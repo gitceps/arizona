@@ -9,7 +9,7 @@ class HomeController < ApplicationController
     end
     
     def input
-        
+        @every_post = Post.all
     end
     
     def point
@@ -23,7 +23,8 @@ class HomeController < ApplicationController
     end
     
     def list
-        @every_post = Post.all
+        #@every_post = Post.all
+        
     end
     
 end

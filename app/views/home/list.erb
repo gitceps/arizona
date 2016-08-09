@@ -1,5 +1,11 @@
 <h1>학점</h1>
-<% @every_post.each do |p|%>
-  <%= p.point %><br>
-<% end %>
+
+<div class="row">
+
+  <!-- Line Chart - Single Series -->
+  <div class="col-xs-6">
+    <%= line_chart Post.group(:point).count %>
+  </div>
+
+</div>
 <a href="/"> 돌아가기 </a>
