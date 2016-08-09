@@ -1,61 +1,74 @@
 <html>
   <head>
-    <!--Load the AJAX API-->
+       <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-    
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
       function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['이름', '학점'],
+          ['Acrocanthosaurus (top-spined lizard)', 1.22],
+          ['Albertosaurus (Alberta lizard)', 3.1],
+          ['Allosaurus (other lizard)', 2.2],
+          ['Apatosaurus (deceptive lizard)', 2.9],
+          ['Archaeopteryx (ancient wing)', 0.9],
+          ['Argentinosaurus (Argentina lizard)', 3.6],
+          ['Baryonyx (heavy claws)', 4.1],
+          ['Brachiosaurus (arm lizard)', 3.5],
+          ['Ceratosaurus (horned lizard)', 3.1],
+          ['Coelophysis (hollow form)', 2.7],
+          ['Compsognathus (elegant jaw)', 0.9],
+          ['Deinonychus (terrible claw)', 2.7],
+          ['Diplodocus (double beam)', 2.1],
+          ['Dromicelomimus (emu mimic)', 3.4],
+          ['Gallimimus (fowl mimic)', 3.5],
+          ['Mamenchisaurus (Mamenchi lizard)', 2.0],
+          ['Megalosaurus (big lizard)', 3.9],
+          ['Microvenator (small hunter)', 4.2],
+          ['Ornithomimus (bird mimic)', 4.5],
+          ['Oviraptor (egg robber)', 1.5],
+          ['Plateosaurus (flat lizard)', 3.9],
+          ['Sauronithoides (narrow-clawed lizard)', 2.0],
+          ['Seismosaurus (tremor lizard)', 3.7],
+          ['Spinosaurus (spiny lizard)', 2.2],
+          ['Supersaurus (super lizard)', 3.5],
+          //['홍길동', 3.5],
+          ['Tyrannosaurus (tyrant lizard)', 4.2],
+          ['Ultrasaurus (ultra lizard)', 3.5],
+          ['Velociraptor (swift robber)', 1.8]]);
 
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
+        var options = {
+            title: '학점',
+            legend: { position: 'center' },
+            chartArea: { width: 600 },
+            hAxis: {
+                title : '점수',
+                ticks: [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]
+            },
+            vAxis : {
+                title : '인원',
+                titleTextStyle : {
+                    italic : false
+                }
+            },
+            bar: { gap: 0.1 },
+            colors: ['green'],
+            histogram: {
+              bucketSize: 0.03,
+              maxNumBuckets: 1000,
+              minValue: 0,
+              maxValue: 4.5
+            }
+        };
 
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
     </script>
   </head>
 
   <body>
-    <div id="chart_div"></div>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-          <div class="form-group">
-          <label for="comment">학점 입력</label>
-          <textarea class="form-control" rows="5" id="comment" name="point"></textarea>
-        </div>
-
-        </div>
-
-         <div class="col-sm-offset-4 col-sm-4">
-         <button type="button" class="btn btn-primary btn-lg sharp" border-radius="20px" value="#" >제출하기</button>
-         </div>  
-        <div class="col-md-4"></div>
-    </div>
-
+        <div id="chart_div"></div>
   </body>
 </html>
