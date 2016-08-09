@@ -28,9 +28,23 @@
         ]);
 
         // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
+								// change the chart to 'approximating Normal Distribution' 
+								var options = {
+										title: 'Approximating Normal Distribution',
+										legend: { position: 'none' },
+										colors: ['#4285F4'],
+
+										chartArea: { width: 450 },
+										hAxis: {ticks: [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]},
+										bar: { gap: 0 },
+										histogram: {
+												bucketSize: 0.01,
+												maxNumBuckets: 100,
+												minValue: 0,
+												maxValue: 4.5
+										}
+								};
+
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
