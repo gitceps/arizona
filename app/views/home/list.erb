@@ -4,12 +4,12 @@
 
   <!-- Line Chart - Single Series -->
   <div class="col-xs-6">
-    <%= line_chart Post.group(:point).count %>
+    <%= line_chart Post.group(:point).count, id: "score-chart", width: "800px", height: "500px", xtitle: "학점", ytitle: "인원"%>
   </div>
 
 </div>
 
-내 점수는 <%= @my_point %><br>
-전체 <%= @all %>명 중 <%= @rank %>등, 상위 <%= @percent %>% 입니다.<br>
+<h2>내 점수는 <%= @my_point %><br>
+    전체 <%= @all %>명 중 <%= @rank %>등, 상위 <%= @percent %>% 입니다.</h2><br>
 
 <a href="/"> 돌아가기 </a>
