@@ -18,7 +18,6 @@ class HomeController < ApplicationController
         new_post.point = params[:point]
         new_post.save
         
-        
         redirect_to "/list/" + params[:point]
         
     end
@@ -27,7 +26,8 @@ class HomeController < ApplicationController
         @my_point = params[:score]
         @rank = Post.where("point > ?", params[:score]).count + 1
         @all = Post.count
-        @percent = (@rank.to_f / @all.to_f) * 100
+        @percent = (@rank.to_f / @all.to_f) * 100 
+        @hi = Post.group(:point).count
         
     end
     
