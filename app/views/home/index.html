@@ -1,10 +1,12 @@
+
+
 <form action="/point" method="POST">
     <div class="row">
       <div class="col-md-4"></div>
       <div class="col-md-4">
           <div class="form-group">
             <label for="comment">학점 입력</label>
-            <input type="number" name="point" class="form-control" rows="5" id="comment" max="4.5" min="0" step="0.01"></input>
+            <input type="number" name="point" class="form-control" rows="5" id="comment_<%= p.id% >" max="4.5" min="0" step="0.01"></input>
           </div>
       </div>
 
@@ -13,4 +15,15 @@
          </div>  
       <div class="col-md-4"></div>
     </div>
+
+<script>
+$.ajax({
+  method: "POST",
+  url: "/home/point",
+  data: { name: "John", location: "Boston" }
+})
+  .done(function( msg ) {
+    alert( "Data Saved: " + msg );
+  });
+</script>
 </form>
