@@ -28,6 +28,9 @@ class HomeController < ApplicationController
         @all = Post.count
         @percent = (@rank.to_f / @all.to_f) * 100 
         @hi = Post.group(:point).count
+    end
+    
+    def update
         
     end
     
