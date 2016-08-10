@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809041908) do
+ActiveRecord::Schema.define(version: 20160810080616) do
 
   create_table "posts", force: :cascade do |t|
     t.string   "point"
@@ -19,11 +19,12 @@ ActiveRecord::Schema.define(version: 20160809041908) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "university", force: :cascade do |t|
-    t.string   "name"
+  create_table "universities", force: :cascade do |t|
+    t.string   "name",              null: false
     t.string   "location"
-    t.boolean  "is_4_5"
-    t.boolean  "is_public"
+    t.string   "is_4_5"
+    t.string   "is_public"
+    t.integer  "total_student_1"
     t.integer  "aplus_students_1"
     t.float    "aplus_ratio_1"
     t.integer  "azero_students_1"
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160809041908) do
     t.float    "dminus_ratio_1"
     t.integer  "f_students_1"
     t.float    "f_ratio_1"
+    t.integer  "total_student_2"
     t.integer  "aplus_students_2"
     t.float    "aplus_ratio_2"
     t.integer  "azero_students_2"
