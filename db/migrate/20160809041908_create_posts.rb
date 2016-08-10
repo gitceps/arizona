@@ -6,7 +6,7 @@ class CreatePosts < ActiveRecord::Migration
         
       t.timestamps null: false
     end
-    create_table :university do |t|
+    create_table :universitys do |t|
       
     t.string :name
     t.string   :location

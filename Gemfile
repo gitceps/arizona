@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'roo', '~> 2.4.0'
+gem 'roo-xls'
 gem 'gon'
 gem 'rabl-rails'
 gem 'chartkick'

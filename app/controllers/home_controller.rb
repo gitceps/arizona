@@ -1,3 +1,9 @@
+require 'roo'
+xl = Roo::Spreadsheet.open('./university.xlsx')
+xl = Roo::Excelx.new("./university.xlsx")
+#xl = Roo::Spreadsheet.open('./rails_temp_upload', extension: :xls)
+xl.default_sheet = xl.sheets.first
+
 class HomeController < ApplicationController
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -31,6 +37,27 @@ class HomeController < ApplicationController
     end
     
     def update
+        #set hashes for label
+#        headers = Hash.new
+#        xl.row(1).each_with_index {|header,i|
+#            headers[header] = i
+#        }
+        
+        univ = University.new
+        #iterator
+        ((xl.first_row + 1)..xl.last_row).each do |row|
+            #write some codes
+            univ.location = xl.cell(row, 'D')
+            univ.name = xl.cell(row, 'F')
+            univ.save
+        end
+        
+        redirect_to "/univ_list"
+
+    end
+    
+    def univlist
+        @univ = University.new
         
     end
     
