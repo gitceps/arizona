@@ -8,12 +8,20 @@
   </div>
 
 </div>
-<h2><%= University.select("aplus_ratio_1", "azero_ratio_1", "aminus_ratio_1","name").where( name: '연세대학교 _본교').limit(1).to_a %></h2>
+
+<h1><%= @university_name %> 의 학점 분포 현황</h1>
+<h2>
+    
+    <%= @query %>
+    <%= @chart_data %>
+    <%= pie_chart @chart_data%>
+    <%= column_chart @chat_data%>
+    
+</h2>
 
 <h1>학교 지역</h1>
 <% @univ.each do |p|%>
-				<%= pie_chart [["A+", p.aplus_students_1], ["A0", p.azero_students_1],["A-",p.aminus_students_1]] %>-->
 
-    <%= p.name %> / <%= p.location %> / <%= p.is_4_5 %> / <%= p.is_public %> / <%= p.total_student_1 %> / <%= p.aplus_students_1 %> / <%= p.aplus_ratio_1 %> / <%= p.aplus_students_2 %> / <%= p.aplus_ratio_2 %><br>
+    <%=p.id %> /<%= p.name %> / <%= p.location %> / <%= p.is_4_5 %> / <%= p.is_public %> / <%= p.total_student_1 %> / <%= p.aplus_students_1 %> / <%= p.aplus_ratio_1 %> / <%= p.aplus_students_2 %> / <%= p.aplus_ratio_2 %><br>
 
 <% end %>
