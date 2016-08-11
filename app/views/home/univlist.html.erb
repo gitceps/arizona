@@ -1,0 +1,15 @@
+
+<div class="row">
+
+  <!-- Line Chart - Single Series -->
+  <div class="col-xs-6">
+    <%= pie_chart University.select("aplus_ratio_1, azero_ratio_1, aminus_ratio_1").where("name = '연세대학교 _본교'").limit(1).to_a %>
+  </div>
+
+</div>
+<h2><%= University.select("aplus_ratio_1", "azero_ratio_1", "aminus_ratio_1").where(name = '연세대학교 _본교').limit(1).to_a %></h2>
+
+<h1>학교 지역</h1>
+<% @univ.each do |p|%>
+    <%= p.name %> / <%= p.location %> / <%= p.is_4_5 %> / <%= p.is_public %> / <%= p.total_student_1 %> / <%= p.aplus_students_1 %> / <%= p.aplus_ratio_1 %> / <%= p.aplus_students_2 %> / <%= p.aplus_ratio_2 %><br>
+<% end %>
