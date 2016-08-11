@@ -119,10 +119,7 @@ class HomeController < ApplicationController
             univ.is_public = xl.cell(row, 'C')
             univ.location = xl.cell(row, 'D')
             
-            univ.is_4_5 = xl.cell(row, 'I')
-            
-
-            
+            univ.is_4_5 = xl.cell(row, 'I')     
             univ.name = xl.cell(row, 'F')
             univ.save
         end
@@ -131,8 +128,26 @@ class HomeController < ApplicationController
     end
     
     def univlist
-        @univ = University.all
         
+        @univ = University.all
+        @university_name = '연세대학교 _본교'
+        @query = University.where('name = ?', @university_name ).pluck('distinct aplus_students_1, azero_students_1, aminus_students_1, bplus_students_1, bzero_students_1, bminus_students_1, cplus_students_1, czero_students_1, cminus_students_1, dplus_students_1, dzero_students_1, dminus_students_1, f_students_1').first
+        
+        @chart_data = Array.new
+        
+        @chart_data.insert(0, ["A+", @query[0]])
+        @chart_data.insert(1, ["A0", @query[1]])
+        @chart_data.insert(2, ["A-", @query[2]])
+        @chart_data.insert(3, ["B+", @query[3]])
+        @chart_data.insert(4, ["B0", @query[4]])
+        @chart_data.insert(5, ["B-", @query[5]])
+        @chart_data.insert(6, ["C+", @query[6]])
+        @chart_data.insert(7, ["C0", @query[7]])
+        @chart_data.insert(8, ["C-", @query[8]])
+        @chart_data.insert(9, ["D+", @query[9]])
+        @chart_data.insert(10, ["D0", @query[10]])
+        @chart_data.insert(11, ["D-", @query[11]])
+        @chart_data.insert(12, ["F", @query[12]])
     end
-    
+
 end
