@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     get '/update' => "home#update"
     get '/univ_list' => "home#univlist"
     get '/list/:score' => "home#list", :constraints => {:score => /[^\/]+/}
-    
+    get '/search' => 'home#search'
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 

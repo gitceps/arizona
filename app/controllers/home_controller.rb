@@ -5,8 +5,16 @@ class HomeController < ApplicationController
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
     def index
-        
+         
     end
+    
+    def search
+    
+
+    end
+
+
+    
     def regular
     end
     
@@ -130,7 +138,7 @@ class HomeController < ApplicationController
     def univlist
         
         @univ = University.all
-        @university_name = '연세대학교 _본교'
+        @university_name = params[:search]
         @query = University.where('name = ?', @university_name ).pluck('distinct aplus_students_1, azero_students_1, aminus_students_1, bplus_students_1, bzero_students_1, bminus_students_1, cplus_students_1, czero_students_1, cminus_students_1, dplus_students_1, dzero_students_1, dminus_students_1, f_students_1').first
         
         @chart_data = Array.new
@@ -148,6 +156,14 @@ class HomeController < ApplicationController
         @chart_data.insert(10, ["D0", @query[10]])
         @chart_data.insert(11, ["D-", @query[11]])
         @chart_data.insert(12, ["F", @query[12]])
+        
+        @univ_search = University.all
+    if params[:search]
+        @univ_search =  University.search(params[:search]).order("created_at DESC")
+    else
+        @univ_search = University.all.order("created_at DESC")
+    end
+        
     end
 
 end
