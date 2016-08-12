@@ -1,0 +1,15 @@
+<h1 align="center">학점</h1>
+
+<div class="row">
+
+  <!-- Line Chart - Single Series -->
+  <div class="col-xs-6">
+    <%= line_chart Post.group(:point).count, id: "score-chart", width: "800px", height: "500px", xtitle: "학점", ytitle: "인원"%>
+  </div>
+
+</div>
+
+<h2>내 점수는 <%= @my_point %><br>
+    전체 <%= @all %>명 중 <%= @rank %>등, 상위 <%= @percent %>% 입니다.</h2><br>
+
+<a href="/input"> 돌아가기 </a>
