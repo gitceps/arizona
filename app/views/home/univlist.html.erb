@@ -1,26 +1,80 @@
-
-<div class="row">
-
-  <!-- Line Chart - Single Series -->
-  <div class="col-xs-6">
-
-
-  </div>
-
-</div>
-
-<h1><%= @university_name %> 의 학점 분포 현황</h1>
-<h2>
+<head>
+    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
+    <%= javascript_include_tag "http://www.google.com/jsapi?ext.js" %>
+    <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
     
-    <%= @query %>
-    <%= @chart_data %>
-    <%= pie_chart @chart_data%>
-    <%= column_chart @chat_data%>
+</head>
+<body>
     
-</h2>
+<h1><%= @university_name %> 의 학점 분포 현황</h1>    
+    
+<!--<div id="chart_div"></div>-->
+<div id="barchart" style="width: 1500px; height: 300px;"></div>
+<div id="piechart" style="width: 900px; height: 500px;"></div>
+    
+    <h2>
+        <%= @query %><br>
+        <%= @chart_data %><br>
+        <%= pie_chart @chart_data%><br>
+        <%= column_chart @chat_data%><br>
+    </h2>
 
-<h1>학교 지역</h1>
-<% @univ.each do |p|%>
-    <%=p.id %> /<%= p.name %> / <%= p.location %> / <%= p.is_4_5 %> / <%= p.is_public %> / <%= p.total_student_1 %> / <%= p.aplus_students_1 %> / <%= p.aplus_ratio_1 %> / <%= p.aplus_students_2 %> / <%= p.aplus_ratio_2 %><br>
+    <h1>학교 지역</h1>
+    <% @univ.each do |p|%>
+        <%=p.id %> /<%= p.name %> / <%= p.location %> / <%= p.is_4_5 %> / <%= p.is_public %> / <%= p.total_student_1 %> / <%= p.aplus_students_1 %> / <%= p.aplus_ratio_1 %> / <%= p.aplus_students_2 %> / <%= p.aplus_ratio_2 %><br>
+    <% end %>
+</body>
 
+<%= javascript_tag do%>
+google.charts.load('current', {'packages':['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawPieChart);
+google.charts.setOnLoadCallback(drawBarChart);
+function drawBarChart() {
+
+   var arr = [['학교', 'A+', 'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'F']];
+    
+   var arr2 = ['ss'];
+   arr2 = arr2.concat(<%= raw @query.as_json%>);
+   arr.push(arr2);
+
+   var data = google.visualization.arrayToDataTable(arr);
+
+   var options = {
+        bar: {groupHeight : "0%"},
+        hAxis: {
+            textPosition : 'none',
+            baselineColor: 'none',
+            ticks: [],
+        },
+        vAxis: {
+            textPosition : 'none',
+            baselineColor: 'none',
+            ticks: [],
+        },
+      legend: {
+            position: 'top'
+        },
+      isStacked:true  
+   }; 
+    var options_fullStacked = {
+          isStacked: 'percent',
+    };
+
+   // Instantiate and draw the chart.
+   var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+   chart.draw(data, options);
+  }
+function drawPieChart() {
+        var arr = [['학점', '인원']];
+        arr = arr.concat(<%= raw @chart_data.as_json %>);
+        var data = google.visualization.arrayToDataTable(arr);
+
+        var options = {
+          title: '연세대학교 학점 분포도'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
 <% end %>
