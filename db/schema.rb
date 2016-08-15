@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20160810080616) do
 
   create_table "posts", force: :cascade do |t|
-    t.string   "point"
+    t.float    "point"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
