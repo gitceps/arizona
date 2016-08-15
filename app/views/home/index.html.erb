@@ -1,5 +1,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/index.css">
+    <link rel="stylesheet" href="../../assets/stylesheets/awesomplete.css" />
+    <script src="../../assets/javascripts/awesomplete.js" async></script>
 </head>
 <form action="/point" method="POST">
     <div class="row">
@@ -19,6 +21,15 @@
                     <% end %>
                 </ul>
             </div>
+            <br>
+            <label for="comment">학교 선택</label><br>
+            <input class="awesomplete" list="mylist" />
+                <datalist id="mylist">
+	               <% @university_name.each do |name| %>
+		              <option><%= name %></option>
+	               <%end%>
+            </datalist>
+            <br>
             <!-- 학과, 학기 입력 -->
             <div class="form-group">
                 <label for="comment">학점 입력</label>
@@ -35,6 +46,17 @@
 $(document).ready(function () {
         $('.dropdown-toggle').dropdown();
 });
+$('.awesomplete').change(function(){
+    //selection changed
+    alert(this.value);//this will give the selected option's value
+    alert($(this).find(':selected').text());//this will give the selected option's text
+});
+//function verify(form) {
+//  if (form.remarks.value.replace(/\s+/g,'') == '') {
+//    alert('Please enter some remarks');
+//    return false;
+//  }
+//}
 $.ajax({
   method: "POST",
   url: "/home/point",

@@ -6,8 +6,7 @@ class HomeController < ApplicationController
   # protect_from_forgery with: :exception
     def index
          @univ = University.all
-         @university_name = University.pluck('name');
-         
+         @university_name = University.distinct.pluck('name');
     end
     
     def search
