@@ -15,6 +15,8 @@ ActiveRecord::Schema.define(version: 20160810080616) do
 
   create_table "posts", force: :cascade do |t|
     t.float    "point"
+    t.string   "name"
+    t.string   "dept"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
