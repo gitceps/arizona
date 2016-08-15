@@ -5,6 +5,8 @@ class HomeController < ApplicationController
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
     def index
+         @univ = University.all
+         @university_name = University.pluck('name');
          
     end
     
@@ -13,9 +15,8 @@ class HomeController < ApplicationController
 
     end
 
-
-    
     def regular
+        
     end
     
     def input

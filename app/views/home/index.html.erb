@@ -1,0 +1,46 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/index.css">
+</head>
+<form action="/point" method="POST">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="dropdown">
+                <label for="comment">학교 선택</label><br>
+                <button class="btn btn-default dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">
+                    대학교를 선택해주세요
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="menu1"> 
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">대학교 선택</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <% @university_name.each do |name| %>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= name %></a></li>
+                    <% end %>
+                </ul>
+            </div>
+            <!-- 학과, 학기 입력 -->
+            <div class="form-group">
+                <label for="comment">학점 입력</label>
+                <input type="number" name="point" class="form-control" rows="5" max="4.5" min="0" step="0.01"></input>
+            </div>
+      </div>
+        <div class="col-sm-offset-4 col-sm-4">
+            <button type="submit" class="btn btn-primary btn-lg sharp" border-radius="20px">제출하기</button>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    
+<script>
+$(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+});
+$.ajax({
+  method: "POST",
+  url: "/home/point",
+  data: { name: "John", location: "Boston" }
+}).done(function( msg ) {
+    alert( "Data Saved: " + msg );
+});
+</script>
+</form>
