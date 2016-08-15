@@ -6,17 +6,16 @@
 </head>
 <body>
     
-<h1><%= @university_name %> 의 학점 분포 현황</h1>    
+<h1 align = "center"><%= @university_name %> 의 학점 분포 현황</h1>    
     
 <!--<div id="chart_div"></div>-->
 <div id="barchart" style="width: 1500px; height: 300px;"></div>
+<h2><a href ="/input"> 내 성적 확인하러가기</a></h2></br>
 <div id="piechart" style="width: 900px; height: 500px;"></div>
     
     <h2>
         <%= @query %><br>
         <%= @chart_data %><br>
-        <%= pie_chart @chart_data%><br>
-        <%= column_chart @chat_data%><br>
     </h2>
 
     <h1>학교 지역</h1>
@@ -41,6 +40,11 @@ function drawBarChart() {
 
    var options = {
         bar: {groupHeight : "0%"},
+        colors: ['#DF0101', 'red', '#FA5858',
+                 '#0B610B', 'green', '#01DF3A',
+                 '#08088A', 'blue', '#2E64FE',
+                 '#FFFF00', 'yellow', '#F2F5A9',
+                 'black'],
         hAxis: {
             textPosition : 'none',
             baselineColor: 'none',
@@ -54,7 +58,7 @@ function drawBarChart() {
       legend: {
             position: 'top'
         },
-      isStacked:true  
+      isStacked:true,
    }; 
     var options_fullStacked = {
           isStacked: 'percent',
@@ -70,7 +74,7 @@ function drawPieChart() {
         var data = google.visualization.arrayToDataTable(arr);
 
         var options = {
-          title: '연세대학교 학점 분포도'
+          //title: '대학교 학점 분포도'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));

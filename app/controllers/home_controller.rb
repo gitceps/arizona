@@ -8,7 +8,8 @@ class HomeController < ApplicationController
      autocomplete :University, :name, :full => true
 
     def index
-         
+         @univ = University.all
+         @university_name = University.distinct.pluck('name');
     end
     
     def search
@@ -16,9 +17,8 @@ class HomeController < ApplicationController
 
     end
 
-
-    
     def regular
+        
     end
     
     def input
@@ -36,11 +36,18 @@ class HomeController < ApplicationController
     end
     
     def list
+        @data = Post.group(:point).count
+        @data = @data.to_a
+        @h_axis = Array.new
+        @v_axis = Array.new
+        @data.each do |temp|
+            @h_axis.push(temp.first)
+        end
+        
         @my_point = params[:score]
         @rank = Post.where("point > ?", params[:score]).count + 1
         @all = Post.count
         @percent = (@rank.to_f / @all.to_f) * 100 
-        @hi = Post.group(:point).count
     end
     
     def update

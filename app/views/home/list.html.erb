@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+      
+    <h2><%= @data %> </h2>
+    <h2><%= @h_axis %> </h2>
+      
+    <h1 align="center">학점</h1>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+    <div class="row">
+
+    <!-- Line Chart - Single Series -->
+    <div class="col-xs-6">
+        <%= line_chart Post.group(:point).count, id: "score-chart", width: "800px", height: "500px", xtitle: "학점", ytitle: "인원"%>
+    </div>
+</div>
+
+<h2>내 점수는 <%= @my_point %><br>
+    전체 <%= @all %>명 중 <%= @rank %>등, 상위 <%= @percent %>% 입니다.</h2><br>
+
+<a href="/input"> 돌아가기 </a>
+  </body>
+</html>
+<%= javascript_tag do%>
+google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      //y축 tick 반올림 필요
+      var arr = [['학점', '인원']];
+      var arr2 = <%= @data %>;
+      arr = arr.concat(arr2);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(arr);
+
+        var options = {
+          curveType: 'function',
+          crosshair: { trigger: 'both',
+                       orientation: 'vertical',
+                       color : 'red'},
+          legend: { position: 'none' },
+          pointSize: 5,
+          vAxis: { title: '인원',
+                    textStyle : { italic: false},
+                    format: '0',
+                    baselineColor: 'none'},
+          hAxis: { title : '학점',
+                   ticks : <%= @h_axis%>,
+                    textStyle: { italic: false},
+                 },
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+<% end %>
