@@ -25,11 +25,11 @@ class HomeController < ApplicationController
     def point
         
         new_post = Post.new
+        new_post.name = params[:univ_name]
         new_post.point = params[:point]
         new_post.save
         
-        redirect_to "/list/" + params[:point]
-        
+        redirect_to "/list/" + new_post.id.to_s
     end
     
     def list
@@ -40,9 +40,9 @@ class HomeController < ApplicationController
         @data.each do |temp|
             @h_axis.push(temp.first)
         end
-        
-        @my_point = params[:score]
-        @rank = Post.where("point > ?", params[:score]).count + 1
+        @my_school = Post.where('id = ?', params[:id]).pluck('name')[0]
+        @my_point = Post.where('id = ?', params[:id]).pluck('point')[0]
+        @rank = Post.where("point > ?", @my_point).count + 1
         @all = Post.count
         @percent = (@rank.to_f / @all.to_f) * 100 
     end

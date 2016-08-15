@@ -3,7 +3,8 @@ class CreatePosts < ActiveRecord::Migration
     create_table :posts do |t|
       
       t.float :point
-        
+      t.string :name
+      t.string :dept
       t.timestamps null: false
     end
     
