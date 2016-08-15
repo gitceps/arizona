@@ -23,7 +23,8 @@ class HomeController < ApplicationController
     end
     
     def point
-        
+        #TODO: 4.3 만점인 학교는 4.5로 환산 할 것
+        #그런 정책을 정해야 함
         new_post = Post.new
         new_post.name = params[:univ_name]
         new_post.point = params[:point]
@@ -33,18 +34,30 @@ class HomeController < ApplicationController
     end
     
     def list
-        @data = Post.group(:point).count
-        @data = @data.to_a
-        @h_axis = Array.new
-        @v_axis = Array.new
-        @data.each do |temp|
-            @h_axis.push(temp.first)
-        end
         @my_school = Post.where('id = ?', params[:id]).pluck('name')[0]
         @my_point = Post.where('id = ?', params[:id]).pluck('point')[0]
-        @rank = Post.where("point > ?", @my_point).count + 1
-        @all = Post.count
-        @percent = (@rank.to_f / @all.to_f) * 100 
+        
+        @data_all = Post.group(:point).count
+        @data_all = @data_all.to_a
+        @h_axis_all = Array.new
+        @data_all.each do |temp|
+            @h_axis_all.push(temp.first)
+        end
+        @rank_all = Post.where("point > ?", @my_point).count + 1
+        @all_all = Post.count
+        @percent_all = (@rank_all.to_f / @all_all.to_f) * 100 
+        
+        
+        @data_school = Post.where('name = ?', @my_school).group(:point).count
+        @data_school = @data_school.to_a
+        @h_axis_school = Array.new
+        @data_school.each do |temp|
+            @h_axis_school.push(temp.first)
+        end
+        
+        @rank_school = Post.where("point > ? and name = ?", @my_point, @my_school).count + 1
+        @all_school = Post.where('name = ?', @my_school).count
+        @percent_school = (@rank_school.to_f / @all_school.to_f) * 100 
     end
     
     def update
