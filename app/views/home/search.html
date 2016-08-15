@@ -1,9 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
+    <%= javascript_include_tag "http://www.google.com/jsapi?ext.js" %>
+    <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+</head>
 
-<%= form_tag(univ_list_path, :method => "get", id: "search-form") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "대학교 입력" %>
-    <%= submit_tag "Search", :name => nil %>
-<% end %>
-    
+<body>
+<form id="search-form" action="/univ_list" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓">
+    <input type="text" name="search" id="search" placeholder="대학교 입력" >
+    <input type="submit" value="Search">
+</form>
+</body>
+</html>
 
-
-    

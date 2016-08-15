@@ -1,15 +1,18 @@
 require 'roo'
+require 'rails4-autocomplete'
 
 class HomeController < ApplicationController
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
+     autocomplete :University, :name, :full => true
+
     def index
          
     end
     
     def search
-    
+        
 
     end
 

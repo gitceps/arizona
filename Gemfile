@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+gem 'rails4-autocomplete'
+gem 'jquery-ui-rails'
+
 gem 'roo', '~> 2.4.0'
 gem 'roo-xls'
 gem 'gon'
