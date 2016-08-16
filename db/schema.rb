@@ -14,8 +14,20 @@
 ActiveRecord::Schema.define(version: 20160816045249) do
 
   create_table "departments", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "university_id"
+    t.string   "department_name"
+    t.string   "college"
+    t.string   "department_code"
+    t.string   "isdaytime"
+    t.string   "department_property"
+    t.string   "department_status"
+    t.string   "department_big_affiliation"
+    t.string   "department_medium_affiliation"
+    t.string   "department_small_affiliation"
+    t.string   "course_term"
+    t.string   "degree"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "distribution_majors", force: :cascade do |t|

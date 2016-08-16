@@ -7,6 +7,10 @@ class HomeController < ApplicationController
     def index
          @univ = University.all
          @university_name = University.distinct.pluck('name');
+         @department = Department.all
+         @ip = request.remote_ip
+        @remote_ip = request.env['REMOTE_ADDR']
+        
     end
     
     def search
@@ -47,7 +51,6 @@ class HomeController < ApplicationController
         @all_all = Post.count
         @percent_all = (@rank_all.to_f / @all_all.to_f) * 100 
         
-        
         @data_school = Post.where('name = ?', @my_school).group(:point).count
         @data_school = @data_school.to_a
         @h_axis_school = Array.new
@@ -61,6 +64,39 @@ class HomeController < ApplicationController
     end
     def update_dept
     #각 학교 별 학과를 업데이트한다.
+        start_row = 2
+        end_row = 18318 
+        xl = Roo::Spreadsheet.open('./university_dept.xlsx')
+        xl = Roo::Excelx.new("./university_dept.xlsx")
+        
+        xl.default_sheet = xl.sheets.first 
+        
+        #iterator
+        start_row.upto(xl.last_row) do |row|
+            department = Department.new
+            department.university_id = University.where('name = ?', xl.cell(row, 'G')).pluck('id')[0]
+            if department.university_id == nil
+                university = University.new
+                university.name = xl.cell(row, 'G')
+                university.save
+                department.university_id = university.id
+            end
+            
+            department.department_name = xl.cell(row, 'K')
+            #캠퍼스 구분해줘야함
+            department.college = xl.cell(row, 'I')
+            department.department_code = xl.cell(row, 'J')
+            department.isdaytime = xl.cell(row, 'L')
+            department.department_property = xl.cell(row, 'M')
+            department.department_status = xl.cell(row, 'N')
+            department.department_big_affiliation = xl.cell(row, 'O')
+            department.department_medium_affiliation = xl.cell(row, 'P')
+            department.department_small_affiliation = xl.cell(row, 'Q')
+            department.course_term = xl.cell(row, 'R')
+            department.degree = xl.cell(row, 'S')
+            department.save
+        end
+        
         redirect_to "/"
     end
     
@@ -72,11 +108,6 @@ class HomeController < ApplicationController
         xl = Roo::Excelx.new("./university_major.xlsx")
 #xl = Roo::Spreadsheet.open('./rails_temp_upload', extension: :xls)
         xl.default_sheet = xl.sheets.first 
-        #set hashes for label
-#        headers = Hash.new
-#        xl.row(1).each_with_index {|header,i|
-#            headers[header] = i
-#        }
 
         #iterator
         start_row.upto(xl.last_row) do |row|
@@ -161,22 +192,28 @@ class HomeController < ApplicationController
         
         @query = DistributionMajor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_1, azero_students_1, aminus_students_1, bplus_students_1, bzero_students_1, bminus_students_1, cplus_students_1, czero_students_1, cminus_students_1, dplus_students_1, dzero_students_1, dminus_students_1, f_students_1').first
         
-        @chart_data = Array.new
-        
-        @chart_data.insert(0, ["A+", @query[0]])
-        @chart_data.insert(1, ["A0", @query[1]])
-        @chart_data.insert(2, ["A-", @query[2]])
-        @chart_data.insert(3, ["B+", @query[3]])
-        @chart_data.insert(4, ["B0", @query[4]])
-        @chart_data.insert(5, ["B-", @query[5]])
-        @chart_data.insert(6, ["C+", @query[6]])
-        @chart_data.insert(7, ["C0", @query[7]])
-        @chart_data.insert(8, ["C-", @query[8]])
-        @chart_data.insert(9, ["D+", @query[9]])
-        @chart_data.insert(10, ["D0", @query[10]])
-        @chart_data.insert(11, ["D-", @query[11]])
-        @chart_data.insert(12, ["F", @query[12]])
-        
+        if @query.nil?
+            redirect_to '/nopage'
+        else
+            @chart_data = Array.new
+
+            @chart_data.insert(0, ["A+", @query[0]])
+            @chart_data.insert(1, ["A0", @query[1]])
+            @chart_data.insert(2, ["A-", @query[2]])
+            @chart_data.insert(3, ["B+", @query[3]])
+            @chart_data.insert(4, ["B0", @query[4]])
+            @chart_data.insert(5, ["B-", @query[5]])
+            @chart_data.insert(6, ["C+", @query[6]])
+            @chart_data.insert(7, ["C0", @query[7]])
+            @chart_data.insert(8, ["C-", @query[8]])
+            @chart_data.insert(9, ["D+", @query[9]])
+            @chart_data.insert(10, ["D0", @query[10]])
+            @chart_data.insert(11, ["D-", @query[11]])
+            @chart_data.insert(12, ["F", @query[12]])
+        end
+    end
+    def nopage
+    
     end
 
 end

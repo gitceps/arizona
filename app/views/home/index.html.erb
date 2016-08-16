@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="../../assets/stylesheets/awesomplete.css" />
     <script src="../../assets/javascripts/awesomplete.js" async></script>
 </head>
+당신의 ip = <%= @remote_ip %>
 
 <form action="/point" method="POST">
     <div class="row">
@@ -15,7 +16,6 @@
 		              <option><%= name %></option>
 	               <%end%>
             </datalist>
-            
             <br>
             <!-- 학과, 학기 입력 -->
             <div class="form-group">
@@ -26,6 +26,7 @@
         <div class="col-sm-offset-4 col-sm-4">
             <button type="submit" class="btn btn-primary btn-lg sharp" border-radius="20px">제출하기</button>
         </div>
+        <br>
         <div class="col-md-4"></div>
     </div>
     

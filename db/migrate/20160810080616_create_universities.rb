@@ -5,7 +5,6 @@ class CreateUniversities < ActiveRecord::Migration
         t.string  :location
         t.string  :is_4_5
         t.string  :is_public
-        
       t.timestamps null: false
     end
   end
