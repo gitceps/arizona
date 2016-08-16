@@ -13,7 +13,8 @@ class HomeController < ApplicationController
     end
     
     def search
-        
+         @univ = University.all
+         @university_name = University.distinct.pluck('name');
 
     end
 

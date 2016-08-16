@@ -1,16 +1,90 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
 <head>
-    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
-    <%= javascript_include_tag "http://www.google.com/jsapi?ext.js" %>
-    <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+    <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/index.css">
+    <link rel="stylesheet" href="../../assets/stylesheets/awesomplete.css" />
+    <link rel="stylesheet"  href="../../assets/stylesheets/search.css">
+    <script src="../../assets/javascripts/awesomplete.js" async></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 
+<body>
+    
+        <section class="container">
+                <form onsubmit="submitFn(this, event);" id="search-form" action="/univ_list" accept-charset="UTF-8" method="get">
+                    <div class="search-wrapper">
+                        <div class="input-holder">
+                            <input name="utf8" type="hidden" value="✓">
+                            <input type="text" name="search" id="search" class="search-input" placeholder="대학교 입력" list="mylist"/>
+                                <datalist id="mylist">
+                                   <% @university_name.each do |name| %>
+                                      <option><%= name %>
+                                      </option>
+                                   <%end%>
+                                </datalist>
+                            <button class="search-icon" onclick="searchToggle(this, event);" value="Search"><span></span></button>
+                        </div>
+                        <span class="close" onclick="searchToggle(this, event);"></span>
+                        <div class="result-container">
 
-<%= form_tag(univ_list_path, :method => "get", id: "search-form") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "대학교 입력" %>
-    <%= submit_tag "Search", :name => nil %>
-<% end %>
-<h2><a href ='/input'>내 성적 확인하러 가기</a></h2>    
->>>>>>> 420da00200bcd2e93f3f34cdabfb45339b618a16
+                        </div>
+                    </div>
+                </form>
+        </section>
+        
+                    
+<div class="row">
+    <div>
+        <p class="text-center" style="margin-top:260px"><font color="red">학점 인프라가 얼마나 심할까?</font>
+    </div>
+    <div class="text-center" style="margin-top: 10px">
+       <a href ='/input'>내 성적 확인하러 가기</a>
+    </div>
+<div>
+    
 
+    
+</body>
+</html>
+    
+
+<script>
+
+    
+var comboplete = new Awesomplete('input.dropdown-input', {
+	minChars: 0,
+});
+
+Awesomplete.$('.dropdown-input').addEventListener("click", function() {
+    if (comboplete.ul.childNodes.length === 0) {
+		comboplete.minChars = 0;
+		comboplete.evaluate();
+	}
+	else if (comboplete.ul.hasAttribute('hidden')) {
+		comboplete.open();
+	}
+	else {
+		comboplete.close();
+	}
+}); 
+    
+//$('.awesomplete').change(function(){
+    //selection changed
+//    alert(this.value);//this will give the selected option's value
+//    alert($(this).find(':selected').text());//this will give the selected option's text
+//});
+//function verify(form) {
+//  if (form.remarks.value.replace(/\s+/g,'') == '') {
+//    alert('Please enter some remarks');
+//    return false;
+//  }
+//}
+$.ajax({
+  method: "POST",
+  url: "/home/point",
+  data: { name: "John", location: "Boston" }
+}).done(function( msg ) {
+    alert( "Data Saved: " + msg );
+});
+</script>
