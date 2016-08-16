@@ -95,7 +95,7 @@ class HomeController < ApplicationController
                 univ.bminus_students_1 = xl.cell(row, 'T')
                 univ.bminus_ratio_1 = xl.cell(row, 'U')
                 univ.cplus_students_1 = xl.cell(row, 'V')
-                univ.cplus_ratio_1 = xl.cell(row,'W')
+                univ.cplus_ratio    _1 = xl.cell(row,'W')
                 univ.czero_students_1 = xl.cell(row, 'X')
                 univ.czero_ratio_1 = xl.cell(row,'Y')
                 univ.cminus_students_1 = xl.cell(row, 'Z')
@@ -152,7 +152,7 @@ class HomeController < ApplicationController
             univ.save
         end
         
-        redirect_to "/univ_list"
+        redirect_to "/"
     end
     
     def univlist
