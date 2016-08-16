@@ -152,7 +152,7 @@ class HomeController < ApplicationController
             univ.save
         end
         
-        redirect_to "/univ_list"
+        redirect_to "/"
     end
     
     def univlist
