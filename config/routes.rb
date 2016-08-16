@@ -9,7 +9,6 @@ Rails.application.routes.draw do
     get '/' => 'home#search'
     get '/input' => 'home#index'
     post '/input' => 'home#input'
-    get '/regular' => 'home#regular'
     post '/point' => "home#point"
     #get '/list' => "home#list"
     get '/update' => "home#update"
