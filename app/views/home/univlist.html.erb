@@ -37,11 +37,7 @@ function drawBarChart() {
 
    var options = {
         bar: {groupHeight : "0%"},
-        colors: ['#DF0101', 'red', '#FA5858',
-                 '#0B610B', 'green', '#01DF3A',
-                 '#08088A', 'blue', '#2E64FE',
-                 '#FFFF00', 'yellow', '#F2F5A9',
-                 'black'],
+        colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863'],
         hAxis: {
             textPosition : 'none',
             baselineColor: 'none',
@@ -71,7 +67,7 @@ function drawPieChart() {
         var data = google.visualization.arrayToDataTable(arr);
 
         var options = {
-          //title: '대학교 학점 분포도'
+        	colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863']
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
