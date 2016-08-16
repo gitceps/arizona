@@ -6,10 +6,11 @@
 </head>
 <body>
     
-<h1 align = "center"><%= @university_name %> 의 학점 분포 현황</h1>    
+<h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (1학기)</h1>    
     
 <!--<div id="chart_div"></div>-->
 <div id="barchart" style="width: 1500px; height: 300px;"></div>
+<h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (2학기) : 구현 예정</h1>    
 <h2><a href ="/input"> 내 성적 확인하러가기</a></h2></br>
 <div id="piechart" style="width: 900px; height: 500px;"></div>
     
@@ -18,10 +19,6 @@
         <%= @chart_data %><br>
     </h2>
 
-    <h1>학교 지역</h1>
-    <% @univ.each do |p|%>
-        <%=p.id %> /<%= p.name %> / <%= p.location %> / <%= p.is_4_5 %> / <%= p.is_public %> / <%= p.total_student_1 %> / <%= p.aplus_students_1 %> / <%= p.aplus_ratio_1 %> / <%= p.aplus_students_2 %> / <%= p.aplus_ratio_2 %><br>
-    <% end %>
 </body>
 
 <%= javascript_tag do%>
@@ -40,11 +37,7 @@ function drawBarChart() {
 
    var options = {
         bar: {groupHeight : "0%"},
-        colors: ['#DF0101', 'red', '#FA5858',
-                 '#0B610B', 'green', '#01DF3A',
-                 '#08088A', 'blue', '#2E64FE',
-                 '#FFFF00', 'yellow', '#F2F5A9',
-                 'black'],
+        colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863'],
         hAxis: {
             textPosition : 'none',
             baselineColor: 'none',
@@ -74,7 +67,7 @@ function drawPieChart() {
         var data = google.visualization.arrayToDataTable(arr);
 
         var options = {
-          //title: '대학교 학점 분포도'
+        	colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863']
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));

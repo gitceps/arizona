@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'home/nopage'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -9,12 +11,13 @@ Rails.application.routes.draw do
     get '/' => 'home#search'
     get '/input' => 'home#index'
     post '/input' => 'home#input'
-    get '/regular' => 'home#regular'
-    post '/point' => "home#point"
+    post '/point' => 'home#point'
     #get '/list' => "home#list"
-    get '/update' => "home#update"
-    get '/univ_list' => "home#univlist"
-    get '/list/:id' => "home#list", :constraints => {:id => /[^\/]+/}
+    get '/update' => 'home#update'
+    get '/update_dept' => 'home#update_dept'
+    get '/univ_list' => 'home#univlist'
+    get '/nopage' => 'home#nopage'
+    get '/list/:id' => 'home#list', :constraints => {:id => /[^\/]+/}
     get '/search' => 'home#search'
     
   # Example of named route that can be invoked with purchase_url(id: product.id)
