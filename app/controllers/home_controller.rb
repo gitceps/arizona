@@ -216,4 +216,8 @@ class HomeController < ApplicationController
             @chart_data.insert(12, ["F", @query[12]])
         end
     end
+    def nopage
+    
+    end
+
 end
