@@ -6,4 +6,3 @@ class University < ActiveRecord::Base
           University.where("name LIKE ?", "%#{:search}%") 
         end
 end
-

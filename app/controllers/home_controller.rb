@@ -8,10 +8,10 @@ class HomeController < ApplicationController
      autocomplete :University, :name, :full => true
 
     def index
-         @univ = University.all
-         @university_name = University.distinct.pluck('name');
-         @department = Department.all
-         @ip = request.remote_ip
+        @univ = University.all
+        @university_name = University.distinct.pluck('name');
+        @department = Department.all
+        @ip = request.remote_ip
         @remote_ip = request.env['REMOTE_ADDR']
         
     end

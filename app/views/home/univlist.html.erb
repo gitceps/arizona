@@ -6,38 +6,34 @@
     <link rel="stylesheet" href="../../assets/stylesheets/univlist.css" />
 </head>
 <body>
-    
-<h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (1학기)</h1>    
-<div id="barchart" style="width: 1500px; height: 300px;"></div>
-            <input class=" dropdown-input" id="target" name="univ_name" list="mylist"/>
-                <datalist id="mylist">
-	               <% @university_list.each do |name| %>
-		              <option><%= name %></option>
-	               <%end%>
-            </datalist>
-    
-<button type="button" class="btn_add btn-primary">비교 학교 추가하기</button>
-    
-<h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (2학기) : 구현 예정</h1>    
-<h2><a href ="/input"> 내 성적 확인하러가기</a></h2></br>
+
+<div class="grid">
+	<h1 align="center"><%=@university_name %>의 학점 분포 현황(1학기)</h1>
+  <div>
+      <div align="center" style="padding:30px;">
+        <input class=" dropdown-input" id="target" name="univ_name" list="mylist"/>
+                    <datalist id="mylist">
+                       <% @university_list.each do |name| %>
+                          <option><%= name %></option>
+                       <%end%>
+                </datalist>
+        <button type="button" class="btn_add btn-primary">비교 학교 추가하기</button>
+        </div>
+        <div id="barchart" class="chart1">
+        </div>
+  </div>
+
+	<div>
+	   <h1 align="center"><%=@university_name %>의 학점 분포 현황(2학기)</h1>
+    </div>
 </body>
 
+
 <%= javascript_tag do%>
-var arr = [['학교', 'A+', 'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'F']];
-
-google.charts.load('current', {'packages':['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawBarChart);
-//google.charts.setOnLoadCallback(drawBarChart2);
-
-function drawBarChart() {
+var arr = [['학교', 'A+',  'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'F']];
+var relativeHeight = 70;
     
-   var arr2 = ['<%= @university_name %>'];
-   arr2 = arr2.concat(<%= raw @query.as_json%>);
-   arr.push(arr2);
-   
-   var data = google.visualization.arrayToDataTable(arr);
-
-   var options = {
+var options = {
         width:"80%",
         height:300,
         bar: {groupHeight : "0%"},
@@ -52,19 +48,30 @@ function drawBarChart() {
             baselineColor: 'none',
             ticks: [],
         },
-      legend: {
-            position: 'top'
+        legend: {
+            position: 'top',
+            alignment: 'center',
+            maxLines: 5
         },
-      isStacked:true,
-   }; 
-    var options_fullStacked = {
-          isStacked: 'percent',
-    };
+        isStacked:'percent'
+	 };
+
+google.charts.load('current', {'packages':['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBarChart);
+
+function drawBarChart() {
+
+   var arr2 = ['<%= @university_name %>'];
+   arr2 = arr2.concat(<%= raw @query.as_json%>);
+   arr.push(arr2);
+   
+   var data = google.visualization.arrayToDataTable(arr);
 
    // Instantiate and draw the chart.
    var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+   options.height = data.getNumberOfRows() * relativeHeight + 30;
    chart.draw(data, options);
-  }
+}
 
 $(".btn_add").click(function(){
 alert($('#target').val());
@@ -87,32 +94,10 @@ $.ajax({
 
    var data = google.visualization.arrayToDataTable(arr);
 
-   var options = {
-        width:"80%",
-        height:300,
-        bar: {groupHeight : "0%"},
-        colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863'],
-        hAxis: {
-            textPosition : 'none',
-            baselineColor: 'none',
-            ticks: [],
-        },
-        vAxis: {
-            //textPosition : 'none',
-            baselineColor: 'none',
-            ticks: [],
-        },
-      legend: {
-            position: 'top'
-        },
-      isStacked:true,
-   }; 
-    var options_fullStacked = {
-          isStacked: 'percent',
-    };
-
    // Instantiate and draw the chart.
    var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+   options.height = data.getNumberOfRows() * relativeHeight + 30;
+   alert(options.height);
    chart.draw(data, options);
     },
     error: function() {
@@ -120,10 +105,18 @@ $.ajax({
         alert('오류');
     }
     }).done(function() {
-        alert('완료');
+        //alert('완료');
     });
 });
 
 
+$(window).resize(function(){
+var data = google.visualization.arrayToDataTable(arr);
+
+   // Instantiate and draw the chart.
+   var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+   options.height = data.getNumberOfRows() * relativeHeight + 30;
+   chart.draw(data, options);
+});
 
 <% end %>

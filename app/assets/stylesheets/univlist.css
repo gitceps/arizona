@@ -1,8 +1,14 @@
-* {
-  @include box-sizing(border-box);
-}
 
 $pad: 20px;
+
+
+#barchart {
+  width: 100%;
+}
+
+#piechart {
+  width: 100%;
+}
 
 .grid {
   background: white;
@@ -11,7 +17,6 @@ $pad: 20px;
   &:after {
     /* Or @extend clearfix */
     content: "";
-    display: table;
     clear: both;
   }
 }
@@ -23,9 +28,24 @@ $pad: 20px;
     padding-right: 0;
   }
 }
-.col-1-2 {
-  width: 100%;
+
+.col-2-3 {
+  width: 66.66%;
 }
+.col-1-3 {
+  width: 33.33%;
+}
+.col-1-2 {
+  width: 50%;
+  align-self:center;
+}
+.col-1-4 {
+  width: 25%;
+}
+.col-1-8 {
+  width: 12.5%;
+}
+
 /* Opt-in outside padding */
 .grid-pad {
   padding: $pad 0 $pad $pad;
@@ -33,7 +53,13 @@ $pad: 20px;
     padding-right: $pad;
   }
 }
-.chart {
+.chart1 {
+  display: flex;
+  width: 100%; 
+  height: 600px;
+}
+
+.chart2 {
   width: 100%; 
   height: 600px;
 }
