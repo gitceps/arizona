@@ -18,6 +18,7 @@ class HomeController < ApplicationController
     
     def search
         @univ_search = University.all
+        @university_name = University.distinct.pluck('name');
         if params[:search]
             @univ_search =  University.search(params[:search]).order("created_at DESC")
         else
@@ -190,8 +191,8 @@ class HomeController < ApplicationController
     end
     
     def univlist
-        
         @university_name = params[:search]
+        @university_list = University.distinct.pluck('name');
         @university_id = University.where('name = ?', @university_name).pluck('id')[0]
         
         @query = DistributionMajor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_1, azero_students_1, aminus_students_1, bplus_students_1, bzero_students_1, bminus_students_1, cplus_students_1, czero_students_1, cminus_students_1, dplus_students_1, dzero_students_1, dminus_students_1, f_students_1').first
@@ -215,6 +216,42 @@ class HomeController < ApplicationController
             @chart_data.insert(11, ["D-", @query[11]])
             @chart_data.insert(12, ["F", @query[12]])
         end
+    end
+    def univ_add
+        
+        @university_name = params[:search]
+        @university_id = University.where('name = ?', @university_name).pluck('id')[0]
+        
+        @query = DistributionMajor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_1, azero_students_1, aminus_students_1, bplus_students_1, bzero_students_1, bminus_students_1, cplus_students_1, czero_students_1, cminus_students_1, dplus_students_1, dzero_students_1, dminus_students_1, f_students_1').first
+        
+        if @query.nil?
+            redirect_to '/nopage'
+        else
+            @chart_data = Array.new
+
+            @chart_data.insert(0, @query[0])
+            @chart_data.insert(1, @query[1])
+            @chart_data.insert(2, @query[2])
+            @chart_data.insert(3, @query[3])
+            @chart_data.insert(4, @query[4])
+            @chart_data.insert(5, @query[5])
+            @chart_data.insert(6, @query[6])
+            @chart_data.insert(7, @query[7])
+            @chart_data.insert(8, @query[8])
+            @chart_data.insert(9, @query[9])
+            @chart_data.insert(10, @query[10])
+            @chart_data.insert(11, @query[11])
+            @chart_data.insert(12, @query[12])
+        end
+        banana = Array.new
+        banana[0] = @university_name
+        banana[1] = @chart_data
+        respond_to do |format|
+          format.json { render json: banana.to_json}
+    end
+    end
+    def show
+        
     end
     def nopage
     

@@ -1,41 +1,45 @@
 <head>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
     <%= javascript_include_tag "http://www.google.com/jsapi?ext.js" %>
     <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
-    
+    <link rel="stylesheet" href="../../assets/stylesheets/univlist.css" />
 </head>
 <body>
     
 <h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (1학기)</h1>    
-    
-<!--<div id="chart_div"></div>-->
 <div id="barchart" style="width: 1500px; height: 300px;"></div>
+            <input class=" dropdown-input" id="target" name="univ_name" list="mylist"/>
+                <datalist id="mylist">
+	               <% @university_list.each do |name| %>
+		              <option><%= name %></option>
+	               <%end%>
+            </datalist>
+    
+<button type="button" class="btn_add btn-primary">비교 학교 추가하기</button>
+    
 <h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (2학기) : 구현 예정</h1>    
 <h2><a href ="/input"> 내 성적 확인하러가기</a></h2></br>
-<div id="piechart" style="width: 900px; height: 500px;"></div>
-    
-    <h2>
-        <%= @query %><br>
-        <%= @chart_data %><br>
-    </h2>
-
 </body>
 
 <%= javascript_tag do%>
-google.charts.load('current', {'packages':['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawPieChart);
-google.charts.setOnLoadCallback(drawBarChart);
-function drawBarChart() {
+var arr = [['학교', 'A+', 'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'F']];
 
-   var arr = [['학교', 'A+', 'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'F']];
+google.charts.load('current', {'packages':['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBarChart);
+//google.charts.setOnLoadCallback(drawBarChart2);
+
+function drawBarChart() {
     
-   var arr2 = ['ss'];
+   var arr2 = ['<%= @university_name %>'];
    arr2 = arr2.concat(<%= raw @query.as_json%>);
    arr.push(arr2);
-
+   
    var data = google.visualization.arrayToDataTable(arr);
 
    var options = {
+        width:"80%",
+        height:300,
         bar: {groupHeight : "0%"},
         colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863'],
         hAxis: {
@@ -44,7 +48,7 @@ function drawBarChart() {
             ticks: [],
         },
         vAxis: {
-            textPosition : 'none',
+            //textPosition : 'none',
             baselineColor: 'none',
             ticks: [],
         },
@@ -61,17 +65,65 @@ function drawBarChart() {
    var chart = new google.visualization.BarChart(document.getElementById('barchart'));
    chart.draw(data, options);
   }
-function drawPieChart() {
-        var arr = [['학점', '인원']];
-        arr = arr.concat(<%= raw @chart_data.as_json %>);
-        var data = google.visualization.arrayToDataTable(arr);
 
-        var options = {
-        	colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863']
-        };
+$(".btn_add").click(function(){
+alert($('#target').val());
+$.ajax({
+    method: "GET", 
+    url: "/univ_add",
+    data: {
+        search: $('#target').val()
+    },
+    success: function(data){
+        //console.log(data);
+        //alert(data);
+        //alert(data[0]);
+        //alert(data[1]);
+        var arr2 = [data[0]];
+        arr2 = arr2.concat(data[1]);
+        console.log(data[1]);
+        arr.push(arr2);
+        console.log(arr);
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+   var data = google.visualization.arrayToDataTable(arr);
 
-        chart.draw(data, options);
-      }
+   var options = {
+        width:"80%",
+        height:300,
+        bar: {groupHeight : "0%"},
+        colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863'],
+        hAxis: {
+            textPosition : 'none',
+            baselineColor: 'none',
+            ticks: [],
+        },
+        vAxis: {
+            //textPosition : 'none',
+            baselineColor: 'none',
+            ticks: [],
+        },
+      legend: {
+            position: 'top'
+        },
+      isStacked:true,
+   }; 
+    var options_fullStacked = {
+          isStacked: 'percent',
+    };
+
+   // Instantiate and draw the chart.
+   var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+   chart.draw(data, options);
+    },
+    error: function() {
+        alert("<%= @university_name1 %>");
+        alert('오류');
+    }
+    }).done(function() {
+        alert('완료');
+    });
+});
+
+
+
 <% end %>
