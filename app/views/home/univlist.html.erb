@@ -2,29 +2,30 @@
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
     <%= javascript_include_tag "http://www.google.com/jsapi?ext.js" %>
     <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
-    
+    <link rel="stylesheet" href="../../assets/stylesheets/univlist.css" />
 </head>
 <body>
-    
-<h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (1학기)</h1>    
-    
-<!--<div id="chart_div"></div>-->
-<div id="barchart" style="width: 1500px; height: 300px;"></div>
-<h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (2학기) : 구현 예정</h1>    
-<h2><a href ="/input"> 내 성적 확인하러가기</a></h2></br>
-<div id="piechart" style="width: 900px; height: 500px;"></div>
-    
-    <h2>
-        <%= @query %><br>
-        <%= @chart_data %><br>
-    </h2>
-
+<div class="grid">
+	<h1 align="center"><%=@university_name %>의 학점 분포 현황(1학기)</h1>
+  <div>
+    <div id="barchart" class="chart1"></div>
+  </div>
+	<div>
+	<h1 align="center"><%=@university_name %>의 학점 분포 현황(1학기)</h1>
+  <div>
+    <div id="piechart" class="chart2"></div>
+  </div>
+</div>
 </body>
+
+
+
 
 <%= javascript_tag do%>
 google.charts.load('current', {'packages':['corechart', 'bar']});
 google.charts.setOnLoadCallback(drawPieChart);
 google.charts.setOnLoadCallback(drawBarChart);
+
 function drawBarChart() {
 
    var arr = [['학교', 'A+', 'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'F']];
@@ -48,11 +49,15 @@ function drawBarChart() {
             baselineColor: 'none',
             ticks: [],
         },
-      legend: {
-            position: 'top'
+        legend: {
+            position: 'top',
+						alignment: 'center',
+						maxLines: 5
         },
-      isStacked:true,
-   }; 
+			
+        isStacked:true
+	 };
+		 
     var options_fullStacked = {
           isStacked: 'percent',
     };
@@ -67,11 +72,22 @@ function drawPieChart() {
         var data = google.visualization.arrayToDataTable(arr);
 
         var options = {
-        	colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863']
+        	colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863'],
+					legend: {
+            position: 'top',
+						alignment: 'center',
+						maxLines: 5
+					}
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
         chart.draw(data, options);
       }
+
+$(window).resize(function(){
+  drawPieChart();
+  drawBarChart();
+});
+
 <% end %>
