@@ -66,6 +66,8 @@
 
 
 <%= javascript_tag do%>
+var schoolList = new Array();
+schoolList.push('<%= @university_name %>')
 var arr = [['학교', 'A+', {role: 'annotation'}, 'A0', {role: 'annotation'}, 'A-', {role: 'annotation'}, 'B+', {role: 'annotation'}, 'B0', {role: 'annotation'}, 'B-', {role: 'annotation'}, 'C+', {role: 'annotation'}, 'C0', {role: 'annotation'}, 'C-', {role: 'annotation'}, 'D+', {role: 'annotation'}, 'D0', {role: 'annotation'}, 'D-', {role: 'annotation'}, 'F', {role: 'annotation'}]];
 var relativeHeight = 70;
     
@@ -116,7 +118,13 @@ function drawBarChart() {
 }
 
 $(".btn_add").click(function(){
-alert($('#target').val());
+if(schoolList.includes($('#target').val(), 0)){
+    alert('이미 추가한 대학교입니다');
+    return false;
+} else {
+    schoolList.push($('#target').val());
+    console.log(schoolList);
+}
 $.ajax({
     method: "GET", 
     url: "/univ_add",
@@ -142,12 +150,11 @@ $.ajax({
    // Instantiate and draw the chart.
    var chart = new google.visualization.BarChart(document.getElementById('barchart'));
    options.height = data.getNumberOfRows() * relativeHeight + 30;
-   alert(options.height);
+   //alert(options.height);
    chart.draw(data, options);
     },
     error: function() {
-        alert("<%= @university_name1 %>");
-        alert('오류');
+        alert('검색어가 유효하지 않습니다');
     }
     }).done(function() {
         //alert('완료');
