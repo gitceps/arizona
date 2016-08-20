@@ -78,7 +78,7 @@ class HomeController < ApplicationController
         #iterator
         start_row.upto(xl.last_row) do |row|
             department = Department.new
-            department.university_id = University.where('name = ?', xl.cell(row, 'G')).pluck('id')[0]
+            department.university_id = University.distinct.where('name = ?', xl.cell(row, 'G')).pluck('id')[0]
             if department.university_id == nil
                 university = University.new
                 university.name = xl.cell(row, 'G')
@@ -365,29 +365,41 @@ class HomeController < ApplicationController
     def univ_add
         #교양일 경우, 2학기일 경우 case 구분
         @university_name = params[:search]
-        @university_id = University.where('name = ?', @university_name).pluck('id')[0]
+        @semester = params[:semester]
+        @is_major = params[:is_major]
+    
+        @university_id = University.distinct.where('name = ?', @university_name).pluck('id')[0]
         
-        @query = DistributionMajor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_1, azero_students_1, aminus_students_1, bplus_students_1, bzero_students_1, bminus_students_1, cplus_students_1, czero_students_1, cminus_students_1, dplus_students_1, dzero_students_1, dminus_students_1, f_students_1').first
-        
-        if @query.nil?
-            redirect_to '/nopage'
+        if @is_major == "true"
+            if @semester == "spring"
+                print "1학기\n"
+                @query = DistributionMajor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_1, aplus_ratio_1, azero_students_1, azero_ratio_1, aminus_students_1, aminus_ratio_1, bplus_students_1, bplus_ratio_1, bzero_students_1, bzero_ratio_1, bminus_students_1, bminus_ratio_1, cplus_students_1, cplus_ratio_1, czero_students_1, czero_ratio_1, cminus_students_1, cminus_ratio_1, dplus_students_1, dplus_ratio_1, dzero_students_1, dzero_ratio_1, dminus_students_1, dminus_ratio_1, f_students_1, f_ratio_1').first
+            else
+                print "2학기\n"
+                @query = DistributionMajor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_2, aplus_ratio_2, azero_students_2, azero_ratio_2, aminus_students_2, aminus_ratio_2, bplus_students_2, bplus_ratio_2, bzero_students_2, bzero_ratio_2, bminus_students_2, bminus_ratio_2, cplus_students_2, cplus_ratio_2, czero_students_2, czero_ratio_2, cminus_students_2, cminus_ratio_2, dplus_students_2, dplus_ratio_2, dzero_students_2, dzero_ratio_2, dminus_students_2, dminus_ratio_2, f_students_2, f_ratio_2').first
+            end
+            if @query.nil?
+                redirect_to '/nopage'
+            else
+                @chart_data = Array.new
+                @chart_data = @query
+            end
         else
-            @chart_data = Array.new
-
-            @chart_data.insert(0, @query[0])
-            @chart_data.insert(1, @query[1])
-            @chart_data.insert(2, @query[2])
-            @chart_data.insert(3, @query[3])
-            @chart_data.insert(4, @query[4])
-            @chart_data.insert(5, @query[5])
-            @chart_data.insert(6, @query[6])
-            @chart_data.insert(7, @query[7])
-            @chart_data.insert(8, @query[8])
-            @chart_data.insert(9, @query[9])
-            @chart_data.insert(10, @query[10])
-            @chart_data.insert(11, @query[11])
-            @chart_data.insert(12, @query[12])
+            if @semester == "spring"
+                print "1학기\n"
+                @query = DistributionMinor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_1, aplus_ratio_1, azero_students_1, azero_ratio_1, aminus_students_1, aminus_ratio_1, bplus_students_1, bplus_ratio_1, bzero_students_1, bzero_ratio_1, bminus_students_1, bminus_ratio_1, cplus_students_1, cplus_ratio_1, czero_students_1, czero_ratio_1, cminus_students_1, cminus_ratio_1, dplus_students_1, dplus_ratio_1, dzero_students_1, dzero_ratio_1, dminus_students_1, dminus_ratio_1, f_students_1, f_ratio_1').first
+            else
+                print "2학기\n"
+                @query = DistributionMinor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_2, aplus_ratio_2, azero_students_2, azero_ratio_2, aminus_students_2, aminus_ratio_2, bplus_students_2, bplus_ratio_2, bzero_students_2, bzero_ratio_2, bminus_students_2, bminus_ratio_2, cplus_students_2, cplus_ratio_2, czero_students_2, czero_ratio_2, cminus_students_2, cminus_ratio_2, dplus_students_2, dplus_ratio_2, dzero_students_2, dzero_ratio_2, dminus_students_2, dminus_ratio_2, f_students_2, f_ratio_2').first
+            end
+            if @query.nil?
+                redirect_to '/nopage'
+            else
+                @chart_data = Array.new
+                @chart_data = @query
+            end
         end
+        
         banana = Array.new
         banana[0] = @university_name
         banana[1] = @chart_data
