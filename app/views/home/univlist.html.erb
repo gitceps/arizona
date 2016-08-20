@@ -66,10 +66,12 @@
 
 
 <%= javascript_tag do%>
-var arr = [['학교', 'A+',  'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'F']];
+var arr = [['학교', 'A+', {role: 'annotation'}, 'A0', {role: 'annotation'}, 'A-', {role: 'annotation'}, 'B+', {role: 'annotation'}, 'B0', {role: 'annotation'}, 'B-', {role: 'annotation'}, 'C+', {role: 'annotation'}, 'C0', {role: 'annotation'}, 'C-', {role: 'annotation'}, 'D+', {role: 'annotation'}, 'D0', {role: 'annotation'}, 'D-', {role: 'annotation'}, 'F', {role: 'annotation'}]];
 var relativeHeight = 70;
     
+    
 var options = {
+    
         width:"80%",
         height:300,
         bar: {groupHeight : "0%"},
@@ -84,11 +86,13 @@ var options = {
             baselineColor: 'none',
             ticks: [],
         },
+    
         legend: {
             position: 'top',
             alignment: 'center',
             maxLines: 5
         },
+    
         isStacked:'percent'
 	 };
 
@@ -100,8 +104,9 @@ function drawBarChart() {
    var arr2 = ['<%= @university_name %>'];
    arr2 = arr2.concat(<%= raw @query.as_json%>);
    arr.push(arr2);
-   
+
    var data = google.visualization.arrayToDataTable(arr);
+
 
    // Instantiate and draw the chart.
    var chart = new google.visualization.BarChart(document.getElementById('barchart'));
