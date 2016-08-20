@@ -195,26 +195,29 @@ class HomeController < ApplicationController
         @university_list = University.distinct.pluck('name');
         @university_id = University.where('name = ?', @university_name).pluck('id')[0]
         
-        @query = DistributionMajor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_1, azero_students_1, aminus_students_1, bplus_students_1, bzero_students_1, bminus_students_1, cplus_students_1, czero_students_1, cminus_students_1, dplus_students_1, dzero_students_1, dminus_students_1, f_students_1').first
+        
+        @query = DistributionMajor.where('university_id = ?', @university_id ).pluck('distinct aplus_students_1, aplus_ratio_1, azero_students_1, azero_ratio_1, aminus_students_1, aminus_ratio_1, bplus_students_1, bplus_ratio_1, bzero_students_1, bzero_ratio_1, bminus_students_1, bminus_ratio_1, cplus_students_1, cplus_ratio_1, czero_students_1, czero_ratio_1, cminus_students_1, cminus_ratio_1, dplus_students_1, dplus_ratio_1, dzero_students_1, dzero_ratio_1, dminus_students_1, dminus_ratio_1, f_students_1, f_ratio_1').first
         
         if @query.nil?
+            
             redirect_to '/nopage'
+            
         else
             @chart_data = Array.new
-
-            @chart_data.insert(0, ["A+", @query[0]])
-            @chart_data.insert(1, ["A0", @query[1]])
-            @chart_data.insert(2, ["A-", @query[2]])
-            @chart_data.insert(3, ["B+", @query[3]])
-            @chart_data.insert(4, ["B0", @query[4]])
-            @chart_data.insert(5, ["B-", @query[5]])
-            @chart_data.insert(6, ["C+", @query[6]])
-            @chart_data.insert(7, ["C0", @query[7]])
-            @chart_data.insert(8, ["C-", @query[8]])
-            @chart_data.insert(9, ["D+", @query[9]])
-            @chart_data.insert(10, ["D0", @query[10]])
-            @chart_data.insert(11, ["D-", @query[11]])
-            @chart_data.insert(12, ["F", @query[12]])
+            
+            @chart_data.insert(0, ["A+", @query[0], "A+%", @query[1]])
+            @chart_data.insert(1, ["A0", @query[2], "A0%", @query[3]])
+            @chart_data.insert(2, ["A-", @query[4], "A-%", @query[5]])
+            @chart_data.insert(3, ["B+", @query[6], "B+%", @query[7]])
+            @chart_data.insert(4, ["B0", @query[8], "B0%", @query[9]])
+            @chart_data.insert(5, ["B-", @query[10], "B-%", @query[11]])
+            @chart_data.insert(6, ["C+", @query[12], "C+%", @query[13]])
+            @chart_data.insert(7, ["C0", @query[14], "C0%", @query[15]])
+            @chart_data.insert(8, ["C-", @query[16], "C-%", @query[17]])
+            @chart_data.insert(9, ["D+", @query[18], "D+%", @query[19]])
+            @chart_data.insert(10, ["D0", @query[20], "D0%", @query[21]])
+            @chart_data.insert(11, ["D-", @query[22], "D-%", @query[23]])
+            @chart_data.insert(12, ["F", @query[24], "F%", @query[25]])
         end
     end
     def univ_add
