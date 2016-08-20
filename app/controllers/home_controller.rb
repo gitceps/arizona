@@ -288,10 +288,22 @@ class HomeController < ApplicationController
     def univlist
         @university_name = params[:search]
         @university_list = University.distinct.pluck('name');
+        if @university_name == "random"
+            @university_name = @university_list.sample
+        end
         @university_id = University.where('name = ?', @university_name).pluck('id')[0]
         
         @test = University.where('name = ?', @university_name).pluck('id');
         @test2 =  DistributionMajor.where('university_id = ?', @university_id).pluck('distinct aplus_students_2, azero_students_2, aminus_students_2, bplus_students_2, bzero_students_2, bminus_students_2, cplus_students_2, czero_students_2, cminus_students_2, dplus_students_2, dzero_students_2, dminus_students_2, f_students_2').first
+        
+        @aplus_top5 = DistributionMajor.joins(:university).distinct. order("aplus_ratio_1 DESC").limit(10).pluck("aplus_ratio_1, name")
+        
+        @aplus_bottom5 = DistributionMajor.joins(:university).distinct.order("aplus_ratio_1 ASC").limit(10).pluck("aplus_ratio_1, name")
+        
+        @f_top5 = DistributionMajor.joins(:university).distinct. order("f_ratio_1 DESC").limit(10).pluck("f_ratio_1, name")
+        
+        @f_bottom5 = DistributionMajor.joins(:university).distinct.order("f_ratio_1 ASC").limit(10).pluck("f_ratio_1, name")
+        
         
         @semester = params[:semester]
         @is_major = params[:is_major]

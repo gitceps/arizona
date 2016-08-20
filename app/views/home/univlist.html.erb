@@ -50,16 +50,34 @@
                           <option><%= name %></option>
                        <%end%>
                 </datalist>
-        <button type="button" class="btn_add btn-primary">비교 학교 추가하기</button>
+        <button type="button" class="btn_add btn-primary" style="display: inline;">비교 학교 추가하기</button>
+        <form action='/univ_list' method='GET'  style="display: inline;">
+            <button type="submit" class="btn_rand btn-primary">랜덤</button>
+            <input type="hidden" name="utf_8" value="✓" />
+        <input type="hidden" name="search" value="random" />
+        <input type="hidden" name="is_major" value="<%= @is_major %>" />
+        <input type="hidden" name="semester" value="<%= @semester %>" />
+        </form>
         </div>
         <div id="barchart" class="chart1">
         </div>
   </div>
-    <h1> <%= @test %></h1>
-    <h1> <%= @university_id %></h1>
-    <h1> <%= @chart_data %></h1>
+    <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최고의  플레이 </span></h1>
+    <h2> <%= @aplus_bottom5 %></h2>
+    <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최악의 플레이 </span></h1>
+    <h2> <%= @aplus_top5 %></h2>
+    
+    <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최고의 플레이 </span></h1>
+    <h2> <%= @f_bottom5 %></h2>
+    <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최악의 플레이 </span></h1>
+    <h2> <%= @f_top5 %></h2>
+    
+    <h1> ========DEBUG=======</h1>
+    <h3> <%= @test %></h3>
+    <h3> <%= @university_id %></h3>
+    <h3> <%= @chart_data %></h3>
     <div align="center">
-        <h1> <a href = "/search">홈으로 이동 </a></h1>
+        <h3> <a href = "/search">홈으로 이동 </a></h3>
     </div>
     
 </body>
