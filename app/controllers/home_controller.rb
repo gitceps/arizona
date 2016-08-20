@@ -189,6 +189,91 @@ class HomeController < ApplicationController
         #학과 업데이트 하러 ㄱㄱ
         redirect_to "/update_dept"
     end
+    def update_minor
+        start_row = 4
+        end_row = 505
+        xl = Roo::Spreadsheet.open('./university_minor.xlsx')
+        xl = Roo::Excelx.new("./university_minor.xlsx")
+#xl = Roo::Spreadsheet.open('./rails_temp_upload', extension: :xls)
+        xl.default_sheet = xl.sheets.first 
+
+        #iterator
+        start_row.upto(xl.last_row) do |row|
+            
+            minor = DistributionMinor.new
+            
+            minor.university_id = University.where('name = ?', xl.cell(row, 'F')).pluck('id')[0]
+            if minor.university_id == nil
+                university = University.new
+                univ.is_public = xl.cell(row, 'C')
+                univ.location = xl.cell(row, 'D')
+                univ.is_4_5 = xl.cell(row, 'I')     
+                univ.name = xl.cell(row, 'F')
+                univ.save
+                minor.university_id = university.id
+            end
+            
+            #1학기
+            minor.total_student_1 = xl.cell(row, 'H')
+            minor.aplus_students_1 = xl.cell(row, 'J')
+            minor.aplus_ratio_1 = xl.cell(row,'K')
+            minor.azero_students_1 = xl.cell(row, 'L')
+            minor.azero_ratio_1 = xl.cell(row,'M')
+            minor.aminus_students_1 = xl.cell(row, 'N')
+            minor.aminus_ratio_1 = xl.cell(row, 'O')
+            minor.bplus_students_1 = xl.cell(row, 'P')
+            minor.bplus_ratio_1 = xl.cell(row,'Q')
+            minor.bzero_students_1 = xl.cell(row, 'R')
+            minor.bzero_ratio_1 = xl.cell(row,'S')
+            minor.bminus_students_1 = xl.cell(row, 'T')
+            minor.bminus_ratio_1 = xl.cell(row, 'U')
+            minor.cplus_students_1 = xl.cell(row, 'V')
+            minor.cplus_ratio_1 = xl.cell(row,'W')
+            minor.czero_students_1 = xl.cell(row, 'X')
+            minor.czero_ratio_1 = xl.cell(row,'Y')
+            minor.cminus_students_1 = xl.cell(row, 'Z')
+            minor.cminus_ratio_1 = xl.cell(row, 'AA')
+            minor.dplus_students_1 = xl.cell(row, 'AB')
+            minor.dplus_ratio_1 = xl.cell(row,'AC')
+            minor.dzero_students_1 = xl.cell(row, 'AD')
+            minor.dzero_ratio_1 = xl.cell(row,'AE')
+            minor.dminus_students_1 = xl.cell(row, 'AF')
+            minor.dminus_ratio_1 = xl.cell(row, 'AG')
+            minor.f_students_1 = xl.cell(row, 'AH')
+            minor.f_ratio_1 = xl.cell(row, 'AI')
+
+            #2학기
+            minor.total_student_2 = xl.cell(row, 'H')
+            minor.aplus_students_2 = xl.cell(row, 'J')
+            minor.aplus_ratio_2 = xl.cell(row,'K')
+            minor.azero_students_2 = xl.cell(row, 'L')
+            minor.azero_ratio_2 = xl.cell(row,'M')
+            minor.aminus_students_2 = xl.cell(row, 'N')
+            minor.aminus_ratio_2 = xl.cell(row, 'O')
+            minor.bplus_students_2 = xl.cell(row, 'P')
+            minor.bplus_ratio_2 = xl.cell(row,'Q')
+            minor.bzero_students_2 = xl.cell(row, 'R')
+            minor.bzero_ratio_2 = xl.cell(row,'S')
+            minor.bminus_students_2 = xl.cell(row, 'T')
+            minor.bminus_ratio_2 = xl.cell(row, 'U')
+            minor.cplus_students_2 = xl.cell(row, 'V')
+            minor.cplus_ratio_2 = xl.cell(row,'W')
+            minor.czero_students_2 = xl.cell(row, 'X')
+            minor.czero_ratio_2 = xl.cell(row,'Y')
+            minor.cminus_students_2 = xl.cell(row, 'Z')
+            minor.cminus_ratio_2 = xl.cell(row, 'AA')
+            minor.dplus_students_2 = xl.cell(row, 'AB')
+            minor.dplus_ratio_2 = xl.cell(row,'AC')
+            minor.dzero_students_2 = xl.cell(row, 'AD')
+            minor.dzero_ratio_2 = xl.cell(row,'AE')
+            minor.dminus_students_2 = xl.cell(row, 'AF')
+            minor.dminus_ratio_2 = xl.cell(row, 'AG')
+            minor.f_students_2 = xl.cell(row, 'AH')
+            minor.f_ratio_2 = xl.cell(row, 'AI')
+            minor.save
+        end
+        redirect_to "/search"
+    end
     
     def univlist
         @university_name = params[:search]
