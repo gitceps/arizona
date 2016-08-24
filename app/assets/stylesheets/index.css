@@ -64,7 +64,6 @@
   background: #fff;
 }  
 
- @font-face {
-        font-family: "typo_dodamm";
-        src: url('/Typo_DodamM.ttf') format('truetype');
+.sumbitbutton {
+  color: black;
 }

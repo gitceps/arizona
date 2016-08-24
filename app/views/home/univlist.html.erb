@@ -1,41 +1,111 @@
 <head>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
     <%= javascript_include_tag "http://www.google.com/jsapi?ext.js" %>
     <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
-    
+    <link rel="stylesheet" href="../../assets/stylesheets/univlist.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 </head>
 <body>
+<div class="grid-container">
+  <div class="grid-element header">
+      <form action="/univ_list" method="get">
+          <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button type="submit" name="is_major" value="true" class="w3-btn">전공</button>
+          </div>
+            <div class="btn-group" role="group">
+          <button type="submit" name="is_major" value="false" class="w3-btn">교양</button>
+            </div>
+          </div>
     
-<h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (1학기)</h1>    
+      <input type="hidden" name="utf_8" value="✓" />
+      <input type="hidden" name="search" value="<%= @university_name %>" />
+      <input type="hidden" name="semester" value="<%= @semester %>" />
+      </form>
+  </div>
+  <div class="grid-element sidebar">
+          <span style = "font-size: 20pt; font-family: BMDOHYEON; src: /assets/fonts/BMDOHYEON.ttf;"><%= @university_name %></br>
+          학점 분포 현황<br>
+          <span style = "font-size: 15pt; color: #808080">(<%= @semester_string %>학기 - <%= @major_string %>)
+          </span>
+      <nav aria-label="...">
+        <ul class="pager">
+            <form id="semesterForm1" action="/univ_list" method="get" style="display: inline;">
+                <li><a href="#" onclick="document.getElementById('semesterForm1').submit();">1학기</a></li>
+                <input type="hidden" name="utf_8" value="✓" />
+                <input type="hidden" name="search" value="<%= @university_name %>" />
+                <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                <input type="hidden" name="semester" value="spring" />
+            </form>
+            <form id="semesterForm2" action="/univ_list" method="get" style="display: inline;">
+                <li><a href="#" onclick="document.getElementById('semesterForm2').submit();">2학기</a></li>
+                <input type="hidden" name="utf_8" value="✓" />
+                <input type="hidden" name="search" value="<%= @university_name %>" />
+                <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                <input type="hidden" name="semester" value="fall" />
+            </form>
+        </ul>
+      </nav>
+  </div>
+  <div class="grid-element main">
+      <div align="center" style="padding:30px;">
+        <input class=" dropdown-input" id="target" name="univ_name" list="mylist"/>
+            <datalist id="mylist">
+            <% @university_list.each do |name| %>
+            <option><%= name %></option>
+            <%end%>
+            </datalist>
+            <button type="button" class="btn_add btn-primary" style="display: inline;">비교 학교 추가하기</button>
+        <form action='/univ_list' method='GET'  style="display: inline;">
+            <button type="submit" class="btn_rand btn-primary">랜덤</button>
+            <input type="hidden" name="utf_8" value="✓" />
+            <input type="hidden" name="search" value="random" />
+            <input type="hidden" name="is_major" value="<%= @is_major %>" />
+            <input type="hidden" name="semester" value="<%= @semester %>" />
+        </form>
+      </div>
+      <div id="barchart" class="chart1"></div>
+  </div>
+  <div class="grid-element extra">
+    <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최고의  플레이 </span></h1>
+    <h2> <%= @aplus_bottom5 %></h2>
+    <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최악의 플레이 </span></h1>
+    <h2> <%= @aplus_top5 %></h2>
     
-<!--<div id="chart_div"></div>-->
-<div id="barchart" style="width: 1500px; height: 300px;"></div>
-<h1 align = "center"><%= @university_name %> 의 학점 분포 현황 (2학기) : 구현 예정</h1>    
-<h2><a href ="/input"> 내 성적 확인하러가기</a></h2></br>
-<div id="piechart" style="width: 900px; height: 500px;"></div>
+    <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최고의 플레이 </span></h1>
+    <h2> <%= @f_bottom5 %></h2>
+    <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최악의 플레이 </span></h1>
+    <h2> <%= @f_top5 %></h2>
     
-    <h2>
-        <%= @query %><br>
-        <%= @chart_data %><br>
-    </h2>
-
+    <h1> ========DEBUG=======</h1>
+    <h3> <%= @test %></h3>
+    <h3> <%= @university_id %></h3>
+    <h3> <%= @chart_data %></h3>
+    <div align="center">
+        <h3> <a href = "/search">홈으로 이동 </a></h3>
+    </div>
+    
+  </div>
+  <div class="grid-element footer">
+  </div>  
+</div>
 </body>
 
+
 <%= javascript_tag do%>
-google.charts.load('current', {'packages':['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawPieChart);
-google.charts.setOnLoadCallback(drawBarChart);
-function drawBarChart() {
-
-   var arr = [['학교', 'A+', 'A0', 'A-', 'B+', 'B0', 'B-', 'C+', 'C0', 'C-', 'D+', 'D0', 'D-', 'F']];
+var schoolList = new Array();
+schoolList.push('<%= @university_name %>')
+var arr = [['학교', 'A+', {role: 'annotation'}, 'A0', {role: 'annotation'}, 'A-', {role: 'annotation'}, 'B+', {role: 'annotation'}, 'B0', {role: 'annotation'}, 'B-', {role: 'annotation'}, 'C+', {role: 'annotation'}, 'C0', {role: 'annotation'}, 'C-', {role: 'annotation'}, 'D+', {role: 'annotation'}, 'D0', {role: 'annotation'}, 'D-', {role: 'annotation'}, 'F', {role: 'annotation'}]];
+var relativeHeight = 70;
     
-   var arr2 = ['ss'];
-   arr2 = arr2.concat(<%= raw @query.as_json%>);
-   arr.push(arr2);
-
-   var data = google.visualization.arrayToDataTable(arr);
-
-   var options = {
+    
+var options = {
+    
+        width:"80%",
+        height:300,
         bar: {groupHeight : "0%"},
         colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863'],
         hAxis: {
@@ -44,34 +114,101 @@ function drawBarChart() {
             ticks: [],
         },
         vAxis: {
-            textPosition : 'none',
+            //textPosition : 'none',
             baselineColor: 'none',
             ticks: [],
         },
-      legend: {
-            position: 'top'
+    
+        legend: {
+            position: 'top',
+            alignment: 'center',
+            maxLines: 5
         },
-      isStacked:true,
-   }; 
-    var options_fullStacked = {
-          isStacked: 'percent',
-    };
+  
+        annotations: {
+          style: 'point',
+          highContrast: 'false',
+          textStyle: {
+            color: '#000000',
+            bold: 'false',
+            auraColor: '#abcdef'
+          }
+        },
+  
+        isStacked:'percent'
+	 };
+
+google.charts.load('current', {'packages':['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBarChart);
+
+function drawBarChart() {
+
+   var arr2 = ['<%= @university_name %>'];
+   arr2 = arr2.concat(<%= raw @query.as_json%>);
+   console.log(arr2);
+   arr.push(arr2);
+
+   var data = google.visualization.arrayToDataTable(arr);
+
 
    // Instantiate and draw the chart.
    var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+   options.height = data.getNumberOfRows() * relativeHeight + 30;
    chart.draw(data, options);
-  }
-function drawPieChart() {
-        var arr = [['학점', '인원']];
-        arr = arr.concat(<%= raw @chart_data.as_json %>);
-        var data = google.visualization.arrayToDataTable(arr);
+}
 
-        var options = {
-        	colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863']
-        };
+$(".btn_add").click(function(){
+if(schoolList.includes($('#target').val(), 0)){
+    alert('이미 추가한 대학교입니다');
+    return false;
+} else {
+    schoolList.push($('#target').val());
+    console.log(schoolList);
+}
+$.ajax({
+    method: "GET", 
+    url: "/univ_add",
+    data: {
+        search: $('#target').val(),
+        semester: '<%= @semester %>',
+        is_major: '<%= @is_major %>'
+    },
+    success: function(data){
+        console.log(data);
+        //alert(data);
+        //alert(data[0]);
+        //alert(data[1]);
+        var arr2 = [data[0]];
+        arr2 = arr2.concat(data[1]);
+        console.log(data[0]);
+        console.log(data[1]);
+        arr.push(arr2);
+        console.log(arr);
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+   var data = google.visualization.arrayToDataTable(arr);
 
-        chart.draw(data, options);
-      }
+   // Instantiate and draw the chart.
+   var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+   options.height = data.getNumberOfRows() * relativeHeight + 30;
+   //alert(options.height);
+   chart.draw(data, options);
+    },
+    error: function() {
+        alert('검색어가 유효하지 않습니다');
+    }
+    }).done(function() {
+        //alert('완료');
+    });
+});
+
+
+$(window).resize(function(){
+var data = google.visualization.arrayToDataTable(arr);
+
+   // Instantiate and draw the chart.
+   var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+   options.height = data.getNumberOfRows() * relativeHeight + 30;
+   chart.draw(data, options);
+});
+
 <% end %>

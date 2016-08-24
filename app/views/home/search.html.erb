@@ -15,35 +15,25 @@
   <div class="grid-element header">
   </div>
   <div class="grid-element sidebar">
-    <p>전국 대학 학점 분포</p>
+      <p> <span style = "font-size: 30pt; font-family: BMDOHYEON; src: /assets/fonts/BMDOHYEON.ttf;">전국 대학<br>학점 분포<br><span style = "display: block; margin-top: -2px; font-size: 15pt; word-spacing: 22px;" >알 아 보 기</span></span></p>
   </div>
   <div class="grid-element main">
-    <form onsubmit="submitFn(this, event);" id="search-form" action="/univ_list" accept-charset="UTF-8" method="get">
-        <div class="search-wrapper">
-            <div class="input-holder">
-              <input name="utf8" type="hidden" value="✓">
-                <input type="text" name="search" id="search" class="search-input" placeholder="대학교 입력" list="mylist"/>
-                 <datalist id="mylist">
+    <form id="search-form" action="/univ_list" accept-charset="UTF-8" method="get">
+        <input name="utf8" type="hidden" value="✓">
+            <input type="text" name="search" id="search" class="awesomplete" placeholder="대학교 입력" list="mylist"/>
+                <datalist id="mylist">
                    <% @university_name.each do |name| %>
-                   <option><%= name %>
-                   </option>
-                   <%end%>
+                <option><%= name %></option><%end%>
                  </datalist>
-              
-              <button class="search-icon" onclick="searchToggle(this, event);" value="Search">
-              <span></span>
-              </button>
-            </div>
-              <span class="close" onclick="searchToggle(this, event);"></span>
-              <div class="result-container"></div>
-        </div>
      </form>
   </div>
   <div class="grid-element extra">
-      <a href ='/input'><font size="3px"> 내 성적 확인하러 가기</font></a>
+      <p style="color:#404040; font-size: 15px">전국 250여 대학교 성적평가 분포 현황<br>
+      <span style="font-size: 10px; color: #808080;">자료제공:대학정보공시센터 | Directed by SAMNAMU</span></p>
+<!--      <a href ='/input'><font size="3px"> 내 성적 확인하러 가기</font></a>-->
   </div>
-  <div class="grid-element footer"></div>
-</div>    
+  <div class="grid-element footer"></div>    
+
 </body>
 </html>
     
