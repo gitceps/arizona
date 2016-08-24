@@ -9,3 +9,61 @@
     width: 450px;
     height: 30px;
 }
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 0.25fr 10px 0.75fr;
+  grid-template-rows: auto 20px auto 20px auto 20px auto;
+}
+
+.grid-element {
+  background-color: #444;
+  color: #000000;
+  padding: 20px;
+  font-size: 2em;
+}
+.header {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background: #fff;
+}
+
+.sidebar {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 6;
+  background: #fff;
+}
+
+.main {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  background: #fff;
+  height:200px;
+}
+
+.extra {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  background: #fff;
+}
+
+.footer {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  background: #fff;
+}  
+
+.sumbitbutton {
+  color: black;
+}

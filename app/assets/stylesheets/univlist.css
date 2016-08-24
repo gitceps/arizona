@@ -2,6 +2,10 @@
 $pad: 20px;
 
 
+.twoline {
+    text-align: left;
+}
+
 #barchart {
   width: 100%;
 }
