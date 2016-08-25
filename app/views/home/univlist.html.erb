@@ -8,7 +8,12 @@
   <title>Your page title here :)</title>
   <meta name="description" content="">
   <meta name="author" content="">
-
+    
+  <!-- js   -->
+    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
+    <%= javascript_include_tag "http://www.google.com/jsapi?ext.js" %>
+    <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+    
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,6 +26,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="../../assets/stylesheets/normalize.css">
   <link rel="stylesheet" href="../../assets/stylesheets/skeleton.css">
+  <link rel="stylesheet" href="../../assets/stylesheets/univlist.css" />
 
 </head>
 <body>
@@ -67,9 +73,9 @@
         <div>
             <div class="row">
                 <div class="tweleve columns">
-                    <input type="text" name="search" id="search" class="awesomplete" placeholder="대학교 입력" list="mylist"/>
+                    <input type="text" name="univ_name" id="target" class="awesomplete" placeholder="대학교 입력" list="mylist"/>
                     <datalist id="mylist">
-                       <% @university_name.each do |name| %>
+                       <% @university_list.each do |name| %>
                     <option><%= name %></option>
                     <%end%>
                     </datalist>
