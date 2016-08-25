@@ -1,28 +1,38 @@
 html,body {height: 100%;}
-body {padding: 0px; margin:0px;}
+body {text-align: center;
+      padding: 0px; margin:0px;
+}
+
+@font-face {
+    font-family: myFirstFont;
+    src: url(sansation_light.woff);
+}
 
 .search-wrapper {
     position: absolute;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
+    /* 전체적인 위치 */
     transform: translate(-50%, -50%);
-    top:50%;
+    top:260px;
     left:50%;
 }
 .search-wrapper.active {}
 
 .search-wrapper .input-holder {
     overflow: hidden;
+    /* input 박스 크기 */
     height: 70px;
     background: rgba(255,255,255,0);
-    border-radius:6px;
+    border-radius:10px;
     position: relative;
     width:70px;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
+
+
 .search-wrapper.active .input-holder {
+    /* 실제 입력하는 곳 모습 */
     border-radius: 50px;
     width:450px;
     background: rgba(0,0,0,0.5);
@@ -31,7 +41,9 @@ body {padding: 0px; margin:0px;}
     transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
 }
 
+
 .search-wrapper .input-holder .search-input {
+    /*실제 입력하는 text input*/
     width:100%;
     height: 50px;
     padding:0px 70px 0 20px;
@@ -46,7 +58,7 @@ body {padding: 0px; margin:0px;}
     border:none;
     outline:none;
     font-family:"Open Sans", Arial, Verdana;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 20px;
     color:#FFF;
@@ -61,6 +73,7 @@ body {padding: 0px; margin:0px;}
     -moz-transition-delay: 0.3s;
     transition-delay: 0.3s;
 }
+
 .search-wrapper.active .input-holder .search-input {
     opacity: 1;
     -webkit-transform: translate(0, 10px);
@@ -69,6 +82,7 @@ body {padding: 0px; margin:0px;}
 }
 
 .search-wrapper .input-holder .search-icon {
+    /*돋보기 겉*/
     width:70px;
     height:70px;
     border:none;
@@ -85,12 +99,14 @@ body {padding: 0px; margin:0px;}
     transition: all 0.3s ease-in-out;
 }
 .search-wrapper.active .input-holder .search-icon {
+    /*돋보기 겉*/
     width: 50px;
     height:50px;
     margin: 10px;
     border-radius: 30px;
 }
 .search-wrapper .input-holder .search-icon span {
+    /*돋보기 겉*/
     width:22px;
     height:22px;
     display: inline-block;
@@ -105,6 +121,7 @@ body {padding: 0px; margin:0px;}
 
 }
 .search-wrapper.active .input-holder .search-icon span {
+    /*아무변화 없음*/
     -webkit-transform: rotate(-45deg);
     -moz-transform: rotate(-45deg);
     transform: rotate(-45deg);
@@ -114,23 +131,26 @@ body {padding: 0px; margin:0px;}
     content:'';
 }
 .search-wrapper .input-holder .search-icon span::before {
-    width: 4px;
-    height: 11px;
-    left: 9px;
-    top: 18px;
+    /*돋보기 막대기*/
+    width: 6px;
+    height: 15px;
+    left: 12px;
+    top: 16px;
     border-radius: 2px;
-    background: #974BE0;
+    background: #000000;
 }
 .search-wrapper .input-holder .search-icon span::after {
-    width: 14px;
-    height: 14px;
-    left: 0px;
-    top: 0px;
-    border-radius: 16px;
-    border: 4px solid #974BE0;
+    /*돋보기 원*/
+    width: 26px;
+    height: 26px;
+    left: 1px;
+    top: -9px;
+    border-radius: 22px;
+    border: 5px solid #000000;
 }
 
 .search-wrapper .close {
+    /* x 모양 */
     position: absolute;
     z-index: 1;
     top:24px;
@@ -187,7 +207,7 @@ body {padding: 0px; margin:0px;}
     font-family: "Open Sans", Arial, Verdana;
     font-size: 14px;
     display:none;
-    color:#B7B7B7;
+    color:#000000;
 }
 
 

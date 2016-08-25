@@ -9,10 +9,16 @@
 div.awesomplete {
 	display: inline-block;
 	position: relative;
+    
 }
 
 div.awesomplete > input {
 	display: block;
+    border-color: #000000;
+    border-width: 5px;
+    height: 50px;
+    padding:0px 70px 0 20px;
+    font-size: 18px;
 }
 
 div.awesomplete > ul {
@@ -30,6 +36,7 @@ div.awesomplete > ul {
 	border: 1px solid rgba(0,0,0,.3);
 	box-shadow: .05em .2em .6em rgba(0,0,0,.2);
 	text-shadow: none;
+    
 }
 
 div.awesomplete > ul[hidden],

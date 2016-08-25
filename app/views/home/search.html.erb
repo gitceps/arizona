@@ -6,48 +6,34 @@
     <link rel="stylesheet"  href="../../assets/stylesheets/search.css">
     <script src="../../assets/javascripts/awesomplete.js" async></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 </head>
 
 <body>
-    
-        <section class="container">
-                <form onsubmit="submitFn(this, event);" id="search-form" action="/univ_list" accept-charset="UTF-8" method="get">
-                    <div class="search-wrapper">
-                        <div class="input-holder">
-                            <input name="utf8" type="hidden" value="✓">
-                            <input type="text" name="search" id="search" class="search-input" placeholder="대학교 입력" list="mylist"/>
-                                <datalist id="mylist">
-                                   <% @university_name.each do |name| %>
-                                      <option><%= name %>
-                                      </option>
-                                   <%end%>
-                                </datalist>
-                            <button class="search-icon" onclick="searchToggle(this, event);" value="Search"><span></span></button>
-                        </div>
-                        <span class="close" onclick="searchToggle(this, event);"></span>
-                        <div class="result-container">
+<div class="grid-container">
+  <div class="grid-element header">
+  </div>
+  <div class="grid-element sidebar">
+      <p> <span style = "font-size: 30pt; font-family: BMDOHYEON; src: /assets/fonts/BMDOHYEON.ttf;">전국 대학<br>학점 분포<br><span style = "display: block; margin-top: -2px; font-size: 15pt; word-spacing: 22px;" >알 아 보 기</span></span></p>
+  </div>
+  <div class="grid-element main">
+    <form id="search-form" action="/univ_list" accept-charset="UTF-8" method="get">
+        <input name="utf8" type="hidden" value="✓">
+            <input type="text" name="search" id="search" class="awesomplete" placeholder="대학교 입력" list="mylist"/>
+                <datalist id="mylist">
+                   <% @university_name.each do |name| %>
+                <option><%= name %></option><%end%>
+                 </datalist>
+     </form>
+  </div>
+  <div class="grid-element extra">
+      <p style="color:#404040; font-size: 15px">전국 250여 대학교 성적평가 분포 현황<br>
+      <span style="font-size: 10px; color: #808080;">자료제공:대학정보공시센터 | Directed by SAMNAMU</span></p>
+<!--      <a href ='/input'><font size="3px"> 내 성적 확인하러 가기</font></a>-->
+  </div>
+  <div class="grid-element footer"></div>    
 
-                        </div>
-                    </div>
-                    <input type="hidden" name="is_major" value="true" />
-                    <input type="hidden" name="semester" value="spring" />
-                </form>
-        </section>
-        
-                    
-<div class="row">
-    <div>
-        <p class="text-center" style="margin-top:260px">
-            <span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">학점 인프라가 얼마나 심할까?</span>
-    </div>
-    
-    <div class="text-center" style="margin-top: 10px; margin-bottom: 30px">
-       <a href ='/input'><span style = "font-size: 30pt; color: black; font-family: koverwatch; src: /assets/koverwatch.ttf;">내 성적 확인하러 가기</span></a>
-    </div>
-<div>
-    
-
-    
 </body>
 </html>
     
