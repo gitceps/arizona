@@ -1,0 +1,6 @@
+@font-face{font-family:BMD; src:local('BMDOHYEON.ttf'),local('배달의민족 도현'),url(./font-BMDOHYEON-wallel.eot),url(./font-BMDOHYEON-wallel.eot?#iefix) format('embedded-opentype'),url(./font-BMDOHYEON-wallel.woff) format('woff')}
+
+@charset "utf-8";
+/*@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);*/
+
+@import url("./images/font-BMDOHYEON-wallel.css");

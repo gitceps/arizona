@@ -29,7 +29,7 @@
 <!--제목 container-->
            <div class="row">
               <div class="twelve columns"; style="text-align:center;">
-                  <p> <span style = "font-size: 30pt; font-family: BMDOHYEON; src: /assets/fonts/BMDOHYEON.ttf;">전국 대학 학점 인플레 비교<br><span style = "display: block; margin-top: -2px; font-size: 15pt; word-spacing: 22px;" >알 아 보 기</span></span></p>
+                  <p> <span style = "font-size: 30pt;">전국 대학 학점 인플레 비교<br><span style = "display: block; margin-top: -2px; font-size: 15pt; word-spacing: 22px;" >알 아 보 기</span></span></p>
               </div>
            </div>
     
@@ -95,7 +95,7 @@
 <!--ㅇㅇ대학교 분포현황-->
     <div class="row">
         <div class="tweleve columns">
-             <span style = "font-size: 20pt; font-family: BMDOHYEON; src: /assets/fonts/BMDOHYEON.ttf;"><%= @university_name %></br>
+             <span style = "font-size: 20pt;"><%= @university_name %></br>
              학점 분포 현황<br>
         </div>     
     </div>
@@ -108,8 +108,12 @@
             <p>설명</p>
         </div>
   </div>
+<<<<<<< HEAD
+<!--
+=======
 
 <!-- 주석 처리
+>>>>>>> ab12b1f862a96e49f725ad0366352b8af516df05
   <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최고의  플레이 </span></h1>
   <h2> <%= @aplus_bottom5 %></h2>
   <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최악의 플레이 </span></h1>
@@ -118,6 +122,8 @@
   <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최고의 플레이 </span></h1>
   <h2> <%= @f_bottom5 %></h2>
   <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최악의 플레이 </span></h1>
+-->
+<!--
   <h2> <%= @f_top5 %></h2>
 -->
       
@@ -141,7 +147,7 @@
 -->
   
    <!-- Swiper -->
-    <div id="layer_fixed" class="swiper-container">
+    <div id="layer_fixed" class="swiper-container twelve columns">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1위  <%=@aplus_top5_list[1][0]%>, A+ <%=@aplus_top5_list[0][0]%>% </div>
           <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2위  <%=@aplus_top5_list[1][1]%>, A+ <%=@aplus_top5_list[0][1]%>% </div>
@@ -175,6 +181,7 @@
 
     });
     </script>
+
   
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
