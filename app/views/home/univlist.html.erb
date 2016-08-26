@@ -95,8 +95,8 @@
 <!--ㅇㅇ대학교 분포현황-->
     <div class="row">
         <div class="tweleve columns">
-             <span style = "font-size: 20pt; font-family: BMDOHYEON; src: /assets/fonts/BMDOHYEON.ttf;"><%= @university_name %></br>
-             학점 분포 현황<br>
+             <span style = "font-size: 20pt; font-family: 'BMD'; src: /assets/BMDOHYEON.ttf;"><%= @university_name %></br>
+             학점 분포 현황</span></br>
         </div>     
     </div>
     <div class="row">
@@ -127,7 +127,7 @@
   </div>
   
    <!-- Swiper -->
-    <div id="layer_fixed" class="swiper-container">
+    <div id="layer_fixed" class="swiper-container twelve columns">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][0]%>, <%=@aplus_top5_list[0][0]%>% </div>
           <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][1]%>, <%=@aplus_top5_list[0][1]%>% </div>
