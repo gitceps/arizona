@@ -145,11 +145,11 @@
    <!-- Swiper -->
     <div id="layer_fixed" class="swiper-container twelve columns">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][0]%>, <%=@aplus_top5_list[0][0]%>% </div>
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][1]%>, <%=@aplus_top5_list[0][1]%>% </div>
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][2]%>, <%=@aplus_top5_list[0][2]%>% </div>
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][3]%>, <%=@aplus_top5_list[0][3]%>% </div>
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][4]%>, <%=@aplus_top5_list[0][4]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1위  <%=@aplus_top5_list[1][0]%>, A+ <%=@aplus_top5_list[0][0]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2위  <%=@aplus_top5_list[1][1]%>, A+ <%=@aplus_top5_list[0][1]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3위  <%=@aplus_top5_list[1][2]%>, A+ <%=@aplus_top5_list[0][2]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4위  <%=@aplus_top5_list[1][3]%>, A+ <%=@aplus_top5_list[0][3]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5위  <%=@aplus_top5_list[1][4]%>, A+ <%=@aplus_top5_list[0][4]%>% </div>
         </div>
     </div>
 
@@ -171,7 +171,9 @@
         speed:1000,
         autoResize:true,
         paginationClickable: true,
-        autoplayDisableOnInteraction:false
+        autoplayDisableOnInteraction:false,
+        slidesPerView:'auto',
+        loopedSlides:1
 
     });
     </script>
@@ -224,7 +226,7 @@ var options = {
           highContrast: 'false',
           textStyle: {
             fontName: 'koverwatch',
-            fontSize: 30,
+            fontSize: 20,
             color: '#000000',
             bold: false
           }
@@ -305,6 +307,13 @@ var data = google.visualization.arrayToDataTable(arr);
    var chart = new google.visualization.BarChart(document.getElementById('barchart'));
    options.height = data.getNumberOfRows() * relativeHeight + 30;
    chart.draw(data, options);
+    
+   if (window.addEventListener) {
+        window.addEventListener('resize', resizeHandler, false);
+    }
+    else if (window.attachEvent) {
+        window.attachEvent('onresize', resizeHandler);
+    }
 });
 
 <% end %>
