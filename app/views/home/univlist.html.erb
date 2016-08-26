@@ -108,6 +108,8 @@
             <p>설명</p>
         </div>
   </div>
+
+<!-- 주석 처리
   <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최고의  플레이 </span></h1>
   <h2> <%= @aplus_bottom5 %></h2>
   <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최악의 플레이 </span></h1>
@@ -117,7 +119,18 @@
   <h2> <%= @f_bottom5 %></h2>
   <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최악의 플레이 </span></h1>
   <h2> <%= @f_top5 %></h2>
+-->
+      
+  <!-- barchart -->
+  </div>
+    <div class="row">
+        <div class="tweleve columns">
+        <div id="barchart" class="chart1"></div>
+    </div>
+  </div>
+    
 
+<!-- 주석 처리
   <h1> ========DEBUG=======</h1>
   <h3> <%= @test %></h3>
   <h3> <%= @university_id %></h3>
@@ -125,6 +138,7 @@
   <div align="center">
       <h3> <a href = "/search">홈으로 이동 </a></h3>
   </div>
+-->
   
    <!-- Swiper -->
     <div id="layer_fixed" class="swiper-container">
@@ -137,12 +151,7 @@
         </div>
     </div>
 
-    </div>
-    <div class="row">
-        <div class="tweleve columns">
-            <div id="barchart" class="chart1"></div>
-        </div>
-    </div>
+    
 </div>
 
 </body>
@@ -187,7 +196,7 @@ var relativeHeight = 70;
     
     
 var options = {
-    
+        chartArea: {'width': '80%', 'height': '80%'}, 
         width:"80%",
         height:300,
         bar: {groupHeight : "0%"},
@@ -210,15 +219,17 @@ var options = {
         },
   
         annotations: {
-          textAlign: 'center',
+          textAlign: center,
           style: 'point',
           highContrast: 'false',
           textStyle: {
+            fontName: 'koverwatch',
+            fontSize: 30,
             color: '#000000',
-            bold: 'false',
-            auraColor: '#abcdef'
+            bold: false
           }
         },
+        
   
         isStacked:'percent'
 	 };
