@@ -306,7 +306,10 @@ class HomeController < ApplicationController
         
         @f_bottom5 = DistributionMajor.joins(:university).distinct.order("f_ratio_1 ASC").limit(10).pluck("f_ratio_1, name")
         
+        # 하단 배너 표시용
+        @aplus_top5_list = @aplus_top5.transpose()
         
+        # 하단 배너 표시 끝
         @semester = params[:semester]
         @is_major = params[:is_major]
         
