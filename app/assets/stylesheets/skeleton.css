@@ -59,6 +59,14 @@
   .columns:first-child {
     margin-left: 0; }
 
+  .top5 { margin-top:5px; }
+  .top7 { margin-top:7px; }
+  .top10 { margin-top:10px; }
+  .top15 { margin-top:15px; }
+  .top17 { margin-top:17px; }
+  .top20 { margin-top:20px; }
+  .top30 { margin-top:30px; }
+    
   .one.column,
   .one.columns                    { width: 4.66666666667%; }
   .two.columns                    { width: 13.3333333333%; }
@@ -125,7 +133,8 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #222; }
+  color: #222;
+}
 
 
 /* Typography
