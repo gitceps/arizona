@@ -1,33 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
-  <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8">
-  <title>Your page title here :)</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
-    
-  <!-- js   -->
+    <title>Your page title here :)</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- js -->
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
     <%= javascript_include_tag "http://www.google.com/jsapi?ext.js" %>
     <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
-    
-  <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <!-- css -->
+    <link rel="stylesheet" href="../../assets/stylesheets/normalize.css">
+    <link rel="stylesheet" href="../../assets/stylesheets/skeleton.css">
+    <link rel="stylesheet" href="../../assets/stylesheets/univlist.css" />
+    <link rel="stylesheet" href="../../assets/stylesheets/banner.css" />
+    <link rel="stylesheet" href="../../assets/stylesheets/swiper.min.css">
 
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="../../assets/stylesheets/normalize.css">
-  <link rel="stylesheet" href="../../assets/stylesheets/skeleton.css">
-  <link rel="stylesheet" href="../../assets/stylesheets/univlist.css" />
-
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 </head>
 <body>
   <div class="container">
@@ -113,6 +107,36 @@
         <div class="ten columns">
             <p>설명</p>
         </div>
+  </div>
+  <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최고의  플레이 </span></h1>
+  <h2> <%= @aplus_bottom5 %></h2>
+  <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최악의 플레이 </span></h1>
+  <h2> <%= @aplus_top5 %></h2>
+
+  <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최고의 플레이 </span></h1>
+  <h2> <%= @f_bottom5 %></h2>
+  <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최악의 플레이 </span></h1>
+  <h2> <%= @f_top5 %></h2>
+
+  <h1> ========DEBUG=======</h1>
+  <h3> <%= @test %></h3>
+  <h3> <%= @university_id %></h3>
+  <h3> <%= @chart_data %></h3>
+  <div align="center">
+      <h3> <a href = "/search">홈으로 이동 </a></h3>
+  </div>
+  
+   <!-- Swiper -->
+    <div id="layer_fixed" class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][0]%>, <%=@aplus_top5_list[0][0]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][1]%>, <%=@aplus_top5_list[0][1]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][2]%>, <%=@aplus_top5_list[0][2]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][3]%>, <%=@aplus_top5_list[0][3]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][4]%>, <%=@aplus_top5_list[0][4]%>% </div>
+        </div>
+    </div>
+
     </div>
     <div class="row">
         <div class="tweleve columns">
@@ -124,6 +148,25 @@
 </body>
 </html>
 
+    <!-- Swiper JS -->
+    <script src="../../assets/javascripts/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+    var Swiper = new Swiper('.swiper-container',{
+        pagination: '.pagination',
+        loop:true,
+        autoplay: 2000,
+        speed:1000,
+        autoResize:true,
+        paginationClickable: true,
+        autoplayDisableOnInteraction:false
+
+    });
+    </script>
+  
+  
+</body>
 
 <%= javascript_tag do%>
 var schoolList = new Array();
@@ -156,6 +199,7 @@ var options = {
         },
   
         annotations: {
+          textAlign: 'center',
           style: 'point',
           highContrast: 'false',
           textStyle: {
