@@ -27,10 +27,9 @@
   <div class="container">
     <div class="row">
 <!--제목 container-->
-       <div class="twelve columns">
            <div class="row">
               <div class="twelve columns"; style="text-align:center;">
-                  <p> <span style = "font-size: 30pt; font-family: BMDOHYEON; src: /assets/fonts/BMDOHYEON.ttf;">전국 대학 학점 분포<br><span style = "display: block; margin-top: -2px; font-size: 15pt; word-spacing: 22px;" >알 아 보 기</span></span></p>
+                  <p> <span style = "font-size: 30pt; font-family: BMDOHYEON; src: /assets/fonts/BMDOHYEON.ttf;">전국 대학 학점 인플레 비교<br><span style = "display: block; margin-top: -2px; font-size: 15pt; word-spacing: 22px;" >알 아 보 기</span></span></p>
               </div>
            </div>
     
@@ -65,7 +64,7 @@
                </div>
             </div>
         <div>
-            <div class="row">
+            <div class="row top7">
                 <div class="tweleve columns">
                     <input type="text" name="univ_name" id="target" class="awesomplete" placeholder="대학교 입력" list="mylist"/>
                     <datalist id="mylist">
@@ -75,12 +74,12 @@
                     </datalist>
                 </div>
             </div>
-            <div class="row">
+            <div class="row top20">
                 <div class="tweleve columns">
-                    <button type="button">비교 학교 추가하기</button>
+                    <button type="button" class="btn_add btn-primary">비교 학교 추가하기</button>
                 </div>
             </div>
-            <div class="row">
+            <div class="row top10">
                 <div class="tweleve columns">
                      <form action='/univ_list' method='GET'  style="display: inline;">
                         <button type="submit" class="btn_rand btn-primary">랜덤</button>
@@ -92,7 +91,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 <!--ㅇㅇ대학교 분포현황-->
     <div class="row">

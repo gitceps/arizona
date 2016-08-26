@@ -9,7 +9,6 @@
 div.awesomplete {
 	display: inline-block;
 	position: relative;
-    
 }
 
 div.awesomplete > input {
@@ -19,6 +18,7 @@ div.awesomplete > input {
     height: 50px;
     padding:0px 70px 0 20px;
     font-size: 18px;
+    background-color: transparent;
 }
 
 div.awesomplete > ul {
