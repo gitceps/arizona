@@ -29,7 +29,7 @@
 <!--제목 container-->
            <div class="row">
               <div class="twelve columns"; style="text-align:center;">
-                  <p> <span style = "font-size: 30pt; font-family: BMDOHYEON; src: /assets/fonts/BMDOHYEON.ttf;">전국 대학 학점 인플레 비교<br><span style = "display: block; margin-top: -2px; font-size: 15pt; word-spacing: 22px;" >알 아 보 기</span></span></p>
+                  <p> <span style = "font-size: 30pt;">전국 대학 학점 인플레 비교<br><span style = "display: block; margin-top: -2px; font-size: 15pt; word-spacing: 22px;" >알 아 보 기</span></span></p>
               </div>
            </div>
     
@@ -95,8 +95,8 @@
 <!--ㅇㅇ대학교 분포현황-->
     <div class="row">
         <div class="tweleve columns">
-             <span style = "font-size: 20pt; font-family: 'BMD'; src: /assets/BMDOHYEON.ttf;"><%= @university_name %></br>
-             학점 분포 현황</span></br>
+             <span style = "font-size: 20pt;"><%= @university_name %></br>
+             학점 분포 현황<br>
         </div>     
     </div>
     <div class="row">
@@ -118,6 +118,8 @@
   <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최고의 플레이 </span></h1>
   <h2> <%= @f_bottom5 %></h2>
   <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최악의 플레이 </span></h1>
+-->
+<!--
   <h2> <%= @f_top5 %></h2>
 -->
       
@@ -173,9 +175,8 @@
 
     });
     </script>
+
   
-  
-</body>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

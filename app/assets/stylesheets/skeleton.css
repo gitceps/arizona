@@ -1,3 +1,12 @@
+@charset "utf-8";
+
+@import url("./fonts/font-BMDOHYEON-wallel.css");
+
+@font-face {font-family:"BMD"; src:local('BMDOHYEON.ttf'),local('배달의민족 도현'),url('./fonts/font-BMDOHYEON-wallel.eot'),url('./fonts/font-BMDOHYEON-wallel.eot?#iefix') format('embedded-opentype'),url('./fonts/font-BMDOHYEON-wallel.woff') format('woff')}
+
+span { 
+  font-family: "BMD", sans-serif;
+}
 /*
 * Skeleton V2.0.4
 * Copyright 2014, Dave Gamache
@@ -132,9 +141,9 @@ body {
   font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
   line-height: 1.6;
   font-weight: 400;
-  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #222;
 }
+
 
 
 /* Typography
