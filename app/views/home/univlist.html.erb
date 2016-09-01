@@ -78,12 +78,15 @@
                 </div>
                 <div class="six columns" style="text-align: right;">
                     <div class="state">
+                    <p><span><%=@year%></span></p>
                     <span>기준년도</span>
                     </div>
                     <div class="state">
+                    <p><span><%=@totalGradePoint%></span></p>
                     <span>만점평점</span>
                     </div>
                     <div class="state">
+                    <p><span><%=@totalStudents%></span></p>
                     <span>성적인정<br>총학생수</span>
                     </div>
                     <div class="state">
@@ -217,6 +220,7 @@ var options = {
         },
   
         annotations: {
+          alwaysOutside: false,
           style: 'point',
           highContrast: 'false',
           textStyle: {
@@ -224,10 +228,10 @@ var options = {
             fontSize: 20,
             color: '#000000',
             bold: false
-          }
+          },
+          visibleInLegend:true
         },
         
-  
         isStacked:'percent'
 	 };
 

@@ -124,8 +124,10 @@ class HomeController < ApplicationController
                 major = DistributionMajor.new
                 if University.distinct.where('name = ?', xl.cell(row, 'F')).pluck('id')[0] == nil
                     univ = University.new
+                    univ.year = xl.cell(row,'A')
                     univ.is_public = xl.cell(row, 'C')
                     univ.location = xl.cell(row, 'D')
+                    univ.total_students = xl.cell(row, 'H')
                     univ.is_4_5 = xl.cell(row, 'I')     
                     univ.name = xl.cell(row, 'F')
                     univ.save
@@ -215,10 +217,14 @@ class HomeController < ApplicationController
                 minor = DistributionMinor.new
                 if University.distinct.where('name = ?', xl.cell(row, 'F')).pluck('id')[0] == nil
                     univ = University.new
+                    univ.year = xl.cell(row,'A')
                     univ.is_public = xl.cell(row, 'C')
                     univ.location = xl.cell(row, 'D')
                     univ.is_4_5 = xl.cell(row, 'I')     
                     univ.name = xl.cell(row, 'F')
+                    univ.aplus_number = xl.cell(row, 'K')
+                    univ.azero_number = xl.cell(row, 'M')
+                    univ.aminus_number = xl.cell(row, 'O')
                     univ.save
                     minor.university_id = univ.id
                 else
@@ -297,6 +303,20 @@ class HomeController < ApplicationController
         
         @test = University.where('name = ?', @university_name).pluck('id');
         @test2 =  DistributionMajor.where('university_id = ?', @university_id).pluck('distinct aplus_students_2, azero_students_2, aminus_students_2, bplus_students_2, bzero_students_2, bminus_students_2, cplus_students_2, czero_students_2, cminus_students_2, dplus_students_2, dzero_students_2, dminus_students_2, f_students_2').first
+        
+        # 기준년도
+        @year = University.distinct.pluck('year').join;
+        
+        # 만점평점
+        @totalGradePoint = University.where('name = ?', @university_name).pluck('is_4_5').first;
+        
+        # 성적인정 총학생수
+        @totalStudents = University.where('name = ?', @university_name).pluck('total_students').first;
+        
+        # A학점 비중
+
+#        @a_total_ratio = University.where('name = ?', @university_name).pluck('aplus_number').first + University.where('name = ?', @university_name).pluck('azero_number').first + University.where('name = ?', @university_name).pluck('aminus_number').first;
+
         
         @aplus_top5 = DistributionMajor.joins(:university).distinct. order("aplus_ratio_1 DESC").limit(10).pluck("aplus_ratio_1, name")
         
@@ -430,5 +450,5 @@ class HomeController < ApplicationController
     def nopage
     
     end
-
+    end
 end
