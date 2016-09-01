@@ -91,10 +91,12 @@ $("#univ_name").focusout(function(){
         url: "/index_dept",
         data: { univ_name: $(this).val()},
         success: function(data) {
-            alert('success');
+            //alert('success');
             console.log(data);
-            //$("#selectNumber").val(data);
-            set_dropdown_item(data);
+            if(data.length == 0)
+                set_dropdown_item(["학과 선택"]);
+            else
+                set_dropdown_item(data);    
             
         }, error: function() {
             alert('error');
