@@ -24,30 +24,23 @@
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <div class="container">
-    <div class="row">
+ 
 <!--제목 container-->
-           <div class="row">
-              <div class="twelve columns"; style="text-align:center;">
-                  <p> <span style = "font-size: 30pt;">전국 대학 학점 인플레 비교<br><span style = "display: block; margin-top: -2px; font-size: 15pt; word-spacing: 22px;" >알 아 보 기</span></span></p>
-              </div>
-           </div>
-    
-<!--학기 및 과목 선택 container -->
-<!--type 바꿔야함 -->
-           <div class="row">
-               <div class="six columns">
-                   <form action="/univ_list" method="get">
-                    <button type="submit" name="is_major" value="true">전공</button>
-                  <button type="submit" name="is_major" value="false">교양</button>
-              <input type="hidden" name="utf_8" value="✓" />
-              <input type="hidden" name="search" value="<%= @university_name %>" />
-              <input type="hidden" name="semester" value="<%= @semester %>" />
-                    </form>
-               </div>
+    <header class="header">
+       <div class="container">
+        <div class="row">
+            <div class="six columns">
+            </div>
+            <div class="six columns">
 
-               <div class="six columns">
-                   <form id="semesterForm1" action="/univ_list" method="get">
+                <form action="/univ_list" method="get">
+                  <button type="submit" name="is_major" value="true">전공</button>
+                  <button type="submit" name="is_major" value="false">교양</button>
+                  <input type="hidden" name="utf_8" value="✓" />
+                  <input type="hidden" name="search" value="<%= @university_name %>" />
+                  <input type="hidden" name="semester" value="<%= @semester %>" />
+                </form>
+                 <form id="semesterForm1" action="/univ_list" method="get">
                         <a href="#" onclick="document.getElementById('semesterForm1').submit();">1학기</a>
                         <input type="hidden" name="utf_8" value="✓" />
                         <input type="hidden" name="search" value="<%= @university_name %>" />
@@ -61,74 +54,71 @@
                         <input type="hidden" name="is_major" value="<%= @is_major %>" />
                         <input type="hidden" name="semester" value="fall" />
                     </form>
-               </div>
+
             </div>
-        <div>
-            <div class="row top7">
-                <div class="tweleve columns">
-                    <input type="text" name="univ_name" id="target" class="awesomplete" placeholder="대학교 입력" list="mylist"/>
-                    <datalist id="mylist">
-                       <% @university_list.each do |name| %>
-                    <option><%= name %></option>
-                    <%end%>
-                    </datalist>
-                </div>
-            </div>
-            <div class="row top20">
-                <div class="tweleve columns">
-                    <button type="button" class="btn_add btn-primary">비교 학교 추가하기</button>
-                </div>
-            </div>
-            <div class="row top10">
-                <div class="tweleve columns">
-                     <form action='/univ_list' method='GET'  style="display: inline;">
-                        <button type="submit" class="btn_rand btn-primary">랜덤</button>
+        </div>
+       </div>
+    </header>
+    <main>
+        <div class="hbg"></div>
+        <div class="container">
+            <div class="row">
+                <div class="six columns">
+                <span style = "font-size: 20pt;"><span style = "color:orange;"><%= @university_name %></span></br>
+                학점 분포 현황     
+                <span style = "font-size: 15pt; color: #808080">(<%= @semester_string %>학기 - <%= @major_string %>)
+                </span>
+                <form action='/univ_list' method='GET'  style="display: inline;">
+                        <button type="submit" class="btn_rand randombt">랜덤 학교</button>
                         <input type="hidden" name="utf_8" value="✓" />
                         <input type="hidden" name="search" value="random" />
                         <input type="hidden" name="is_major" value="<%= @is_major %>" />
                         <input type="hidden" name="semester" value="<%= @semester %>" />
-                     </form>
+                </form>
+                </div>
+                <div class="six columns" style="text-align: right;">
+                    <div class="state">
+                    <span>기준년도</span>
+                    </div>
+                    <div class="state">
+                    <span>만점평점</span>
+                    </div>
+                    <div class="state">
+                    <span>성적인정<br>총학생수</span>
+                    </div>
+                    <div class="state">
+                    <span>A학점비중</span>
+                    </div>
                 </div>
             </div>
         </div>
-</div>
+    </main>
+    <div class="nav">
+        <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <input type="text" name="univ_name" id="target" class="at awesomplete" placeholder="대학교 추가 입력" list="mylist"/>
+                    <datalist id="mylist">
+                    <% @university_list.each do |name| %>
+                    <option><%= name %></option>
+                    <%end%>
+                    </datalist>
+                    <button type="button" class="btn_add btadd">비교 학교 추가하기</button>
+            </div>
+        </div>
+        </div>
+    </div>
+<!--학기 및 과목 선택 container -->
+<!--type 바꿔야함 -->
 <!--ㅇㅇ대학교 분포현황-->
     <div class="row">
-        <div class="tweleve columns">
-             <span style = "font-size: 20pt;"><%= @university_name %></br>
-             학점 분포 현황<br>
-        </div>     
-    </div>
-    <div class="row">
-        <div class="two columns">
-            <span style = "font-size: 15pt; color: #808080">(<%= @semester_string %>학기 - <%= @major_string %>)
-             </span>
-        </div>
         <div class="ten columns">
             <p>설명</p>
         </div>
   </div>
-<<<<<<< HEAD
-<!--
-=======
 
-<!-- 주석 처리
->>>>>>> ab12b1f862a96e49f725ad0366352b8af516df05
-  <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최고의  플레이 </span></h1>
-  <h2> <%= @aplus_bottom5 %></h2>
-  <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최악의 플레이 </span></h1>
-  <h2> <%= @aplus_top5 %></h2>
-
-  <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최고의 플레이 </span></h1>
-  <h2> <%= @f_bottom5 %></h2>
-  <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최악의 플레이 </span></h1>
--->
-<!--
-  <h2> <%= @f_top5 %></h2>
--->
-      
   <!-- barchart -->
-  </div>
+</div>
     <div class="row">
         <div class="tweleve columns">
         <div id="barchart" class="chart1"></div>
@@ -149,11 +139,12 @@
    <!-- Swiper -->
     <div id="layer_fixed" class="swiper-container twelve columns">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1위  <%=@aplus_top5_list[1][0]%>, A+ <%=@aplus_top5_list[0][0]%>% </div>
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2위  <%=@aplus_top5_list[1][1]%>, A+ <%=@aplus_top5_list[0][1]%>% </div>
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3위  <%=@aplus_top5_list[1][2]%>, A+ <%=@aplus_top5_list[0][2]%>% </div>
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4위  <%=@aplus_top5_list[1][3]%>, A+ <%=@aplus_top5_list[0][3]%>% </div>
-          <div class="swiper-slide"><span style="color:orange">최고의 플레이</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5위  <%=@aplus_top5_list[1][4]%>, A+ <%=@aplus_top5_list[0][4]%>% </div>
+
+          <div class="swiper-slide"><span style="color:orange">A학점 최고의 대학교</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][0]%>, <%=@aplus_top5_list[0][0]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">A학점 최고의 대학교</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][1]%>, <%=@aplus_top5_list[0][1]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">A학점 최고의 대학교</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][2]%>, <%=@aplus_top5_list[0][2]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">A학점 최고의 대학교</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][3]%>, <%=@aplus_top5_list[0][3]%>% </div>
+          <div class="swiper-slide"><span style="color:orange">A학점 최고의 대학교</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=@aplus_top5_list[1][4]%>, <%=@aplus_top5_list[0][4]%>% </div>
         </div>
     </div>
 
