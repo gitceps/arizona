@@ -75,7 +75,8 @@ main {
     width: 80px;
     text-align: center;
     margin: 4px 0 0 8px;
-    font-style: color: #777;
+    /font-style: 
+    color: #777;
 }
 
 .nav {
@@ -85,9 +86,9 @@ main {
     padding: 10px;
     
 }
-.
+
 /*
-* Skeleton V2.0.4
+* Skeleton V2.0.4ft
 * Copyright 2014, Dave Gamache
 * www.getskeleton.com
 * Free to use under the MIT license.
