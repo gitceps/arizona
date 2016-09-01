@@ -1,11 +1,6 @@
 
 $pad: 20px;
 
-.twoline {
-    margin-right: 40px;
-}
-
-
 .grid {
   background: white;
   margin: 0 0 $pad 0;
