@@ -167,12 +167,17 @@ ActiveRecord::Schema.define(version: 20160816045249) do
   end
 
   create_table "universities", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string   "year"
+    t.string   "total_students"
+    t.string   "name",           null: false
     t.string   "location"
     t.string   "is_4_5"
     t.string   "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "aplus_number"
+    t.integer  "azero_number"
+    t.integer  "aminus_number"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
 end
