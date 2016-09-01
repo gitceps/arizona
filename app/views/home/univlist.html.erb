@@ -68,6 +68,13 @@
                 학점 분포 현황     
                 <span style = "font-size: 15pt; color: #808080">(<%= @semester_string %>학기 - <%= @major_string %>)
                 </span>
+                <form action='/univ_list' method='GET'  style="display: inline;">
+                        <button type="submit" class="btn_rand randombt">랜덤 학교</button>
+                        <input type="hidden" name="utf_8" value="✓" />
+                        <input type="hidden" name="search" value="random" />
+                        <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                        <input type="hidden" name="semester" value="<%= @semester %>" />
+                </form>
                 </div>
                 <div class="six columns" style="text-align: right;">
                     <div class="state">
@@ -90,21 +97,13 @@
         <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <input type="text" name="univ_name" id="target" class="awesomplete" placeholder="대학교 추가 입력" list="mylist"/>
+                <input type="text" name="univ_name" id="target" class="awesomplete at" placeholder="대학교 추가 입력" list="mylist"/>
                     <datalist id="mylist">
                     <% @university_list.each do |name| %>
                     <option><%= name %></option>
                     <%end%>
                     </datalist>
                     <button type="button" class="btn_add btadd">비교 학교 추가하기</button>
-            
-                    <form action='/univ_list' method='GET'  style="display: inline;">
-                        <button type="submit" class="btn_rand btadd">랜덤</button>
-                        <input type="hidden" name="utf_8" value="✓" />
-                        <input type="hidden" name="search" value="random" />
-                        <input type="hidden" name="is_major" value="<%= @is_major %>" />
-                        <input type="hidden" name="semester" value="<%= @semester %>" />
-                     </form>
             </div>
         </div>
         </div>
@@ -117,22 +116,6 @@
             <p>설명</p>
         </div>
   </div>
-
-<!-- 주석 처리
->>>>>>> ab12b1f862a96e49f725ad0366352b8af516df05
-  <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최고의  플레이 </span></h1>
-  <h2> <%= @aplus_bottom5 %></h2>
-  <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">A+ 최악의 플레이 </span></h1>
-  <h2> <%= @aplus_top5 %></h2>
-
-  <h1> <span style = "font-size: 30pt; color: orange; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최고의 플레이 </span></h1>
-  <h2> <%= @f_bottom5 %></h2>
-  <h1><span style = "font-size: 30pt; color: red; font-family: koverwatch; src: /assets/koverwatch.ttf;">F 최악의 플레이 </span></h1>
--->
-<!--
-  <h2> <%= @f_top5 %></h2>
--->
-      
   <!-- barchart -->
 </div>
     <div class="row">

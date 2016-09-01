@@ -49,6 +49,7 @@ div.awesomplete > ul[hidden],
 div.awesomplete > ul:empty {
 	display: none;
 }
+/*
 
 @supports (transform: scale(0)) {
 	div.awesomplete > ul {
@@ -65,7 +66,7 @@ div.awesomplete > ul:empty {
 	}
 }
 
-	/* Pointer */
+	 Pointer 
 	div.awesomplete > ul:before {
 		content: "";
 		position: absolute;
@@ -108,4 +109,4 @@ div.awesomplete > ul:empty {
 		div.awesomplete li[aria-selected="true"] mark {
 			background: hsl(86, 100%, 21%);
 			color: inherit;
-		}
+		}*/
