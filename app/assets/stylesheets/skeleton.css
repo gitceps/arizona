@@ -297,7 +297,7 @@ input[type="button"]:hover {
     outline: none;
     box-shadow: 0 0 15px #B8860B;
 
-},
+}
 .button:focus,
 button:focus,
 input[type="submit"]:focus,
