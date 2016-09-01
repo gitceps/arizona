@@ -10,18 +10,31 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <label for="comment">학교 선택</label><br>
-            <input class=" dropdown-input" name="univ_name" list="mylist"/>
+            <input id="univ_name" class="dropdown-input" name="univ_name" list="mylist"/>
                 <datalist id="mylist">
 	               <% @university_name.each do |name| %>
 		              <option><%= name %></option>
 	               <%end%>
-            </datalist>
-            <input class=" dropdown-input" name="univ_name" list="mylist"/>
-                <datalist id="mylist">
-	               <% @university_name.each do |name| %>
+                </datalist>
+          <div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Dropdown
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
+            <input class="dropdown-input-dept" name="dept_name" list="deptlist"/>
+                <datalist id="deptlist">
+	               <% @department_name.each do |name| %>
 		              <option><%= name %></option>
 	               <%end%>
-            </datalist>
+                </datalist>
             <br>
             <!-- 학과, 학기 입력 -->
             <div class="form-group">
@@ -35,6 +48,8 @@
         <br>
         <div class="col-md-4"></div>
     </div>
+    <%= @univ_id %>
+    <%= @department_name %>
     
 <script>
 
@@ -42,22 +57,25 @@
 var comboplete = new Awesomplete('input.dropdown-input', {
 	minChars: 0,
 });
-
-Awesomplete.$('.dropdown-input').addEventListener("click", function() {
-    if (comboplete.ul.childNodes.length === 0) {
-		comboplete.minChars = 0;
-		comboplete.evaluate();
-	}
-	else if (comboplete.ul.hasAttribute('hidden')) {
-		comboplete.open();
-	}
-	else {
-		comboplete.close();
-	}
-}); 
-    
-//$('.awesomplete').change(function(){
-    //selection changed
+//
+//Awesomplete.$('.dropdown-input').addEventListener("change", function() {
+//        alert('dropdown changed : ' + this.val);
+////    alert('change');
+//    if (comboplete.ul.childNodes.length === 0) {
+//		comboplete.minChars = 0;
+//		comboplete.evaluate();
+//	}
+//	else if (comboplete.ul.hasAttribute('hidden')) {
+//		comboplete.open();
+//	}
+//	else {
+//		comboplete.close();
+//	}
+//}); 
+//    
+//$('.dropdown-input').change(function(){
+//    //selection changed
+//    //    alert('dropdown changed : ' + this.val);
 //    alert(this.value);//this will give the selected option's value
 //    alert($(this).find(':selected').text());//this will give the selected option's text
 //});
@@ -67,12 +85,24 @@ Awesomplete.$('.dropdown-input').addEventListener("click", function() {
 //    return false;
 //  }
 //}
-$.ajax({
-  method: "POST",
-  url: "/home/point",
-  data: { name: "John", location: "Boston" }
-}).done(function( msg ) {
-    alert( "Data Saved: " + msg );
-});
+$("#univ_name").focusout(function(){
+    console.log("focusout : " + $(this).val());
+    $.ajax({
+        method: "GET",
+        url: "/index_dept",
+        data: { univ_name: $(this).val()},
+        success: function(data) {
+            alert('success');
+            console.log(data);
+            $("#deptlist").val("123123");
+        }, error: function() {
+            alert('error');
+        }}).done(function( msg ) {
+        //alert( "done");
+        });    
+})
+    
+
+
 </script>
 </form>

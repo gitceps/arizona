@@ -10,9 +10,14 @@ class HomeController < ApplicationController
     def index
         @univ = University.all
         @university_name = University.distinct.pluck('name');
-        @department = Department.all
+        @department = Department.all.distinct.pluck('university_id')
         @ip = request.remote_ip
         @remote_ip = request.env['REMOTE_ADDR']
+        @univ_id = University.where('name = ?', '건국대학교').pluck('id')
+        
+        @department_name_test = Department.where('university_id = ?', @univ_id).pluck('department_name')
+        
+        @department_name = Array.new
         
     end
     
@@ -194,7 +199,6 @@ class HomeController < ApplicationController
             end
         end
         
-        #학과 업데이트 하러 ㄱㄱ
         redirect_to "/search"
     end
     def update_minor
@@ -422,7 +426,18 @@ class HomeController < ApplicationController
         banana[1] = @chart_data
         respond_to do |format|
           format.json { render json: banana.to_json}
+        end
     end
+    def index_dept
+        
+        @university_name = params[:univ_name]
+        @university_id = University.where('name = ?', @university_name).pluck('id').first
+        
+        @department = Department.where('university_id = ?', @university_id).pluck('department_name')
+        @test = [1,2,3,4];
+        respond_to do |format|
+            format.json{ render json: @department.to_json}
+        end
     end
     def show
         
