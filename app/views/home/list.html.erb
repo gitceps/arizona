@@ -4,29 +4,39 @@
     <link rel="stylesheet" href="../../assets/stylesheets/list.css" />
   </head>
   <body>
-    <h1 align="center">내 학교 <<%= @my_school %>></h1><br>
-    <h2 align="center">전국 대학생들의 학점 분포</h2>
+    <h2 align="center"><%= @my_school %> <%= @my_dept %> 학생들의 학점 분포</h2>
+      <div id="curve_chart_dept" style="width: 900px; height: 500px; margin: auto"></div>
+          <h2 align="center">내 점수는 <%= @my_point %><br>
+    전체 <%= @all_dept %>명 중 <%= @rank_dept %>등, 상위 <%= @percent_dept %>% 입니다.</h2><br>
+      
+      <h2 align="center"><%= @my_school %> 학생들의 학점 분포</h2>
+    <div id="curve_chart_school" style="width: 900px; height: 500px; margin: auto"></div>
+        <h2 align="center">내 점수는 <%= @my_point %><br>
+    전체 <%= @all_school %>명 중 <%= @rank_school %>등, 상위 <%= @percent_school %>% 입니다.</h2><br>
+    
+      <h2 align="center">전국 대학생들의 학점 분포</h2>
     <div id="curve_chart_all" style="width: 900px; height: 500px; margin: auto" ></div>
     <h2 align="center">내 점수는 <%= @my_point %><br>
     전체 <%= @all_all %>명 중 <%= @rank_all %>등, 상위 <%= @percent_all %>% 입니다.</h2><br>
         
-    <h2 align="center"><%= @my_school %> 학생들의 학점 분포</h2>
-    <div id="curve_chart_school" style="width: 900px; height: 500px; margin: auto"></div>
-        <h2 align="center">내 점수는 <%= @my_point %><br>
-    전체 <%= @all_school %>명 중 <%= @rank_school %>등, 상위 <%= @percent_school %>% 입니다.</h2><br>
     <a href="/input"><h2>돌아가기 </h2></a><br>
     <a href="#"><h2>페이스북 공유하기</h2></a>
   </body>
 </html>
+
+
+
 <%= javascript_tag do%>
 google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChartAll);
       google.charts.setOnLoadCallback(drawChartSchool);
+      google.charts.setOnLoadCallback(drawChartDept);
       //y축 tick 반올림 필요
       var arr = [['학점', '인원']];
       
       var arr_all = arr.concat(<%= @data_all %>);
       var arr_school = arr.concat(<%= @data_school %>);
+      var arr_dept = arr.concat(<%= @data_dept %>);
 
       function drawChartAll() {
         var data = google.visualization.arrayToDataTable(arr_all);
@@ -74,6 +84,31 @@ google.charts.load('current', {'packages':['corechart']});
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart_school'));
+
+        chart.draw(data, options);
+      }
+
+      function drawChartDept() {
+        var data = google.visualization.arrayToDataTable(arr_dept);
+
+        var options = {
+          curveType: 'function',
+          crosshair: { trigger: 'both',
+                       orientation: 'vertical',
+                       color : 'red'},
+          legend: { position: 'none' },
+          pointSize: 5,
+          vAxis: { title: '인원',
+                    textStyle : { italic: false},
+                    format: '0',
+                    baselineColor: 'none'},
+          hAxis: { title : '학점',
+                   ticks : <%= @h_axis_dept%>,
+                    textStyle: { italic: false},
+                 },
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart_dept'));
 
         chart.draw(data, options);
       }

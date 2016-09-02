@@ -24,9 +24,9 @@
 		              <option><%= name %></option>
 	               <%end%>
                 </datalist>
-            <select id="selectNumber">
-    <option>학과 선택</option>
-  </select>
+            <select id="selectNumber" name="dept">
+                <option>학과 선택</option>
+            </select>
             <br>
             <!-- 학과, 학기 입력 -->
             <div class="form-group">
@@ -40,6 +40,8 @@
         <br>
         <div class="col-md-4"></div>
     </div>
+</form>
+
 <script>
 
     
@@ -108,4 +110,3 @@ $("#univ_name").focusout(function(){
 
 
 </script>
-</form>

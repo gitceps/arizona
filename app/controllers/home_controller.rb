@@ -39,39 +39,69 @@ class HomeController < ApplicationController
     
     def point
         #TODO: 4.3 만점인 학교는 4.5로 환산 할 것
-        #그런 정책을 정해야 함
-        new_post = Post.new
-        new_post.name = params[:univ_name]
-        new_post.point = params[:point]
-        new_post.save
+        #user은 임시로 생성. facebook login api와 연동해야함
+        new_user = User.new
+
+        new_user.university_id = University.where('name = ?', params[:univ_name]).pluck('id')[0]
+        new_user.department_id = Department.where('university_id = ? and department_name = ?', new_user.university_id, params[:dept]).pluck('id')[0]
+        new_user.point = params[:point]
+        new_user.save
+    
+#        new_post = Post.new
+#        new_post.name = params[:univ_name]
+#        new_post.dept = params[:dept]
+#        new_post.point = params[:point]
+#        new_post.save
         
-        redirect_to "/list/" + new_post.id.to_s
+        redirect_to "/list/" + new_user.id.to_s
     end
     
     def list
-        @my_school = Post.where('id = ?', params[:id]).pluck('name')[0]
-        @my_point = Post.where('id = ?', params[:id]).pluck('point')[0]
+        @my_point = User.where('id = ?', params[:id]).pluck('point')[0]
         
-        @data_all = Post.group(:point).count
+        @my_school_id = User.where('id = ?', params[:id]).pluck('university_id')[0]
+        @my_dept_id = User.where('id = ?', params[:id]).pluck('department_id')[0]
+        
+        @my_school = University.where('id = ?', @my_school_id).pluck('name')[0]
+        @my_dept = Department.where('id = ?', @my_dept_id).pluck('department_name')[0]
+        
+        #전체 데이터 계산
+        @data_all = User.group(:point).count
         @data_all = @data_all.to_a
         @h_axis_all = Array.new
         @data_all.each do |temp|
             @h_axis_all.push(temp.first)
         end
-        @rank_all = Post.where("point > ?", @my_point).count + 1
-        @all_all = Post.count
+        
+        @rank_all = User.where("point > ?", @my_point).count + 1
+        @all_all = User.count
         @percent_all = (@rank_all.to_f / @all_all.to_f) * 100 
         
-        @data_school = Post.where('name = ?', @my_school).group(:point).count
+        #대학교별 데이터 계산
+        @data_school = User.where('university_id = ?', @my_school_id).group(:point).count
         @data_school = @data_school.to_a
         @h_axis_school = Array.new
         @data_school.each do |temp|
             @h_axis_school.push(temp.first)
         end
         
-        @rank_school = Post.where("point > ? and name = ?", @my_point, @my_school).count + 1
-        @all_school = Post.where('name = ?', @my_school).count
+        @rank_school = User.where("point > ? and university_id = ?", @my_point, @my_school).count + 1
+        @all_school = User.where('university_id = ?', @my_school_id).count
         @percent_school = (@rank_school.to_f / @all_school.to_f) * 100 
+        
+        #학과별 데이터 계산
+        @data_dept = User.where('university_id = ? and department_id = ?',
+        @my_school_id, @my_dept_id).group(:point).count
+        @data_dept = @data_dept.to_a
+        @h_axis_dept = Array.new
+        @data_dept.each do |temp|
+            @h_axis_dept.push(temp.first)
+        end
+        
+        @rank_dept = User.where('point > ? and university_id = ? and department_id = ?', @my_point, @my_school_id, @my_dept_id).count + 1
+        @all_dept = User.where('university_id = ? and department_id = ?', @my_school_id, @my_dept_id).count
+        @percent_dept = (@rank_dept.to_f / @all_dept.to_f) * 100
+        
     end
     def update_dept
     #각 학교 별 학과를 업데이트한다.
