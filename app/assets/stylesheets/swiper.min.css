@@ -79,17 +79,11 @@
 }
 
 .swiper-slide {
-
-  
-
-}
-
-
-.swiper-slide {
-  font-family: "koverwatch";
+  font-family: "BMD";
   color:aliceblue;
   text-align: center;
-  font-size: 16px;
+  padding: 10px 0 3px 0;
+  font-size: 20px;
   background: #000000;
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;

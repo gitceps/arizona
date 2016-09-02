@@ -36,7 +36,7 @@ span {
     margin: auto;
     width: 350px;
     padding: 10px;
-    text-align: left
+    text-align: left;
 }
 
 .header {
@@ -75,8 +75,6 @@ main {
     width: 80px;
     text-align: center;
     margin: 4px 0 0 8px;
-    /font-style: 
-    color: #777;
 }
 
 .nav {
@@ -292,7 +290,7 @@ input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover {
     background-color: #B8860B;
-    color: #333
+    color: #333;
     transition: all ease-in-out 0.15s;
     -webkit-transition: all ease-in-out 0.15s;
     -o-transition: all ease-in-out 0.15s;
@@ -300,7 +298,7 @@ input[type="button"]:hover {
     outline: none;
     box-shadow: 0 0 15px #B8860B;
 
-},
+}
 .button:focus,
 button:focus,
 input[type="submit"]:focus,
