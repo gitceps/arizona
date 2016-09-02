@@ -495,5 +495,5 @@ class HomeController < ApplicationController
     def nopage
     
     end
-    end
+    
 end
