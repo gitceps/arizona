@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Your page title here :)</title>
     <meta name="description" content="">
@@ -38,21 +38,26 @@
                   <input type="hidden" name="search" value="<%= @university_name %>" />
                   <input type="hidden" name="semester" value="<%= @semester %>" />
                 </form>
-                 <form id="semesterForm1" action="/univ_list" method="get">
-                        <a href="#" onclick="document.getElementById('semesterForm1').submit();">1학기</a>
-                        <input type="hidden" name="utf_8" value="✓" />
-                        <input type="hidden" name="search" value="<%= @university_name %>" />
-                        <input type="hidden" name="is_major" value="<%= @is_major %>" />
-                        <input type="hidden" name="semester" value="spring" />
-                   </form>
-                   <form id="semesterForm2" action="/univ_list" method="get">
-                        <a href="#" onclick="document.getElementById('semesterForm2').submit();">2학기</a>
-                        <input type="hidden" name="utf_8" value="✓" />
-                        <input type="hidden" name="search" value="<%= @university_name %>" />
-                        <input type="hidden" name="is_major" value="<%= @is_major %>" />
-                        <input type="hidden" name="semester" value="fall" />
-                    </form>
-
+                <ul>
+                    <li>
+                       <form id="semesterForm2" action="/univ_list" method="get">
+                            <a href="#" onclick="document.getElementById('semesterForm2').submit();">2학기</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                            <input type="hidden" name="semester" value="fall" />
+                        </form>
+                    </li>
+                    <li>
+                        <form id="semesterForm1" action="/univ_list" method="get">
+                            <a href="#" onclick="document.getElementById('semesterForm1').submit();">1학기</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                            <input type="hidden" name="semester" value="spring" />
+                        </form>
+                      </li>
+                   </ul>
             </div>
         </div>
        </div>
@@ -66,29 +71,24 @@
                 학점 분포 현황     
                 <span style = "font-size: 15pt; color: #808080">(<%= @semester_string %>학기 - <%= @major_string %>)
                 </span>
-                <form action='/univ_list' method='GET'  style="display: inline;">
-                        <button type="submit" class="btn_rand randombt">랜덤 학교</button>
-                        <input type="hidden" name="utf_8" value="✓" />
-                        <input type="hidden" name="search" value="random" />
-                        <input type="hidden" name="is_major" value="<%= @is_major %>" />
-                        <input type="hidden" name="semester" value="<%= @semester %>" />
-                </form>
                 </div>
                 <div class="six columns" style="text-align: right;">
+                    <div class="state-top">
                     <div class="state">
-                    <p><span><%=@year%></span></p>
-                    <span>기준년도</span>
+                        <p><span class="state-b"><%=@year%></span></p>
+                        <span class="state-a">기준년도</span>
                     </div>
                     <div class="state">
-                    <p><span><%=@totalGradePoint%></span></p>
-                    <span>만점평점</span>
+                        <p><span class="state-b"><%=@totalGradePoint%></span></p>
+                        <span class="state-a">만점평점</span>
                     </div>
                     <div class="state">
-                    <p><span><%=@totalStudents%></span></p>
-                    <span>성적인정<br>총학생수</span>
+                        <p><span class="state-b"><%=@totalStudents%></span></p>
+                        <span class="state-a">성적인정<br>총학생수</span>
                     </div>
                     <div class="state">
-                    <span>A학점비중</span>
+                        <span class="state-a">A학점비중</span>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -105,6 +105,13 @@
                     <%end%>
                     </datalist>
                     <button type="submit" class="btn_add">비교 하기</button>
+                <form action='/univ_list' method='GET'  style="display: inline;">
+                        <button type="submit" class="btn_rand randombt">랜덤 학교</button>
+                        <input type="hidden" name="utf_8" value="✓" />
+                        <input type="hidden" name="search" value="random" />
+                        <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                        <input type="hidden" name="semester" value="<%= @semester %>" />
+                </form>
             </div>
         </div>
         </div>
@@ -191,7 +198,7 @@
 var schoolList = new Array();
 schoolList.push('<%= @university_name %>')
 var arr = [['학교', 'A+', {role: 'annotation'}, 'A0', {role: 'annotation'}, 'A-', {role: 'annotation'}, 'B+', {role: 'annotation'}, 'B0', {role: 'annotation'}, 'B-', {role: 'annotation'}, 'C+', {role: 'annotation'}, 'C0', {role: 'annotation'}, 'C-', {role: 'annotation'}, 'D+', {role: 'annotation'}, 'D0', {role: 'annotation'}, 'D-', {role: 'annotation'}, 'F', {role: 'annotation'}]];
-var relativeHeight = 70;
+var relativeHeight = 40;
     
     
 var options = {
@@ -199,7 +206,8 @@ var options = {
         width:"80%",
         height:300,
         bar: {groupHeight : "0%"},
-        colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863'],
+        colors: ['272422','3B2724','612C21', '8B3220','BA3A20', 'DA4524','E05C29','E57732','EB8F3B','F2AB46','F6C851','FCE75C','FDED75'],
+                
         hAxis: {
             textPosition : 'none',
             baselineColor: 'none',
@@ -222,9 +230,9 @@ var options = {
           style: 'point',
           highContrast: 'false',
           textStyle: {
-            fontName: 'koverwatch',
-            fontSize: 20,
-            color: '#000000',
+            fontName: '',
+            fontSize: 10,
+            color: 'transparent',
             bold: false
           },
           visibleInLegend:true
