@@ -33,6 +33,9 @@ Rails.application.routes.draw do
     get '/univ_list' => 'home#univlist'
     #get '/univ_add/:univ_name' => 'home#univ_add'
     get '/univ_add' => 'home#univ_add'
+    
+    get '/index_dept' => 'home#index_dept'
+    
     get '/nopage' => 'home#nopage'
     get '/list/:id' => 'home#list', :constraints => {:id => /[^\/]+/}
     get '/search' => 'home#search'
