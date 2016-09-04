@@ -1,11 +1,13 @@
 source 'https://rubygems.org'
 
+gem 'omniauth'
+gem 'omniauth-digitalocean'
+gem 'omniauth-facebook', '~> 1.4.1'
 gem 'devise', '~> 4.2.0'
 gem "figaro"
 gem 'rails4-autocomplete'
 gem 'jquery-ui-rails'
 
-gem 'omniauth-facebook', '~> 1.4.1'
 gem 'roo', '~> 2.4.0'
 gem 'roo-xls'
 gem 'gon'

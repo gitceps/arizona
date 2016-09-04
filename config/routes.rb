@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-    get 'auth/:provider/callback', to: 'sessions#create'
-    get 'auth/failure', to: redirect('/')
-    get 'signout', to: 'sessions#destroy', as: 'signout'
-
-    resources :sessions, only: [:create, :destroy]
-    resource :home, only: [:show]
+    devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
+#    get 'auth/:provider/callback', to: 'sessions#create'
+#    get 'auth/failure', to: redirect('/')
+#    get 'signout', to: 'sessions#destroy', as: 'signout'
+#
+#    resources :sessions, only: [:create, :destroy]
+#    resource :home, only: [:show]
 
     #root to: "home#show"
   get 'sessions/create'
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   get 'home/show'
   get 'facebook/login'
   get 'home/nopage'
+  get '/mygrade' => 'home#mygrade'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
