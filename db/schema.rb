@@ -176,6 +176,9 @@ ActiveRecord::Schema.define(version: 20160902081145) do
     t.integer  "university_id"
     t.integer  "department_id"
     t.float    "point"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "provider"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end

@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'devise', '~> 4.2.0'
 gem "figaro"
 gem 'rails4-autocomplete'
 gem 'jquery-ui-rails'

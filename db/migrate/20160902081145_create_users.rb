@@ -5,6 +5,11 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :department_id
       t.float :point
         
+      #facebook login information
+      t.string :uid
+      t.string :name
+      t.string :provider
+        
       t.timestamps null: false
     end
   end
