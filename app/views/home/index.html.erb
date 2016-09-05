@@ -13,7 +13,7 @@
 </head>
 당신의 ip = <%= @remote_ip %><br>
 당신의 아이디 = <%= @email %><br>  
-<%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+<%= link_to('Logout', destroy_user_session_path, :method => :get) %>
 <form action="/point" method="POST">
     <div class="row">
         <div class="col-md-4"></div>

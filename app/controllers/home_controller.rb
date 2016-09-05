@@ -492,9 +492,9 @@ class HomeController < ApplicationController
     end
     def mygrade
         if user_signed_in?
-            redirect_to '/login'
-        else
             redirect_to '/input'
+        else
+            redirect_to '/login'
         end
     end
     def show
