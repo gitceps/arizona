@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 #    resource :home, only: [:show]
 
     #root to: "home#show"
+  get '/users/sign_out' => 'devise/sessions#destroy'
   get 'sessions/create'
   get 'sessions/destroy'
   get 'home/show'

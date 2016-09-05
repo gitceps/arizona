@@ -3,13 +3,16 @@
 <% end %>
 
 <% if user_signed_in? %>
+  <h1>Current User : <%= current_user.email %></h1>
   <li>
-  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
+  <%= link_to('Logout', destroy_user_session_path, :method => :get) %>        
   </li>
 <% else %>
+로그인 안됨!
 <h1>Current User : <%= @current %></h1>
+<h1>Current Session : <%= user_session %></h1>
   <li>
   <%= link_to('Login', new_user_session_path)  %>  
-  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+  <%= link_to('Logout', destroy_user_session_path, :method => :get) %>
   </li>
 <% end %>
