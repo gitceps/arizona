@@ -1,17 +1,20 @@
 Rails.application.routes.draw do
-    get 'auth/:provider/callback', to: 'sessions#create'
-    get 'auth/failure', to: redirect('/')
-    get 'signout', to: 'sessions#destroy', as: 'signout'
-
-    resources :sessions, only: [:create, :destroy]
-    resource :home, only: [:show]
+    devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
+#    get 'auth/:provider/callback', to: 'sessions#create'
+#    get 'auth/failure', to: redirect('/')
+#    get 'signout', to: 'sessions#destroy', as: 'signout'
+#
+#    resources :sessions, only: [:create, :destroy]
+#    resource :home, only: [:show]
 
     #root to: "home#show"
+  get '/users/sign_out' => 'devise/sessions#destroy'
   get 'sessions/create'
   get 'sessions/destroy'
   get 'home/show'
   get 'facebook/login'
   get 'home/nopage'
+  get '/mygrade' => 'home#mygrade'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -39,7 +42,7 @@ Rails.application.routes.draw do
     get '/nopage' => 'home#nopage'
     get '/list/:id' => 'home#list', :constraints => {:id => /[^\/]+/}
     get '/search' => 'home#search'
-    get '/facebook' => 'facebook#login'
+    get '/login' => 'facebook#login'
     
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

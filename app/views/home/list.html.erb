@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="../../assets/stylesheets/list.css" />
   </head>
   <body>
+    
+      
+
     <h2 align="center"><%= @my_school %> <%= @my_dept %> 학생들의 학점 분포</h2>
       <div id="curve_chart_dept" style="width: 900px; height: 500px; margin: auto"></div>
           <h2 align="center">내 점수는 <%= @my_point %><br>
@@ -23,8 +26,6 @@
     <a href="#"><h2>페이스북 공유하기</h2></a>
   </body>
 </html>
-
-
 
 <%= javascript_tag do%>
 google.charts.load('current', {'packages':['corechart']});

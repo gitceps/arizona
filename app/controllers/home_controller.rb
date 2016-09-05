@@ -8,6 +8,7 @@ class HomeController < ApplicationController
      autocomplete :University, :name, :full => true
 
     def index
+        @email = current_user.email
         @univ = University.all
         @university_name = University.distinct.pluck('name');
         @department = Department.all.distinct.pluck('university_id')
@@ -487,6 +488,13 @@ class HomeController < ApplicationController
         @test = [1,2,3,4];
         respond_to do |format|
             format.json{ render json: @department.to_json}
+        end
+    end
+    def mygrade
+        if user_signed_in?
+            redirect_to '/input'
+        else
+            redirect_to '/login'
         end
     end
     def show
