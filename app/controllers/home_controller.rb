@@ -58,8 +58,11 @@ class HomeController < ApplicationController
     
     def list
         #현재 유저와 파라미터 유저가 다르면 조회 불가처리
+        #if current_user.id != params[:id]
+        #    redirect_to '/'
+        #end
         @users = User.all
-        @test =  User.where('id = ?', params[:id]).pluck('university_id')[0];
+    
         @my_point = User.where('id = ?', params[:id]).pluck('point')[0]
         @my_school_id = User.where('id = ?', params[:id]).pluck('university_id')[0]
         @my_dept_id = User.where('id = ?', params[:id]).pluck('department_id')[0]
@@ -493,7 +496,14 @@ class HomeController < ApplicationController
     end
     def mygrade
         if user_signed_in?
-            redirect_to '/input'
+            user = User.where('email = ?', current_user.email.to_s)
+            
+            if user.pluck('university_id')[0] == nil
+                redirect_to '/input'
+            else
+                redirect_to '/list/' + current_user.id.to_s
+            end
+            
         else
             redirect_to '/login'
         end
