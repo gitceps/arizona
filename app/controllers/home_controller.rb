@@ -57,10 +57,16 @@ class HomeController < ApplicationController
     end
     
     def list
-        #현재 유저와 파라미터 유저가 다르면 조회 불가처리
-        if current_user.id.to_s != params[:id]
-            redirect_to '/'
+        #로그인 하지 않았거나, 현재 유저와 파라미터 유저가 다르면 조회 불가처리
+        if !user_signed_in?
+            redirect_to '/users/sign_in'
+        else 
+            if current_user.id.to_s != params[:id]
+                redirect_to '/'
+            end
         end
+        #정보 입력하지 않으면 입력하도록 리디렉션 해야함
+
         @users = User.all
     
         @my_point = User.where('id = ?', params[:id]).pluck('point')[0]
@@ -505,7 +511,7 @@ class HomeController < ApplicationController
             end
             
         else
-            redirect_to '/login'
+            redirect_to '/list/' + current_user.id.to_s
         end
     end
     def show

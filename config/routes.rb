@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     get '/nopage' => 'home#nopage'
     get '/list/:id' => 'home#list', :constraints => {:id => /[^\/]+/}
     get '/search' => 'home#search'
-    get '/login' => 'facebook#login'
+    #get '/login' => 'facebook#login'
     
   #routes for server management
     get '/delete/:email' => 'supervisor#delete_user', :constraints => {:email => /[^\/]+/}
