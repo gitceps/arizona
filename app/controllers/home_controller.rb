@@ -58,9 +58,9 @@ class HomeController < ApplicationController
     
     def list
         #현재 유저와 파라미터 유저가 다르면 조회 불가처리
-        #if current_user.id != params[:id]
-        #    redirect_to '/'
-        #end
+        if current_user.id.to_s != params[:id]
+            redirect_to '/'
+        end
         @users = User.all
     
         @my_point = User.where('id = ?', params[:id]).pluck('point')[0]
