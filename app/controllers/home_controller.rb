@@ -41,25 +41,26 @@ class HomeController < ApplicationController
     def point
         #TODO: 4.3 만점인 학교는 4.5로 환산 할 것
         #user은 임시로 생성. facebook login api와 연동해야함
-        new_user = User.new
-
-        new_user.university_id = University.where('name = ?', params[:univ_name]).pluck('id')[0]
-        new_user.department_id = Department.where('university_id = ? and department_name = ?', new_user.university_id, params[:dept]).pluck('id')[0]
-        new_user.point = params[:point]
-        new_user.save
-    
-#        new_post = Post.new
-#        new_post.name = params[:univ_name]
-#        new_post.dept = params[:dept]
-#        new_post.point = params[:point]
-#        new_post.save
+        user = User.where('email = ?', current_user.email.to_s)
+        if user.pluck('university_id')[0] == nil
+            univ_id = University.where('name = ?', params[:univ_name]).pluck('id')[0]
+            dept_id = Department.where('university_id = ? and department_name = ?', univ_id, params[:dept]).pluck('id')[0]
+            
+            User.where('email = ?', current_user.email.to_s).limit(1).update_all(:university_id => univ_id, :department_id => dept_id, :point => params[:point])
+#            new_user.university_id = University.where('name = ?', params[:univ_name]).pluck('id')[0]
+#            new_user.department_id = Department.where('university_id = ? and department_name = ?', new_user.university_id, params[:dept]).pluck('id')[0]
+#            new_user.point = params[:point]
+#            new_user.save 
+        end
         
-        redirect_to "/list/" + new_user.id.to_s
+        redirect_to "/list/" + current_user.id.to_s
     end
     
     def list
+        #현재 유저와 파라미터 유저가 다르면 조회 불가처리
+        @users = User.all
+        @test =  User.where('id = ?', params[:id]).pluck('university_id')[0];
         @my_point = User.where('id = ?', params[:id]).pluck('point')[0]
-        
         @my_school_id = User.where('id = ?', params[:id]).pluck('university_id')[0]
         @my_dept_id = User.where('id = ?', params[:id]).pluck('department_id')[0]
         
