@@ -4,9 +4,17 @@
     <link rel="stylesheet" href="../../assets/stylesheets/list.css" />
   </head>
   <body>
-    
-      
-
+    <% @users.each do |u| %>
+      <%= u.id %>
+      <%= u.email %>
+      <%= u.university_id%>
+      <%= u.department_id%>
+      <%= u.point%><br>
+    <% end %> 
+    당신의 ip = <%= request.env['REMOTE_ADDR'] %><br>
+당신의 아이디 = <%= current_user.email %><br>  
+<%= link_to('Logout', destroy_user_session_path, :method => :get) %>
+    <h2 align="center">내 점수 <%= @my_point %></h2>
     <h2 align="center"><%= @my_school %> <%= @my_dept %> 학생들의 학점 분포</h2>
       <div id="curve_chart_dept" style="width: 900px; height: 500px; margin: auto"></div>
           <h2 align="center">내 점수는 <%= @my_point %><br>
@@ -21,7 +29,7 @@
     <div id="curve_chart_all" style="width: 900px; height: 500px; margin: auto" ></div>
     <h2 align="center">내 점수는 <%= @my_point %><br>
     전체 <%= @all_all %>명 중 <%= @rank_all %>등, 상위 <%= @percent_all %>% 입니다.</h2><br>
-        
+
     <a href="/input"><h2>돌아가기 </h2></a><br>
     <a href="#"><h2>페이스북 공유하기</h2></a>
   </body>

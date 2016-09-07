@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     get '/input' => 'home#index'
     post '/input' => 'home#input'
     post '/point' => 'home#point'
-    #get '/list' => "home#list"
+    get '/list' => "home#list"
     
     get '/update' => 'home#update'
     get '/update_minor' => 'home#update_minor'
@@ -42,7 +42,10 @@ Rails.application.routes.draw do
     get '/nopage' => 'home#nopage'
     get '/list/:id' => 'home#list', :constraints => {:id => /[^\/]+/}
     get '/search' => 'home#search'
-    get '/login' => 'facebook#login'
+    #get '/login' => 'facebook#login'
+    
+  #routes for server management
+    get '/delete/:email' => 'supervisor#delete_user', :constraints => {:email => /[^\/]+/}
     
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
