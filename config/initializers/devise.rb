@@ -1,7 +1,7 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-
+  require "omniauth-facebook"
   config.omniauth :facebook, "1270506772973041", "bda787844be1024175878b6aa8a64e33"
   # 이렇게 쓰면 좋지 않음.
   ##config.omniauth :facebook, ENV["FB_APP_ID"], ENV["FB_APP_SECRET"] 이렇게 쓰고

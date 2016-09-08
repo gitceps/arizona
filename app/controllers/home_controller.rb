@@ -511,7 +511,7 @@ class HomeController < ApplicationController
             end
             
         else
-            redirect_to '/list/' + current_user.id.to_s
+            redirect_to '/users/sign_in'
         end
     end
     def show
