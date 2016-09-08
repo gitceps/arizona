@@ -1,4 +1,4 @@
-class CallbacksController < Devise::OmniauthCallbacksController
+class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     before_action :authenticate_user!
 	def facebook
 	puts "================facebook===================="
