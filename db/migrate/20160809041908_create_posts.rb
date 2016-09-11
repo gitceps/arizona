@@ -4,7 +4,12 @@ class CreatePosts < ActiveRecord::Migration
       
       t.string :title
       t.string :author
+      t.integer :view
+      t.integer :like
+      t.integer :dislike
+    
       t.text :content
+      
         
       t.timestamps null: false
     end

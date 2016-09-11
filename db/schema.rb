@@ -153,6 +153,9 @@ ActiveRecord::Schema.define(version: 20160911054910) do
   create_table "posts", force: :cascade do |t|
     t.string   "title"
     t.string   "author"
+    t.integer  "view"
+    t.integer  "like"
+    t.integer  "dislike"
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -161,6 +164,8 @@ ActiveRecord::Schema.define(version: 20160911054910) do
   create_table "replies", force: :cascade do |t|
     t.text     "content"
     t.string   "author"
+    t.integer  "like"
+    t.integer  "dislike"
     t.integer  "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

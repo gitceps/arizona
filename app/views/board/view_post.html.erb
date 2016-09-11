@@ -1,9 +1,13 @@
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
 </head>
 <body>
     <div class = "container">
-        <table>
+        <table class = "table">
             <tr> 
                 <td>
                     <span style="font-weight:bold; color:black;"><%= @p.title%></span>
@@ -17,10 +21,17 @@
                 <td><%= @p.content%></td>
             </tr>
         </table>
-    
+      <p align="center" style ="color:black"> 이 글을
+        <button type="button" class="btn btn-default btn-sm" style="margin-left:20px">
+          <span class="glyphicon glyphicon-thumbs-up"></span> 좋아요 <%= @p.like %>
+        </button>
+        <button type="button" class="btn btn-default btn-sm" style="margin-left:20px">
+          <span class="glyphicon glyphicon-thumbs-down"></span> 싫어요 <%= @p.dislike %>
+        </button>
+      </p>
         <div class="well">
         댓글 <%= @p.replies.count%> 개
-        <table>
+        <table class = "table">
         <% @p.replies.each do |m|%>
             <tr>
                 <td>익명</td>
@@ -41,13 +52,36 @@
               <textarea class="form-control" rows="3" id="comment" name="reply_content"></textarea>
           </div>
           <button value="<%= params[:id] %>" type="submit" class="btn btn-default reply_submit" style="margin-top:20px;">댓글 달기</button>
-            <a href = "/board/">
-                <button  style="margin-top:20px;">
-                    목록
-                </button>
-            </a>
-
     </div>
+        <div class = "container">
+    <table class = "table">
+        <thead class ="thead-inverse">
+            <td>글번호</td>
+            <td>제목</td>
+            <td>글쓴이</td>
+            <td>조회수</td>
+            <td>추천수</td>
+            <td>작성시간</td>
+        </thead>
+        <% @posts.each do |p| %>
+        <tr>
+            <td><%= p.id %></td>
+            <td><a href ="/board/view_post/<%= p.id %>"><%= p.title %></a></td>
+            <td>익명</td>
+            <td><%= p.view %></td>
+            <td><%= p.like %></td>
+            <td><%= p.created_at %></td>
+        </tr>
+        <% end %>
+    </table>
+    <a href ="/board/new_post">
+        <button class="btn btn-default">글쓰기</button>
+    </a>
+    <a href = "/board/">
+        <button class="btn btn-default">목록</button>
+    </a>
+</div>
+
 </body>
 <script>
     $(".reply_submit").click(function() {
