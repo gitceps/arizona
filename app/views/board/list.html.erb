@@ -1,0 +1,23 @@
+<div class = "container">
+    <table>
+        <tr>
+            <td>글번호</td>
+            <td>제목</td>
+            <td>글쓴이</td>
+            <td>조회수</td>
+            <td>작성시간</td>
+        </tr>
+        <% @posts.each do |p| %>
+        <tr>
+            <td><%= p.id %></td>
+            <td><a href ="/board/view_post/<%= p.id %>"><%= p.title %></a></td>
+            <td>익명</td>
+            <td>0</td>
+            <td><%= p.created_at %></td>
+        </tr>
+        <% end %>
+    </table>
+    <a href ="/board/new_post">
+        <button class="btn btn-default">글쓰기</button>
+    </a>
+</div>

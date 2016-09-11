@@ -1,0 +1,74 @@
+<head>
+    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
+</head>
+<body>
+    <div class = "container">
+        <table>
+            <tr> 
+                <td>
+                    <span style="font-weight:bold; color:black;"><%= @p.title%></span>
+                </td>
+            </tr>
+            <tr>
+                <td>글쓴이 : <span style="font-weight:bold; color:black;">익명</span></td>
+                <td><%= @p.created_at %></td>
+            </tr>
+            <tr>
+                <td><%= @p.content%></td>
+            </tr>
+        </table>
+    
+        <div class="well">
+        댓글 <%= @p.replies.count%> 개
+        <table>
+        <% @p.replies.each do |m|%>
+            <tr>
+                <td>익명</td>
+                <td>
+                <p style="color:black;"><%= m.content %></p>
+                </td>
+                <td> <%= m.created_at %></td>
+            </tr>
+        <% end %>
+        </table>
+            
+<!--    <form style="margin-top:40px;" action="/board/reply_write" method="POST">-->
+        
+        <!-- 글 번호를 저장하기 위해 hidden type의 input box 사용-->
+          <input type="hidden" value="<%= params[:id] %>" name ="id_of_post">
+          
+          <div class="form-group">
+              <textarea class="form-control" rows="3" id="comment" name="reply_content"></textarea>
+          </div>
+          <button value="<%= params[:id] %>" type="submit" class="btn btn-default reply_submit" style="margin-top:20px;">댓글 달기</button>
+            <a href = "/board/">
+                <button  style="margin-top:20px;">
+                    목록
+                </button>
+            </a>
+
+    </div>
+</body>
+<script>
+    $(".reply_submit").click(function() {
+        post_id = this.value;
+        post_content = $("#comment").val();
+        $.ajax({
+            method: "POST",
+            url: "/board/reply_write",
+            data: { 
+                    id_of_post: post_id,
+                    reply_content: post_content
+            },
+            success: function(){
+                alert('리플을 작성하였습니다');
+            },
+            error: function(msg) {
+                alert('오류 발생');
+                alert(msg);
+            }
+        })
+    }); 
+    
+    
+</script>

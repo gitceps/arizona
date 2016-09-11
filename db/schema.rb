@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160904095008) do
+ActiveRecord::Schema.define(version: 20160911054910) do
 
   create_table "departments", force: :cascade do |t|
     t.integer  "university_id"
@@ -151,9 +151,17 @@ ActiveRecord::Schema.define(version: 20160904095008) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.float    "point"
-    t.string   "name"
-    t.string   "dept"
+    t.string   "title"
+    t.string   "author"
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "replies", force: :cascade do |t|
+    t.text     "content"
+    t.string   "author"
+    t.integer  "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
