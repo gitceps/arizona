@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  get 'board/list'
-
-    devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
+    devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 #    get 'auth/:provider/callback', to: 'sessions#create'
 #    get 'auth/failure', to: redirect('/')
 #    get 'signout', to: 'sessions#destroy', as: 'signout'
@@ -17,13 +15,6 @@ Rails.application.routes.draw do
   get 'facebook/login'
   get 'home/nopage'
   get '/mygrade' => 'home#mygrade'
-
-  #게시판 관련
-  get '/board' => 'board#list'
-  get '/board/new_post' => 'board#new_post'
-  get '/board/view_post/:id' => 'board#view_post'
-  post '/board/upload_post' => 'board#upload_post'
-  post '/board/reply_write' => 'board#reply_write'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
