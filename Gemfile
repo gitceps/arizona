@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'will_paginate'
 gem 'omniauth'
 gem 'omniauth-digitalocean'
 gem 'omniauth-facebook', '~> 1.4.1'

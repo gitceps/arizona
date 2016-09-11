@@ -1,13 +1,42 @@
 class BoardController < ApplicationController
   def list
       @posts = Post.all.order("created_at DESC")
+      @post_count = @posts.count
+      @page_count = (@post_count.to_f / 1.to_f).ceil
+      
   end
   def view_post
-      @posts = Post.all
+      #@posts = Post.find_by_sql("SELECT * FROM posts order by posts.id desc")
+      @posts = Post.all.order("created_at DESC").limit(1)
+      
+      @post_count = @posts.count
+      @page_count = (@post_count.to_f / 1.to_f).ceil
+      
+      @pages = Post.paginate(:page => params[:page], :per_page =>5).order('id DESC')
+      
       @p = @posts.find(params[:id])
+      @date = @p.created_at.strftime("%Y-%m-%d %H:%M")
       @p.view += 1
       @p.save
       @replies = Reply.all
+  end
+  def upvote_post
+      #중복 추천 불가하게 해야함
+      @p = @posts.find(pararms[:id])
+      @p.like += 1
+      @p.save
+  end
+  def downvote_post
+      #중복 추천 불가하게 해야함
+      @p = @posts.find(pararms[:id])
+      @p.like -= 1
+      @p.save
+  end
+  def upvote_reply
+      
+  end
+  def downvote_reply
+      
   end
   def new_post
       

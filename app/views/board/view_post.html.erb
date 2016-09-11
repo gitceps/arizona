@@ -6,42 +6,84 @@
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
 </head>
 <body>
+    <!--제목 container-->
+    <header class="header">
+       <div class="container">
+        <div class="row">
+            <div class="six columns">
+            </div>
+            <div class="six columns">
+                <a href="/mygrade"> 내 학점 비교하기 </a><br>
+                <a href="/board"> 자유게시판 </a>
+
+                <form id="semesterFormMajor" action="/univ_list" method="get">
+                    <a onclick="document.getElementById('semesterFormMajor').submit();">전공</a>
+                    <input type="hidden" name="utf_8" value="✓" />
+                    <input type="hidden" name="search" value="<%= @university_name %>" />
+                    <input type="hidden" name="semester" value="<%= @semester %>" />
+                    <input type="hidden" name="is_major" value="true" />
+                </form>
+                <ul>
+                    <li>
+                       <form id="semesterForm2" action="/univ_list" method="get">
+                            <a href="#" onclick="document.getElementById('semesterForm2').submit();">2학기</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                            <input type="hidden" name="semester" value="fall" />
+                        </form>
+                    </li>
+                    <li>
+                        <form id="semesterForm1" action="/univ_list" method="get">
+                            <a href="#" onclick="document.getElementById('semesterForm1').submit();">1학기</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                            <input type="hidden" name="semester" value="spring" />
+                        </form>
+                      </li>
+                   </ul>
+            </div>
+        </div>
+       </div>
+    </header>
     <div class = "container">
-        <table class = "table">
-            <tr> 
-                <td>
+        <table class = "table" style="width: 100%">
+            <thead>
+                <th>
                     <span style="font-weight:bold; color:black;"><%= @p.title%></span>
-                </td>
-            </tr>
-            <tr>
-                <td>글쓴이 : <span style="font-weight:bold; color:black;">익명</span></td>
-                <td><%= @p.created_at %></td>
-            </tr>
-            <tr>
-                <td><%= @p.content%></td>
-            </tr>
-        </table>
-      <p align="center" style ="color:black"> 이 글을
+                </th>
+                <th>글쓴이 : <span style="font-weight:bold; color:black;">익명</span></th>
+                <th><%= @date %></th>
+            </thead>
+            <tr width=100%>
+                <td class="post_content" colspan="3">
+                    <p style="color:black;">
+                        <%= @p.content%>
+                    </p>
+                    <div align="center" style ="color:black"> 이 글을
         <button type="button" class="btn btn-default btn-sm" style="margin-left:20px">
           <span class="glyphicon glyphicon-thumbs-up"></span> 좋아요 <%= @p.like %>
         </button>
         <button type="button" class="btn btn-default btn-sm" style="margin-left:20px">
           <span class="glyphicon glyphicon-thumbs-down"></span> 싫어요 <%= @p.dislike %>
         </button>
-      </p>
-        <div class="well">
-        댓글 <%= @p.replies.count%> 개
-        <table class = "table">
-        <% @p.replies.each do |m|%>
+      </div><br>
+                댓글 <%= @p.replies.count%> 개
+                </td>
+            </tr>
+            <% @p.replies.each do |m|%>
             <tr>
-                <td>익명</td>
-                <td>
+               <td colspan=3>
+                익명     <%= m.created_at.strftime("%Y-%m-%d %H:%M") %><br>
+                
                 <p style="color:black;"><%= m.content %></p>
                 </td>
-                <td> <%= m.created_at %></td>
             </tr>
         <% end %>
         </table>
+      
+        <div class="well">
             
 <!--    <form style="margin-top:40px;" action="/board/reply_write" method="POST">-->
         
@@ -54,14 +96,14 @@
           <button value="<%= params[:id] %>" type="submit" class="btn btn-default reply_submit" style="margin-top:20px;">댓글 달기</button>
     </div>
         <div class = "container">
-    <table class = "table">
+    <table class = "table" style="width: 100%">
         <thead class ="thead-inverse">
-            <td>글번호</td>
-            <td>제목</td>
-            <td>글쓴이</td>
-            <td>조회수</td>
-            <td>추천수</td>
-            <td>작성시간</td>
+            <th>글번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>조회수</th>
+            <th>추천수</th>
+            <th>작성시간</th>
         </thead>
         <% @posts.each do |p| %>
         <tr>
@@ -70,16 +112,28 @@
             <td>익명</td>
             <td><%= p.view %></td>
             <td><%= p.like %></td>
-            <td><%= p.created_at %></td>
+            <td><%= p.created_at.strftime("%Y-%m-%d %H:%M") %></td>
         </tr>
         <% end %>
     </table>
+    <div align="center">
+        처음
+        <% for count in 1..@page_count do %>
+            <a href ="/board"><%= count %> </a>
+        <% end %>
+        끝
+    </div>
+    <div align="center">
+        <% will_paginate @pages %>
+    </div>
+    <div align="right">
     <a href ="/board/new_post">
         <button class="btn btn-default">글쓰기</button>
     </a>
     <a href = "/board/">
         <button class="btn btn-default">목록</button>
     </a>
+            </div>
 </div>
 
 </body>

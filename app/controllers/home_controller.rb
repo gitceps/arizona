@@ -242,7 +242,7 @@ class HomeController < ApplicationController
             end
         end
         
-        redirect_to "/search"
+        redirect_to "/update_minor"
     end
     def update_minor
         start_row = 4
@@ -335,7 +335,7 @@ class HomeController < ApplicationController
                 minor.save
             end
         end
-        redirect_to "/search"
+        redirect_to "/update_dept"
     end
     
     def univlist
