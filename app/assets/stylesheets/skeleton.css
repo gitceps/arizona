@@ -44,21 +44,30 @@ span {
     background: #141414;
     background-position: top center;
     background-size: cover;
-    padding: 10px 0;
     color: #eee;
+    
 }
-
+.header p {
+    display: inline-block;
+}
 main {
-    position: relative;
     background: #222;
     padding: 20px 0;
+    background: url(background.png) no-repeat center center fixed;   
+    background-size: cover;
+    background-position: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    overflow: hidden;
 }
 
 .hbg {
     background: url(background.png) no-repeat center center fixed;   
     background-size: cover;
     background-position: center;
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -130,7 +139,6 @@ main {
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .container {
-  position: relative;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -146,7 +154,7 @@ main {
 @media (min-width: 320px) {
   .container {
     width: 85%;
-    padding: 20px; }
+    }
     .state {
         width: 61px
     }
@@ -302,8 +310,9 @@ input[type="button"] {
   cursor: pointer;
   box-sizing: border-box; 
 }
-.button:hover,
-button:hover,
+
+body{background:#555;}
+header{position:relative;width:100%;background:#333;}
 input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover {
@@ -417,27 +426,29 @@ label > .label-body {
 
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-ul {
+ul.topnav {
     list-style-type: none;
     overflow: hidden;
 }
 
-li {
+ul.topnav li {
     float: right;
 }
 
-li a {
+ul.topnav li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 1px 16px;
     text-decoration: none;
+    transition: 0.3s;
 }
 
-li a:hover {
+ul.topnav li a:hover {
     background-color: #111;
 }
 
+ul.topnav li.icon {display: none;}
 
 
 /* Code
@@ -481,16 +492,7 @@ textarea,
 select,
 fieldset {
   margin-bottom: 1.5rem; }
-pre,
-blockquote,
-dl,
-figure,
-table,
-p,
-ul,
-ol,
-form {
-  margin-bottom: 1.0rem; }
+
 
 
 /* Utilities
@@ -564,3 +566,10 @@ there.
     border-top: 1px solid rgba(255,255,255,0.1);
 }
 }
+
+@media screen and (max-width:680px) {
+  
+}
+
+@media screen and (max-width:680px) {
+ 
