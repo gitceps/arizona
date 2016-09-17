@@ -1,0 +1,58 @@
+<header class="header-mobile">
+    <div class="container">
+        <div class="row">
+            <div class="twleve columns">
+                <div class="header-mobile-main">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".header-mobile-toggle">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="header-mobile-toggle row collapse in" aria-expanded="true">
+            <ul class="topnav" id="topnav">
+                    <li>
+                        <form id="semesterFormMajor" action="/univ_list" method="get">
+                            <a onclick="document.getElementById('semesterFormMajor').submit();">전공</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="semester" value="<%= @semester %>" />
+                            <input type="hidden" name="is_major" value="true" />
+                        </form>
+                    </li>
+                    <li>
+                        <form id="semesterFormMinor" action="/univ_list" method="get">
+                            <a onclick="document.getElementById('semesterFormMinor').submit();">교양</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="semester" value="<%= @semester %>" />
+                            <input type="hidden" name="is_major" value="false" />
+                        </form>
+                    </li>
+                    <li>
+                       <form id="semesterForm2" action="/univ_list" method="get">
+                            <a href="#" onclick="document.getElementById('semesterForm2').submit();">2학기</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                            <input type="hidden" name="semester" value="fall" />
+                        </form>
+                    </li>
+                    <li>
+                        <form id="semesterForm1" action="/univ_list" method="get">
+                            <a href="#" onclick="document.getElementById('semesterForm1').submit();">1학기</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                            <input type="hidden" name="semester" value="spring" />
+                        </form>
+                      </li>
+                      <li class="icon">
+                        <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
+                      </li>
+                   </ul>
+        </div>
+    </div>
+</header>
