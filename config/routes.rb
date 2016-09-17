@@ -1,17 +1,29 @@
 Rails.application.routes.draw do
-    get 'auth/:provider/callback', to: 'sessions#create'
-    get 'auth/failure', to: redirect('/')
-    get 'signout', to: 'sessions#destroy', as: 'signout'
+  get 'board/list'
 
-    resources :sessions, only: [:create, :destroy]
-    resource :home, only: [:show]
+    devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
+#    get 'auth/:provider/callback', to: 'sessions#create'
+#    get 'auth/failure', to: redirect('/')
+#    get 'signout', to: 'sessions#destroy', as: 'signout'
+#
+#    resources :sessions, only: [:create, :destroy]
+#    resource :home, only: [:show]
 
     #root to: "home#show"
+  get '/users/sign_out' => 'devise/sessions#destroy'
   get 'sessions/create'
   get 'sessions/destroy'
   get 'home/show'
   get 'facebook/login'
   get 'home/nopage'
+  get '/mygrade' => 'home#mygrade'
+
+  #게시판 관련
+  get '/board' => 'board#list'
+  get '/board/new_post' => 'board#new_post'
+  get '/board/view_post/:id' => 'board#view_post'
+  post '/board/upload_post' => 'board#upload_post'
+  post '/board/reply_write' => 'board#reply_write'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -24,7 +36,7 @@ Rails.application.routes.draw do
     get '/input' => 'home#index'
     post '/input' => 'home#input'
     post '/point' => 'home#point'
-    #get '/list' => "home#list"
+    get '/list' => "home#list"
     
     get '/update' => 'home#update'
     get '/update_minor' => 'home#update_minor'
@@ -33,10 +45,16 @@ Rails.application.routes.draw do
     get '/univ_list' => 'home#univlist'
     #get '/univ_add/:univ_name' => 'home#univ_add'
     get '/univ_add' => 'home#univ_add'
+    
+    get '/index_dept' => 'home#index_dept'
+    
     get '/nopage' => 'home#nopage'
     get '/list/:id' => 'home#list', :constraints => {:id => /[^\/]+/}
     get '/search' => 'home#search'
-    get '/facebook' => 'facebook#login'
+    #get '/login' => 'facebook#login'
+    
+  #routes for server management
+    get '/delete/:email' => 'supervisor#delete_user', :constraints => {:email => /[^\/]+/}
     
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

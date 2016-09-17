@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Facebook Auth Example</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<div>
-  <% if current_user %>
-    Signed in as <strong><%= current_user.name %></strong>!
-    <%= link_to "Sign out", signout_path, id: "sign_out" %>
-  <% else %>
-    <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
-  <% end %>
-</div>
-<%= yield %>
+<%= @user.each do |p| %>
+    <%= p.email %><br>
+<% end %>
 
-</body>
-</html>
+<% if user_signed_in? %>
+  <h1>Current User : <%= current_user.email %></h1>
+  <li>
+  <%= link_to('Logout', destroy_user_session_path, :method => :get) %>        
+  </li>
+<% else %>
+로그인 안됨!
+<h1>Current User : <%= @current %></h1>
+<h1>Current Session : <%= user_session %></h1>
+  <li>
+  <%= link_to('Login', new_user_session_path)  %>  
+  <%= link_to('Logout', destroy_user_session_path, :method => :get) %>
+  </li>
+<% end %>

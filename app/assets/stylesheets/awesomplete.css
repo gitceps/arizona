@@ -5,13 +5,27 @@
 	position: absolute;
 	clip: rect(0, 0, 0, 0);
 }
-
 div.awesomplete {
 	display: inline-block;
 	position: relative;
 }
 
-div.awesomplete > input {
+
+.ct {
+    display: inline-block;
+    width: 300px;
+    height: 45px;
+    font-size: 12px;
+    border: 0;
+    background: #222;
+    color: #eee;
+    transition: background 0.15s ease-in-out;   
+    }
+
+
+.at {
+    width: 300px;
+    height: 50px;
 	display: inline-block;
     border-radius: 2px;
     height: 50px;
@@ -19,10 +33,6 @@ div.awesomplete > input {
     font-size: 18px;
     background-color: #FFFFFF;
     opacity: 1.0;
-    filter: alpha(opacity=100); 
-    -webkit-transform: skew(-10deg);
-    -moz-transform: skew(-10deg);
-    -o-transform: skew(-10deg);
 }
 
 div.awesomplete > ul {
@@ -48,8 +58,6 @@ div.awesomplete > ul[hidden],
 div.awesomplete > ul:empty {
 	display: none;
 }
-/*
-
 
 	/* Pointer */
 	div.awesomplete > ul:before {
@@ -71,6 +79,7 @@ div.awesomplete > ul:empty {
 		position: relative;
 		padding: .2em .5em;
 		cursor: pointer;
+        float: none;
 	}
 	
 	div.awesomplete > ul > li:hover {
@@ -95,3 +104,5 @@ div.awesomplete > ul:empty {
 			background: hsl(86, 100%, 21%);
 			color: inherit;
 		}
+
+

@@ -1,0 +1,162 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+    <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
+</head>
+<body>
+    <!--제목 container-->
+    <header class="header">
+       <div class="container">
+        <div class="row">
+            <div class="six columns">
+            </div>
+            <div class="six columns">
+                <a href="/mygrade"> 내 학점 비교하기 </a><br>
+                <a href="/board"> 자유게시판 </a>
+
+                <form id="semesterFormMajor" action="/univ_list" method="get">
+                    <a onclick="document.getElementById('semesterFormMajor').submit();">전공</a>
+                    <input type="hidden" name="utf_8" value="✓" />
+                    <input type="hidden" name="search" value="<%= @university_name %>" />
+                    <input type="hidden" name="semester" value="<%= @semester %>" />
+                    <input type="hidden" name="is_major" value="true" />
+                </form>
+                <ul>
+                    <li>
+                       <form id="semesterForm2" action="/univ_list" method="get">
+                            <a href="#" onclick="document.getElementById('semesterForm2').submit();">2학기</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                            <input type="hidden" name="semester" value="fall" />
+                        </form>
+                    </li>
+                    <li>
+                        <form id="semesterForm1" action="/univ_list" method="get">
+                            <a href="#" onclick="document.getElementById('semesterForm1').submit();">1학기</a>
+                            <input type="hidden" name="utf_8" value="✓" />
+                            <input type="hidden" name="search" value="<%= @university_name %>" />
+                            <input type="hidden" name="is_major" value="<%= @is_major %>" />
+                            <input type="hidden" name="semester" value="spring" />
+                        </form>
+                      </li>
+                   </ul>
+            </div>
+        </div>
+       </div>
+    </header>
+    <div class = "container">
+        <table class = "table" style="width: 100%">
+            <thead>
+                <th>
+                    <span style="font-weight:bold; color:black;"><%= @p.title%></span>
+                </th>
+                <th>글쓴이 : <span style="font-weight:bold; color:black;">익명</span></th>
+                <th><%= @date %></th>
+            </thead>
+            <tr width=100%>
+                <td class="post_content" colspan="3">
+                    <p style="color:black;">
+                        <%= @p.content%>
+                    </p>
+                    <div align="center" style ="color:black"> 이 글을
+        <button type="button" class="btn btn-default btn-sm" style="margin-left:20px">
+          <span class="glyphicon glyphicon-thumbs-up"></span> 좋아요 <%= @p.like %>
+        </button>
+        <button type="button" class="btn btn-default btn-sm" style="margin-left:20px">
+          <span class="glyphicon glyphicon-thumbs-down"></span> 싫어요 <%= @p.dislike %>
+        </button>
+      </div><br>
+                댓글 <%= @p.replies.count%> 개
+                </td>
+            </tr>
+            <% @p.replies.each do |m|%>
+            <tr>
+               <td colspan=3>
+                익명     <%= m.created_at.strftime("%Y-%m-%d %H:%M") %><br>
+                
+                <p style="color:black;"><%= m.content %></p>
+                </td>
+            </tr>
+        <% end %>
+        </table>
+      
+        <div class="well">
+            
+<!--    <form style="margin-top:40px;" action="/board/reply_write" method="POST">-->
+        
+        <!-- 글 번호를 저장하기 위해 hidden type의 input box 사용-->
+          <input type="hidden" value="<%= params[:id] %>" name ="id_of_post">
+          
+          <div class="form-group">
+              <textarea class="form-control" rows="3" id="comment" name="reply_content"></textarea>
+          </div>
+          <button value="<%= params[:id] %>" type="submit" class="btn btn-default reply_submit" style="margin-top:20px;">댓글 달기</button>
+    </div>
+        <div class = "container">
+    <table class = "table" style="width: 100%">
+        <thead class ="thead-inverse">
+            <th>글번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>조회수</th>
+            <th>추천수</th>
+            <th>작성시간</th>
+        </thead>
+        <% @posts.each do |p| %>
+        <tr>
+            <td><%= p.id %></td>
+            <td><a href ="/board/view_post/<%= p.id %>"><%= p.title %></a></td>
+            <td>익명</td>
+            <td><%= p.view %></td>
+            <td><%= p.like %></td>
+            <td><%= p.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        </tr>
+        <% end %>
+    </table>
+    <div align="center">
+        처음
+        <% for count in 1..@page_count do %>
+            <a href ="/board"><%= count %> </a>
+        <% end %>
+        끝
+    </div>
+    <div align="center">
+        <% will_paginate @pages %>
+    </div>
+    <div align="right">
+    <a href ="/board/new_post">
+        <button class="btn btn-default">글쓰기</button>
+    </a>
+    <a href = "/board/">
+        <button class="btn btn-default">목록</button>
+    </a>
+            </div>
+</div>
+
+</body>
+<script>
+    $(".reply_submit").click(function() {
+        post_id = this.value;
+        post_content = $("#comment").val();
+        $.ajax({
+            method: "POST",
+            url: "/board/reply_write",
+            data: { 
+                    id_of_post: post_id,
+                    reply_content: post_content
+            },
+            success: function(){
+                alert('리플을 작성하였습니다');
+            },
+            error: function(msg) {
+                alert('오류 발생');
+                alert(msg);
+            }
+        })
+    }); 
+    
+    
+</script>

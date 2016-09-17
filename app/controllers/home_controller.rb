@@ -8,11 +8,17 @@ class HomeController < ApplicationController
      autocomplete :University, :name, :full => true
 
     def index
+        @email = current_user.email
         @univ = University.all
         @university_name = University.distinct.pluck('name');
-        @department = Department.all
+        @department = Department.all.distinct.pluck('university_id')
         @ip = request.remote_ip
         @remote_ip = request.env['REMOTE_ADDR']
+        @univ_id = University.where('name = ?', '건국대학교').pluck('id')
+        
+        @department_name_test = Department.where('university_id = ?', @univ_id).pluck('department_name')
+        
+        @department_name = Array.new
         
     end
     
@@ -34,39 +40,79 @@ class HomeController < ApplicationController
     
     def point
         #TODO: 4.3 만점인 학교는 4.5로 환산 할 것
-        #그런 정책을 정해야 함
-        new_post = Post.new
-        new_post.name = params[:univ_name]
-        new_post.point = params[:point]
-        new_post.save
+        #user은 임시로 생성. facebook login api와 연동해야함
+        user = User.where('email = ?', current_user.email.to_s)
+        if user.pluck('university_id')[0] == nil
+            univ_id = University.where('name = ?', params[:univ_name]).pluck('id')[0]
+            dept_id = Department.where('university_id = ? and department_name = ?', univ_id, params[:dept]).pluck('id')[0]
+            
+            User.where('email = ?', current_user.email.to_s).limit(1).update_all(:university_id => univ_id, :department_id => dept_id, :point => params[:point])
+#            new_user.university_id = University.where('name = ?', params[:univ_name]).pluck('id')[0]
+#            new_user.department_id = Department.where('university_id = ? and department_name = ?', new_user.university_id, params[:dept]).pluck('id')[0]
+#            new_user.point = params[:point]
+#            new_user.save 
+        end
         
-        redirect_to "/list/" + new_post.id.to_s
+        redirect_to "/list/" + current_user.id.to_s
     end
     
     def list
-        @my_school = Post.where('id = ?', params[:id]).pluck('name')[0]
-        @my_point = Post.where('id = ?', params[:id]).pluck('point')[0]
+        #로그인 하지 않았거나, 현재 유저와 파라미터 유저가 다르면 조회 불가처리
+        if !user_signed_in?
+            redirect_to '/users/sign_in'
+        else 
+            if current_user.id.to_s != params[:id]
+                redirect_to '/'
+            end
+        end
+        #정보 입력하지 않으면 입력하도록 리디렉션 해야함
+
+        @users = User.all
+    
+        @my_point = User.where('id = ?', params[:id]).pluck('point')[0]
+        @my_school_id = User.where('id = ?', params[:id]).pluck('university_id')[0]
+        @my_dept_id = User.where('id = ?', params[:id]).pluck('department_id')[0]
         
-        @data_all = Post.group(:point).count
+        @my_school = University.where('id = ?', @my_school_id).pluck('name')[0]
+        @my_dept = Department.where('id = ?', @my_dept_id).pluck('department_name')[0]
+        
+        #전체 데이터 계산
+        @data_all = User.group(:point).count
         @data_all = @data_all.to_a
         @h_axis_all = Array.new
         @data_all.each do |temp|
             @h_axis_all.push(temp.first)
         end
-        @rank_all = Post.where("point > ?", @my_point).count + 1
-        @all_all = Post.count
+        
+        @rank_all = User.where("point > ?", @my_point).count + 1
+        @all_all = User.count
         @percent_all = (@rank_all.to_f / @all_all.to_f) * 100 
         
-        @data_school = Post.where('name = ?', @my_school).group(:point).count
+        #대학교별 데이터 계산
+        @data_school = User.where('university_id = ?', @my_school_id).group(:point).count
         @data_school = @data_school.to_a
         @h_axis_school = Array.new
         @data_school.each do |temp|
             @h_axis_school.push(temp.first)
         end
         
-        @rank_school = Post.where("point > ? and name = ?", @my_point, @my_school).count + 1
-        @all_school = Post.where('name = ?', @my_school).count
+        @rank_school = User.where("point > ? and university_id = ?", @my_point, @my_school).count + 1
+        @all_school = User.where('university_id = ?', @my_school_id).count
         @percent_school = (@rank_school.to_f / @all_school.to_f) * 100 
+        
+        #학과별 데이터 계산
+        @data_dept = User.where('university_id = ? and department_id = ?',
+        @my_school_id, @my_dept_id).group(:point).count
+        @data_dept = @data_dept.to_a
+        @h_axis_dept = Array.new
+        @data_dept.each do |temp|
+            @h_axis_dept.push(temp.first)
+        end
+        
+        @rank_dept = User.where('point > ? and university_id = ? and department_id = ?', @my_point, @my_school_id, @my_dept_id).count + 1
+        @all_dept = User.where('university_id = ? and department_id = ?', @my_school_id, @my_dept_id).count
+        @percent_dept = (@rank_dept.to_f / @all_dept.to_f) * 100
+        
     end
     def update_dept
     #각 학교 별 학과를 업데이트한다.
@@ -196,8 +242,7 @@ class HomeController < ApplicationController
             end
         end
         
-        #학과 업데이트 하러 ㄱㄱ
-        redirect_to "/search"
+        redirect_to "/update_minor"
     end
     def update_minor
         start_row = 4
@@ -290,7 +335,7 @@ class HomeController < ApplicationController
                 minor.save
             end
         end
-        redirect_to "/search"
+        redirect_to "/update_dept"
     end
     
     def univlist
@@ -442,7 +487,32 @@ class HomeController < ApplicationController
         banana[1] = @chart_data
         respond_to do |format|
           format.json { render json: banana.to_json}
+        end
     end
+    def index_dept
+        
+        @university_name = params[:univ_name]
+        @university_id = University.where('name = ?', @university_name).pluck('id').first
+        
+        @department = Department.where('university_id = ?', @university_id).pluck('department_name')
+        @test = [1,2,3,4];
+        respond_to do |format|
+            format.json{ render json: @department.to_json}
+        end
+    end
+    def mygrade
+        if user_signed_in?
+            user = User.where('email = ?', current_user.email.to_s)
+            
+            if user.pluck('university_id')[0] == nil
+                redirect_to '/input'
+            else
+                redirect_to '/list/' + current_user.id.to_s
+            end
+            
+        else
+            redirect_to '/users/sign_in'
+        end
     end
     def show
         
@@ -450,5 +520,5 @@ class HomeController < ApplicationController
     def nopage
     
     end
-    end
+    
 end

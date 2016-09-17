@@ -1,27 +1,33 @@
 <head>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/index.css">
     <link rel="stylesheet" href="../../assets/stylesheets/awesomplete.css" />
     <script src="../../assets/javascripts/awesomplete.js" async></script>
 </head>
-당신의 ip = <%= @remote_ip %>
-
+당신의 ip = <%= @remote_ip %><br>
+당신의 아이디 = <%= @email %><br>  
+<%= link_to('Logout', destroy_user_session_path, :method => :get) %>
 <form action="/point" method="POST">
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <label for="comment">학교 선택</label><br>
-            <input class=" dropdown-input" name="univ_name" list="mylist"/>
+            <input id="univ_name" class="dropdown-input" name="univ_name" list="mylist"/>
                 <datalist id="mylist">
 	               <% @university_name.each do |name| %>
 		              <option><%= name %></option>
 	               <%end%>
-            </datalist>
-            <input class=" dropdown-input" name="univ_name" list="mylist"/>
-                <datalist id="mylist">
-	               <% @university_name.each do |name| %>
-		              <option><%= name %></option>
-	               <%end%>
-            </datalist>
+                </datalist>
+            <select id="selectNumber" name="dept">
+                <option>학과 선택</option>
+            </select>
             <br>
             <!-- 학과, 학기 입력 -->
             <div class="form-group">
@@ -35,29 +41,33 @@
         <br>
         <div class="col-md-4"></div>
     </div>
-    
+</form>
+
 <script>
 
     
 var comboplete = new Awesomplete('input.dropdown-input', {
 	minChars: 0,
 });
-
-Awesomplete.$('.dropdown-input').addEventListener("click", function() {
-    if (comboplete.ul.childNodes.length === 0) {
-		comboplete.minChars = 0;
-		comboplete.evaluate();
-	}
-	else if (comboplete.ul.hasAttribute('hidden')) {
-		comboplete.open();
-	}
-	else {
-		comboplete.close();
-	}
-}); 
-    
-//$('.awesomplete').change(function(){
-    //selection changed
+//
+//Awesomplete.$('.dropdown-input').addEventListener("change", function() {
+//        alert('dropdown changed : ' + this.val);
+////    alert('change');
+//    if (comboplete.ul.childNodes.length === 0) {
+//		comboplete.minChars = 0;
+//		comboplete.evaluate();
+//	}
+//	else if (comboplete.ul.hasAttribute('hidden')) {
+//		comboplete.open();
+//	}
+//	else {
+//		comboplete.close();
+//	}
+//}); 
+//    
+//$('.dropdown-input').change(function(){
+//    //selection changed
+//    //    alert('dropdown changed : ' + this.val);
 //    alert(this.value);//this will give the selected option's value
 //    alert($(this).find(':selected').text());//this will give the selected option's text
 //});
@@ -67,12 +77,37 @@ Awesomplete.$('.dropdown-input').addEventListener("click", function() {
 //    return false;
 //  }
 //}
-$.ajax({
-  method: "POST",
-  url: "/home/point",
-  data: { name: "John", location: "Boston" }
-}).done(function( msg ) {
-    alert( "Data Saved: " + msg );
-});
+function set_dropdown_item(data) {
+    $('#selectNumber').empty();
+    var option = '';
+    for (var i=0;i<data.length;i++){
+   option += '<option value="'+ data[i] + '">' + data[i] + '</option>';
+}
+    $('#selectNumber').append(option);
+    //$("#selectNumber").val(data);
+    //$("#selectNumber").val(data).trigger('change');
+}
+$("#univ_name").focusout(function(){
+    console.log("focusout : " + $(this).val());
+    $.ajax({
+        method: "GET",
+        url: "/index_dept",
+        data: { univ_name: $(this).val()},
+        success: function(data) {
+            //alert('success');
+            console.log(data);
+            if(data.length == 0)
+                set_dropdown_item(["학과 선택"]);
+            else
+                set_dropdown_item(data);    
+            
+        }, error: function() {
+            alert('error');
+        }}).done(function( msg ) {
+        //alert( "done");
+        });    
+})
+    
+
+
 </script>
-</form>

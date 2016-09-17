@@ -63,7 +63,7 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.2;
+    opacity: 0.5;
     overflow: hidden;
     filter: blur(5px);
     -webkit-filter: blur(5px);
@@ -74,18 +74,33 @@ main {
     display: inline-block;
     width: 80px;
     text-align: center;
-    margin: 4px 0 0 8px;
+    margin: 4px 0 0 4px;
+    vertical-align: top;
 }
 
 .nav {
     position: relative;
     background: #eee;
     border-bottom: 1px solid #ddd;
-    padding: 10px;
+    padding: 10px;   
+}
+
+.state-a {
+    color: #777;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.state-b {
+    color: #ccc;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 40px;
     
 }
+
 /*
-* Skeleton V2.0.4
+* Skeleton V2.0.4ft
 * Copyright 2014, Dave Gamache
 * www.getskeleton.com
 * Free to use under the MIT license.
@@ -117,7 +132,7 @@ main {
 .container {
   position: relative;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box; }
@@ -128,10 +143,13 @@ main {
   box-sizing: border-box; }
 
 /* For devices larger than 400px */
-@media (min-width: 400px) {
+@media (min-width: 320px) {
   .container {
     width: 85%;
-    padding: 0; }
+    padding: 20px; }
+    .state {
+        width: 61px
+    }
 }
 
 /* For devices larger than 550px */
@@ -265,12 +283,13 @@ button,
 input[type="submit"],
 input[type="reset"],
 input[type="button"] {
+  vertical-align: middle;
   display: inline-block;
-  height: 38px;
-  padding: 0 30px;
+  height: 45px;
+  padding: 0 10px;
   color: #555;
   text-align: center;
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 600;
   line-height: 38px;
   letter-spacing: .1rem;
@@ -342,7 +361,6 @@ textarea,
 select {
 /*  height: 38px;*/
   padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
-  background-color: #fff;
   border: 1px solid #D1D1D1;
   border-radius: 4px;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -400,20 +418,26 @@ label > .label-body {
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul {
-  list-style: circle inside; }
-ol {
-  list-style: decimal inside; }
-ol, ul {
-  padding-left: 0;
-  margin-top: 0; }
-ul ul,
-ul ol,
-ol ol,
-ol ul {
-  margin: 1.5rem 0 1.5rem 3rem;
-  font-size: 90%; }
+    list-style-type: none;
+    overflow: hidden;
+}
+
 li {
-  margin-bottom: 1rem; }
+    float: right;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
 
 
 /* Code
@@ -515,8 +539,11 @@ there.
 
 
 /* Larger than mobile */
-@media (min-width: 400px) {}
-
+@media (min-width: 400px) {
+.state {
+    margin: 0 !important;
+}
+}
 /* Larger than phablet (also point when grid becomes active) */
 @media (min-width: 550px) {}
 
@@ -528,3 +555,12 @@ there.
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
+
+@media only screen and (max-width: 550px) {
+.state-top {
+    margin: 10px 0 0;
+    padding: 5px 0 0;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+}
