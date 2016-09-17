@@ -2,6 +2,7 @@
   <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link rel="stylesheet" href="../../assets/stylesheets/list.css" />
+  <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
   </head>
   <body>
     <% @users.each do |u| %>
@@ -29,11 +30,34 @@
     <div id="curve_chart_all" style="width: 900px; height: 500px; margin: auto" ></div>
     <h2 align="center">내 점수는 <%= @my_point %><br>
     전체 <%= @all_all %>명 중 <%= @rank_all %>등, 상위 <%= @percent_all %>% 입니다.</h2><br>
-
-    <a href="/input"><h2>돌아가기 </h2></a><br>
     <a href="#"><h2>페이스북 공유하기</h2></a>
+      <h3>카카오톡 앱이 설치되어 있는 모바일 기기라면 아래의 링크가 동작합니다.</h3>
+<a id="kakao-link-btn" href="javascript:;">
+<img src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+</a>
   </body>
 </html>
+<script type='text/javascript'>
+  //<![CDATA[
+    // // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('aad2c79abd8f32592d3a986f94d16ea0');
+    // // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+    Kakao.Link.createTalkLinkButton({
+      container: '#kakao-link-btn',
+      label: '카카오링크 샘플에 오신 것을 환영합니다.',
+      image: {
+        src: 'http://dn.api1.kage.kakao.co.kr/14/dn/btqaWmFftyx/tBbQPH764Maw2R6IBhXd6K/o.jpg',
+        width: '300',
+        height: '200'
+      },
+      webButton: {
+        text: '카카오 디벨로퍼스',
+        url: 'https://localhost:3000' // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+      }
+    });
+  //]]>
+</script>
+
 
 <%= javascript_tag do%>
 google.charts.load('current', {'packages':['corechart']});
@@ -59,10 +83,10 @@ google.charts.load('current', {'packages':['corechart']});
           pointSize: 5,
           vAxis: { title: '인원',
                     textStyle : { italic: false},
-                    format: '0',
+                    //format: '0',
                     baselineColor: 'none'},
           hAxis: { title : '학점',
-                   ticks : <%= @h_axis_all%>,
+                    ticks : <%= @h_axis_all%>,
                     textStyle: { italic: false},
                  },
         };
@@ -84,10 +108,11 @@ google.charts.load('current', {'packages':['corechart']});
           pointSize: 5,
           vAxis: { title: '인원',
                     textStyle : { italic: false},
-                    format: '0',
+                    gridlines: { count : 10},
+                    format: 'long',
                     baselineColor: 'none'},
           hAxis: { title : '학점',
-                   ticks : <%= @h_axis_school%>,
+                   ticks : [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5],
                     textStyle: { italic: false},
                  },
         };
@@ -108,11 +133,14 @@ google.charts.load('current', {'packages':['corechart']});
           legend: { position: 'none' },
           pointSize: 5,
           vAxis: { title: '인원',
+                    gridlines: { count : 10},
+                    //count: 4,
                     textStyle : { italic: false},
-                    format: '0',
+                    format: 'long',
                     baselineColor: 'none'},
           hAxis: { title : '학점',
-                   ticks : <%= @h_axis_dept%>,
+                   ticks : [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5],
+                   //ticks : <%= @h_axis_dept%>,
                     textStyle: { italic: false},
                  },
         };
