@@ -9,7 +9,7 @@
             </div>
             <div class="six columns">
                 <a href="/mygrade"> 내 학점 비교하기 </a><br>
-                <a href="/board"> 자유게시판 </a>
+                <a href="/board?page=1"> 자유게시판 </a>
 
                 <form id="semesterFormMajor" action="/univ_list" method="get">
                     <a onclick="document.getElementById('semesterFormMajor').submit();">전공</a>
@@ -52,10 +52,10 @@
             <th>추천수</th>
             <th>작성시간</th>
         </thead>
-        <% @posts.each do |p| %>
+        <% @pages.each do |p| %>
         <tr>
             <td><%= p.id %></td>
-            <td><a href ="/board/view_post/<%= p.id %>"><%= p.title %></a></td>
+            <td><a href ="/board/view_post/<%= p.id %>"><%= p.title %> [<%=p.replies.count%>]</a></td>
             <td>익명</td>
             <td><%= p.view %></td>
             <td><%= p.like %></td>
@@ -63,6 +63,9 @@
         </tr>
         <% end %>
     </table>
+    <div align="center" style ="color:black;">
+        <%= will_paginate @pages, :page_links => true, :next_label => "다음 >", :previous_label => "< 이전" %>
+    </div>
     <a href ="/board/new_post">
         <button class="btn btn-default">글쓰기</button>
     </a>

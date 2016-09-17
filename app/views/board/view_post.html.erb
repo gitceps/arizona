@@ -6,7 +6,7 @@
     <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" %>
 </head>
 <body>
-    <!--제목 container-->
+    <!--제목 container123-->
     <header class="header">
        <div class="container">
         <div class="row">
@@ -105,10 +105,10 @@
             <th>추천수</th>
             <th>작성시간</th>
         </thead>
-        <% @posts.each do |p| %>
+        <% @pages.each do |p| %>
         <tr>
             <td><%= p.id %></td>
-            <td><a href ="/board/view_post/<%= p.id %>"><%= p.title %></a></td>
+            <td><a href ="/board/view_post/<%= p.id %>"><%= p.title %> [<%=p.replies.count%>]</a></td>
             <td>익명</td>
             <td><%= p.view %></td>
             <td><%= p.like %></td>
@@ -116,6 +116,7 @@
         </tr>
         <% end %>
     </table>
+<!--
     <div align="center">
         처음
         <% for count in 1..@page_count do %>
@@ -123,8 +124,9 @@
         <% end %>
         끝
     </div>
+-->
     <div align="center">
-        <% will_paginate @pages %>
+        <%= will_paginate @pages, :page_links => true, :next_label => "다음 >", :previous_label => "< 이전" %>
     </div>
     <div align="right">
     <a href ="/board/new_post">
