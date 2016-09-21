@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'uri-query_params'
 gem 'will_paginate'
 gem 'omniauth'
 gem 'omniauth-digitalocean'

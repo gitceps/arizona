@@ -1,3 +1,4 @@
+require 'uri/query_params'
 require 'roo'
 require 'rails4-autocomplete'
 
@@ -302,8 +303,27 @@ class HomeController < ApplicationController
             redirect_to '/users/sign_in'
         end
     end
-    def show
-        
+    def nav_univ_list
+        if user_signed_in?
+            if current_user.university_id == nil
+                
+                redirect_to '/search'
+            else
+                query_string = '?'
+                search = University.where('id = ?', current_user.university_id).pluck('name')[0]
+                utf_8 = params[:utf_8]
+                semester = params[:semester]
+                is_major = params[:is_major]
+                
+                query_string += 'search=' + search + '&semester=' + semester +'&is_major='  + is_major
+                
+                redirect_to '/univ_list' + query_string
+             
+            end
+            
+        else
+            redirect_to '/search'
+        end
     end
     def nopage
     

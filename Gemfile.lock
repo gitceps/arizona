@@ -221,6 +221,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
+    uri-query_params (0.7.1)
     warden (1.2.6)
       rack (>= 1.0)
     web-console (2.3.0)
@@ -259,6 +260,7 @@ DEPENDENCIES
   therubyracer
   turbolinks
   uglifier (>= 1.3.0)
+  uri-query_params
   web-console (~> 2.0)
   will_paginate
 

@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     get '/update_dept' => 'update#update_dept'
     
     get '/univ_list' => 'home#univlist'
+    get '/nav_univ_list' => 'home#nav_univ_list'
     #get '/univ_add/:univ_name' => 'home#univ_add'
     get '/univ_add' => 'home#univ_add'
     
