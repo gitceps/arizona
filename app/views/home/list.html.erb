@@ -2,6 +2,7 @@
   <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link rel="stylesheet" href="../../assets/stylesheets/list.css" />
+    <link rel="stylesheet" href="../../assets/stylesheets/progress_bubbling.css" />
   <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
   </head>
   <body>
@@ -15,6 +16,7 @@
     당신의 ip = <%= request.env['REMOTE_ADDR'] %><br>
 당신의 아이디 = <%= current_user.email %><br>  
 <%= link_to('Logout', destroy_user_session_path, :method => :get) %>
+
     <h2 align="center">내 점수 <%= @my_point %></h2>
     <h2 align="center"><%= @my_school %> <%= @my_dept %> 학생들의 학점 분포</h2>
       <div align="center">
@@ -24,16 +26,40 @@
 <img src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
 </a>
           </div>
+      <div class="bubblingG" id="bubble1" align="center">
+	<span id="bubblingG_1">
+	</span>
+	<span id="bubblingG_2">
+	</span>
+	<span id="bubblingG_3">
+	</span>
+</div>
       <div id="curve_chart_dept" style="width: 900px; height: 500px; margin: auto"></div>
           <h2 align="center">내 점수는 <%= @my_point %><br>
     전체 <%= @all_dept %>명 중 <%= @rank_dept %>등, 상위 <%= @percent_dept %>% 입니다.</h2><br>
       
       <h2 align="center"><%= @my_school %> 학생들의 학점 분포</h2>
+      <div class="bubblingG" id="bubble2" align="center">
+	<span id="bubblingG_1">
+	</span>
+	<span id="bubblingG_2">
+	</span>
+	<span id="bubblingG_3">
+	</span>
+</div>
     <div id="curve_chart_school" style="width: 900px; height: 500px; margin: auto"></div>
         <h2 align="center">내 점수는 <%= @my_point %><br>
     전체 <%= @all_school %>명 중 <%= @rank_school %>등, 상위 <%= @percent_school %>% 입니다.</h2><br>
     
       <h2 align="center">전국 대학생들의 학점 분포</h2>
+      <div class="bubblingG" id="bubble3" align="center">
+	<span id="bubblingG_1">
+	</span>
+	<span id="bubblingG_2">
+	</span>
+	<span id="bubblingG_3">
+	</span>
+</div>
     <div id="curve_chart_all" style="width: 900px; height: 500px; margin: auto" ></div>
     <h2 align="center">내 점수는 <%= @my_point %><br>
     전체 <%= @all_all %>명 중 <%= @rank_all %>등, 상위 <%= @percent_all %>% 입니다.</h2><br>
@@ -62,6 +88,10 @@
 
 
 <%= javascript_tag do%>
+
+$(document).ready(function(){
+    
+});
 function findLowLimit(arr) {
     arr.sort();
     var low = 0;
@@ -145,9 +175,25 @@ function terminalDataProcess2(arr) {
           arr_dept = arr.concat(arr_dept); 
 
       google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChartAll);
-      google.charts.setOnLoadCallback(drawChartSchool);
-      google.charts.setOnLoadCallback(drawChartDept);
+      google.charts.setOnLoadCallback(chartOnLoadCallbackAll);
+      google.charts.setOnLoadCallback(chartOnLoadCallbackSchool);
+      google.charts.setOnLoadCallback(chartOnLoadCallbackDept);
+
+    function chartOnLoadCallbackAll() {
+        console.log("callback called");
+        $("#bubble3").hide();
+        drawChartAll();
+    }
+    function chartOnLoadCallbackSchool() {
+        console.log("callback called");
+        $("#bubble2").hide();
+        drawChartSchool();
+    }
+    function chartOnLoadCallbackDept() {
+        console.log("callback called");
+        $("#bubble1").hide();
+        drawChartDept();
+    }
 
       function drawChartAll() {
         var data = google.visualization.arrayToDataTable(arr_all);
@@ -175,7 +221,6 @@ function terminalDataProcess2(arr) {
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart_all'));
-
         chart.draw(data, options);
       }
       
