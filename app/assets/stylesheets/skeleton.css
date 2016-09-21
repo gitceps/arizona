@@ -35,7 +35,6 @@ span {
 .fontbox {
     margin: auto;
     width: 350px;
-    padding: 10px;
     text-align: left;
 }
 
@@ -229,6 +228,7 @@ main {
 
   .offset-by-one-half.column,
   .offset-by-one-half.columns     { margin-left: 52%; }
+
 
 }
 
@@ -567,9 +567,80 @@ there.
 }
 }
 
-@media screen and (max-width:680px) {
-  
+
+@media screen and (max-width:500px) {
+.at{
+    margin-top: 10px;
+}
+.bt {
+    width: 300px ;
+    display: block;
+}
+.fontbox {
+    margin: auto;
+    width: 100%;
+    text-align: left;
 }
 
-@media screen and (max-width:680px) {
+
+.fontbox #two {
+    font-size :20pt;   
+}
+
+.fontbox #three {
+    font-size: 25pt;
+}
+
+.fontbox #four {
+    font-size: 35pt;
+}
+    
+#five {
+    font-size: 15pt;
+    letter-spacing: 8px;
+    text-align: center;
+}
+
+.ct {
+    margin-bottom: 10px;
+}
+    
+.swiper-slide {
+    font-size: 10px;
+}
+}
+
+@media screen and (max-width:390px) {
+#five {
+    font-size: 13pt;
+}
+}
+
+@media screen and (max-width:330px) {
  
+.fontbox #two {
+    font-size :19pt;   
+}
+
+.fontbox #three {
+    font-size: 24pt;
+}
+
+.fontbox #four {
+    font-size: 29pt;
+} 
+
+#five {
+    font-size: 11pt;
+    letter-spacing: 8px;
+    text-align: center;
+}
+
+.at {
+    width: 265px;    
+}
+.bt {
+    width: 265px;
+}
+}
+

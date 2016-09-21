@@ -35,6 +35,24 @@ div.awesomplete {
     opacity: 1.0;
 }
 
+.fontbox #two {
+    font-size :25pt;   
+}
+
+.fontbox #three {
+    font-size: 30pt;
+}
+
+.fontbox #four {
+    font-size: 40pt;
+}
+
+#five {
+    font-size: 15pt;
+    letter-spacing: 8px;
+    text-align: center;
+}
+
 div.awesomplete > ul {
 	position: absolute;
     text-align: left;
