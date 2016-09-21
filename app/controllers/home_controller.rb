@@ -1,3 +1,4 @@
+require 'uri/query_params'
 require 'roo'
 require 'rails4-autocomplete'
 
@@ -23,10 +24,21 @@ class HomeController < ApplicationController
     end
     
     def search
+        if user_signed_in?
+            if current_user.university_id == nil
+                @university_name = nil
+            else
+                @university_name = University.distinct.where('id = ?', current_user.university_id).pluck('name')[0]
+            end
+        else
+            @university_name = nil
+        end
+    
         @univ = University.all
          @university_name = University.distinct.pluck('name');
         @univ_search = University.all
-        @university_name = University.distinct.pluck('name');
+        @university_list = University.distinct.pluck('name');
+        
         if params[:search]
             @univ_search =  University.search(params[:search]).order("created_at DESC")
         else
@@ -46,7 +58,7 @@ class HomeController < ApplicationController
             univ_id = University.where('name = ?', params[:univ_name]).pluck('id')[0]
             dept_id = Department.where('university_id = ? and department_name = ?', univ_id, params[:dept]).pluck('id')[0]
             
-            User.where('email = ?', current_user.email.to_s).limit(1).update_all(:university_id => univ_id, :department_id => dept_id, :point => params[:point])
+            User.where('email = ?', current_user.email.to_s).limit(1).update_all(:university_id => univ_id, :department_id => dept_id, :point => params[:point], :nickname => params[:nickname], :hakbun => params[:hakbun], :grade => [:class])
 #            new_user.university_id = University.where('name = ?', params[:univ_name]).pluck('id')[0]
 #            new_user.department_id = Department.where('university_id = ? and department_name = ?', new_user.university_id, params[:dept]).pluck('id')[0]
 #            new_user.point = params[:point]
@@ -77,7 +89,8 @@ class HomeController < ApplicationController
         @my_dept = Department.where('id = ?', @my_dept_id).pluck('department_name')[0]
         
         #전체 데이터 계산
-        @data_all = User.group(:point).count
+        #회원가입하고 데이터 입력 안한사람들을 위한 예외처리 해야함
+        @data_all = User.where.not(university_id: nil).group(:point).count
         @data_all = @data_all.to_a
         @h_axis_all = Array.new
         @data_all.each do |temp|
@@ -86,7 +99,7 @@ class HomeController < ApplicationController
         
         @rank_all = User.where("point > ?", @my_point).count + 1
         @all_all = User.count
-        @percent_all = (@rank_all.to_f / @all_all.to_f) * 100 
+        @percent_all = ((@rank_all.to_f / @all_all.to_f) * 100).round(2)
         
         #대학교별 데이터 계산
         @data_school = User.where('university_id = ?', @my_school_id).group(:point).count
@@ -98,7 +111,7 @@ class HomeController < ApplicationController
         
         @rank_school = User.where("point > ? and university_id = ?", @my_point, @my_school).count + 1
         @all_school = User.where('university_id = ?', @my_school_id).count
-        @percent_school = (@rank_school.to_f / @all_school.to_f) * 100 
+        @percent_school = ((@rank_school.to_f / @all_school.to_f) * 100).round(2)
         
         #학과별 데이터 계산
         @data_dept = User.where('university_id = ? and department_id = ?',
@@ -111,233 +124,9 @@ class HomeController < ApplicationController
         
         @rank_dept = User.where('point > ? and university_id = ? and department_id = ?', @my_point, @my_school_id, @my_dept_id).count + 1
         @all_dept = User.where('university_id = ? and department_id = ?', @my_school_id, @my_dept_id).count
-        @percent_dept = (@rank_dept.to_f / @all_dept.to_f) * 100
+        @percent_dept = ((@rank_dept.to_f / @all_dept.to_f) * 100).round(2)
         
     end
-    def update_dept
-    #각 학교 별 학과를 업데이트한다.
-        start_row = 2
-        end_row = 18318 
-        xl = Roo::Spreadsheet.open('./university_dept.xlsx')
-        xl = Roo::Excelx.new("./university_dept.xlsx")
-        
-        xl.default_sheet = xl.sheets.first 
-        
-        #iterator
-        start_row.upto(xl.last_row) do |row|
-            department = Department.new
-            department.university_id = University.distinct.where('name = ?', xl.cell(row, 'G')).pluck('id')[0]
-            if department.university_id == nil
-                university = University.new
-                university.name = xl.cell(row, 'G')
-                university.save
-                department.university_id = university.id
-            end
-            
-            department.department_name = xl.cell(row, 'K')
-            #캠퍼스 구분해줘야함
-            department.college = xl.cell(row, 'I')
-            department.department_code = xl.cell(row, 'J')
-            department.isdaytime = xl.cell(row, 'L')
-            department.department_property = xl.cell(row, 'M')
-            department.department_status = xl.cell(row, 'N')
-            department.department_big_affiliation = xl.cell(row, 'O')
-            department.department_medium_affiliation = xl.cell(row, 'P')
-            department.department_small_affiliation = xl.cell(row, 'Q')
-            department.course_term = xl.cell(row, 'R')
-            department.degree = xl.cell(row, 'S')
-            department.save
-        end
-        
-        redirect_to "/"
-    end
-    
-    def update
-    #학교별 성적 분포를 업데이트
-        start_row = 4
-        end_row = 528
-        xl = Roo::Spreadsheet.open('./university_major.xlsx')
-        xl = Roo::Excelx.new("./university_major.xlsx")
-        
-        xl.default_sheet = xl.sheets.first 
-
-        major = nil
-        #iterator
-        start_row.upto(xl.last_row) do |row|
-            
-            #1학기
-            if xl.cell(row, 'G') == "1학기"
-                major = DistributionMajor.new
-                if University.distinct.where('name = ?', xl.cell(row, 'F')).pluck('id')[0] == nil
-                    univ = University.new
-                    univ.year = xl.cell(row,'A')
-                    univ.is_public = xl.cell(row, 'C')
-                    univ.location = xl.cell(row, 'D')
-                    univ.total_students = xl.cell(row, 'H')
-                    univ.is_4_5 = xl.cell(row, 'I')     
-                    univ.name = xl.cell(row, 'F')
-                    univ.save
-                    major.university_id = univ.id
-                else
-                    major.university_id = University.distinct.where('name = ?', xl.cell(row, 'F')).pluck('id')[0] 
-                end
-                major.total_student_1 = xl.cell(row, 'H')
-                major.aplus_students_1 = xl.cell(row, 'J')
-                major.aplus_ratio_1 = xl.cell(row,'K')
-                major.azero_students_1 = xl.cell(row, 'L')
-                major.azero_ratio_1 = xl.cell(row,'M')
-                major.aminus_students_1 = xl.cell(row, 'N')
-                major.aminus_ratio_1 = xl.cell(row, 'O')
-                major.bplus_students_1 = xl.cell(row, 'P')
-                major.bplus_ratio_1 = xl.cell(row,'Q')
-                major.bzero_students_1 = xl.cell(row, 'R')
-                major.bzero_ratio_1 = xl.cell(row,'S')
-                major.bminus_students_1 = xl.cell(row, 'T')
-                major.bminus_ratio_1 = xl.cell(row, 'U')
-                major.cplus_students_1 = xl.cell(row, 'V')
-                major.cplus_ratio_1 = xl.cell(row,'W')
-                major.czero_students_1 = xl.cell(row, 'X')
-                major.czero_ratio_1 = xl.cell(row,'Y')
-                major.cminus_students_1 = xl.cell(row, 'Z')
-                major.cminus_ratio_1 = xl.cell(row, 'AA')
-                major.dplus_students_1 = xl.cell(row, 'AB')
-                major.dplus_ratio_1 = xl.cell(row,'AC')
-                major.dzero_students_1 = xl.cell(row, 'AD')
-                major.dzero_ratio_1 = xl.cell(row,'AE')
-                major.dminus_students_1 = xl.cell(row, 'AF')
-                major.dminus_ratio_1 = xl.cell(row, 'AG')
-                major.f_students_1 = xl.cell(row, 'AH')
-                major.f_ratio_1 = xl.cell(row, 'AI')
-                
-            else
-            #2학기
-                major.total_student_2 = xl.cell(row, 'H')
-                major.aplus_students_2 = xl.cell(row, 'J')
-                major.aplus_ratio_2 = xl.cell(row,'K')
-                major.azero_students_2 = xl.cell(row, 'L')
-                major.azero_ratio_2 = xl.cell(row,'M')
-                major.aminus_students_2 = xl.cell(row, 'N')
-                major.aminus_ratio_2 = xl.cell(row, 'O')
-                major.bplus_students_2 = xl.cell(row, 'P')
-                major.bplus_ratio_2 = xl.cell(row,'Q')
-                major.bzero_students_2 = xl.cell(row, 'R')
-                major.bzero_ratio_2 = xl.cell(row,'S')
-                major.bminus_students_2 = xl.cell(row, 'T')
-                major.bminus_ratio_2 = xl.cell(row, 'U')
-                major.cplus_students_2 = xl.cell(row, 'V')
-                major.cplus_ratio_2 = xl.cell(row,'W')
-                major.czero_students_2 = xl.cell(row, 'X')
-                major.czero_ratio_2 = xl.cell(row,'Y')
-                major.cminus_students_2 = xl.cell(row, 'Z')
-                major.cminus_ratio_2 = xl.cell(row, 'AA')
-                major.dplus_students_2 = xl.cell(row, 'AB')
-                major.dplus_ratio_2 = xl.cell(row,'AC')
-                major.dzero_students_2 = xl.cell(row, 'AD')
-                major.dzero_ratio_2 = xl.cell(row,'AE')
-                major.dminus_students_2 = xl.cell(row, 'AF')
-                major.dminus_ratio_2 = xl.cell(row, 'AG')
-                major.f_students_2 = xl.cell(row, 'AH')
-                major.f_ratio_2 = xl.cell(row, 'AI')
-                major.save
-            end
-        end
-        
-        redirect_to "/update_minor"
-    end
-    def update_minor
-        start_row = 4
-        end_row = 505
-        xl = Roo::Spreadsheet.open('./university_minor.xlsx')
-        xl = Roo::Excelx.new("./university_minor.xlsx")
-#xl = Roo::Spreadsheet.open('./rails_temp_upload', extension: :xls)
-        xl.default_sheet = xl.sheets.first 
-        
-        minor = nil
-
-        #iterator
-        start_row.upto(xl.last_row) do |row|
-            
-            #1학기
-            if xl.cell(row, 'G') == "1학기"
-                minor = DistributionMinor.new
-                if University.distinct.where('name = ?', xl.cell(row, 'F')).pluck('id')[0] == nil
-                    univ = University.new
-                    univ.year = xl.cell(row,'A')
-                    univ.is_public = xl.cell(row, 'C')
-                    univ.location = xl.cell(row, 'D')
-                    univ.is_4_5 = xl.cell(row, 'I')     
-                    univ.name = xl.cell(row, 'F')
-                    univ.aplus_number = xl.cell(row, 'K')
-                    univ.azero_number = xl.cell(row, 'M')
-                    univ.aminus_number = xl.cell(row, 'O')
-                    univ.save
-                    minor.university_id = univ.id
-                else
-                    minor.university_id = University.distinct.where('name = ?', xl.cell(row, 'F')).pluck('id')[0] 
-                end
-                minor.total_student_1 = xl.cell(row, 'H')
-                minor.aplus_students_1 = xl.cell(row, 'J')
-                minor.aplus_ratio_1 = xl.cell(row,'K')
-                minor.azero_students_1 = xl.cell(row, 'L')
-                minor.azero_ratio_1 = xl.cell(row,'M')
-                minor.aminus_students_1 = xl.cell(row, 'N')
-                minor.aminus_ratio_1 = xl.cell(row, 'O')
-                minor.bplus_students_1 = xl.cell(row, 'P')
-                minor.bplus_ratio_1 = xl.cell(row,'Q')
-                minor.bzero_students_1 = xl.cell(row, 'R')
-                minor.bzero_ratio_1 = xl.cell(row,'S')
-                minor.bminus_students_1 = xl.cell(row, 'T')
-                minor.bminus_ratio_1 = xl.cell(row, 'U')
-                minor.cplus_students_1 = xl.cell(row, 'V')
-                minor.cplus_ratio_1 = xl.cell(row,'W')
-                minor.czero_students_1 = xl.cell(row, 'X')
-                minor.czero_ratio_1 = xl.cell(row,'Y')
-                minor.cminus_students_1 = xl.cell(row, 'Z')
-                minor.cminus_ratio_1 = xl.cell(row, 'AA')
-                minor.dplus_students_1 = xl.cell(row, 'AB')
-                minor.dplus_ratio_1 = xl.cell(row,'AC')
-                minor.dzero_students_1 = xl.cell(row, 'AD')
-                minor.dzero_ratio_1 = xl.cell(row,'AE')
-                minor.dminus_students_1 = xl.cell(row, 'AF')
-                minor.dminus_ratio_1 = xl.cell(row, 'AG')
-                minor.f_students_1 = xl.cell(row, 'AH')
-                minor.f_ratio_1 = xl.cell(row, 'AI')
-                
-            else
-            #2학기
-                minor.total_student_2 = xl.cell(row, 'H')
-                minor.aplus_students_2 = xl.cell(row, 'J')
-                minor.aplus_ratio_2 = xl.cell(row,'K')
-                minor.azero_students_2 = xl.cell(row, 'L')
-                minor.azero_ratio_2 = xl.cell(row,'M')
-                minor.aminus_students_2 = xl.cell(row, 'N')
-                minor.aminus_ratio_2 = xl.cell(row, 'O')
-                minor.bplus_students_2 = xl.cell(row, 'P')
-                minor.bplus_ratio_2 = xl.cell(row,'Q')
-                minor.bzero_students_2 = xl.cell(row, 'R')
-                minor.bzero_ratio_2 = xl.cell(row,'S')
-                minor.bminus_students_2 = xl.cell(row, 'T')
-                minor.bminus_ratio_2 = xl.cell(row, 'U')
-                minor.cplus_students_2 = xl.cell(row, 'V')
-                minor.cplus_ratio_2 = xl.cell(row,'W')
-                minor.czero_students_2 = xl.cell(row, 'X')
-                minor.czero_ratio_2 = xl.cell(row,'Y')
-                minor.cminus_students_2 = xl.cell(row, 'Z')
-                minor.cminus_ratio_2 = xl.cell(row, 'AA')
-                minor.dplus_students_2 = xl.cell(row, 'AB')
-                minor.dplus_ratio_2 = xl.cell(row,'AC')
-                minor.dzero_students_2 = xl.cell(row, 'AD')
-                minor.dzero_ratio_2 = xl.cell(row,'AE')
-                minor.dminus_students_2 = xl.cell(row, 'AF')
-                minor.dminus_ratio_2 = xl.cell(row, 'AG')
-                minor.f_students_2 = xl.cell(row, 'AH')
-                minor.f_ratio_2 = xl.cell(row, 'AI')
-                minor.save
-            end
-        end
-        redirect_to "/update_dept"
-    end
-    
     def univlist
         @university_name = params[:search]
         @university_list = University.distinct.pluck('name');
@@ -514,8 +303,27 @@ class HomeController < ApplicationController
             redirect_to '/users/sign_in'
         end
     end
-    def show
-        
+    def nav_univ_list
+        if user_signed_in?
+            if current_user.university_id == nil
+                
+                redirect_to '/search'
+            else
+                query_string = '?'
+                search = University.where('id = ?', current_user.university_id).pluck('name')[0]
+                utf_8 = params[:utf_8]
+                semester = params[:semester]
+                is_major = params[:is_major]
+                
+                query_string += 'search=' + search + '&semester=' + semester +'&is_major='  + is_major
+                
+                redirect_to '/univ_list' + query_string
+             
+            end
+            
+        else
+            redirect_to '/search'
+        end
     end
     def nopage
     

@@ -10,6 +10,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :university_id
       t.integer :department_id
       t.float :point
+      t.float :point_4_3
         
       #facebook login information
         
