@@ -51,9 +51,7 @@
                         <p><span class="state-b"><%=@totalStudents%></span></p>
                         <span class="state-a">성적인정<br>총학생수</span>
                     </div>
-                    <div class="state">
-                        <span class="state-a">A학점비중</span>
-                    </div>
+
                     </div>
                 </div>
             </div>
@@ -179,9 +177,11 @@ var options = {
         colors: ['F25C5C','FF9A9A','FFD1D1', 'F5A623','FFCD7B', 'FBDCA7','30D9A2','77F0C9','BAF1DF','5C9AF2','95B4E1','BCC9DA','600863'],
                 
         hAxis: {
-            textPosition : 'none',
-            baselineColor: 'none',
-            ticks: [],
+            title: '비율',
+            textPosition : 'center',
+            baselineColor: 'black',
+            //ticks: [],
+            //ticks: [{v:0, f:'0%'}, {v:1, f:'50%'}]
         },
         vAxis: {
             //textPosition : 'none',
