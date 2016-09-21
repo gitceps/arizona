@@ -4,7 +4,7 @@
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :"이메일" %><br />
     <%= f.email_field :email, autofocus: true %>
   </div>
 
@@ -13,11 +13,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.label :"비밀번호" %> <i>(비밀번호를 변경하지 않는 경우엔 빈칸으로 두세요.)</i><br />
     <%= f.password_field :password, autocomplete: "off" %>
     <% if @minimum_password_length %>
       <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <em>(<%= @minimum_password_length %>)자리 이상</em>
     <% end %>
   </div>
 
@@ -27,12 +27,12 @@
   </div>
 
   <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.label :"현재 비밀번호" %> <i>(개인확인을 위해서 현재 비밀번호를 입력해주세요.)</i><br />
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%= f.submit "정보 변경하기" %>
   </div>
 <% end %>
 
