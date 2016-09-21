@@ -17,7 +17,6 @@
 당신의 아이디 = <%= current_user.email %><br>  
 <%= link_to('Logout', destroy_user_session_path, :method => :get) %>
 
-    <h2 align="center">내 점수 <%= @my_point %></h2>
     <h2 align="center"><%= @my_school %> <%= @my_dept %> 학생들의 학점 분포</h2>
       <div align="center">
           <a href="#"><h2>페이스북 공유하기</h2></a>
@@ -36,6 +35,8 @@
 </div>
       <div id="curve_chart_dept" style="width: 900px; height: 500px; margin: auto"></div>
           <h2 align="center">내 점수는 <%= @my_point %><br>
+          <h2 align="center">그룹 평균 <%= @avg_dept %><br>
+            
     전체 <%= @all_dept %>명 중 <%= @rank_dept %>등, 상위 <%= @percent_dept %>% 입니다.</h2><br>
       
       <h2 align="center"><%= @my_school %> 학생들의 학점 분포</h2>
@@ -49,6 +50,7 @@
 </div>
     <div id="curve_chart_school" style="width: 900px; height: 500px; margin: auto"></div>
         <h2 align="center">내 점수는 <%= @my_point %><br>
+        <h2 align="center">그룹 평균 <%= @avg_school %><br>
     전체 <%= @all_school %>명 중 <%= @rank_school %>등, 상위 <%= @percent_school %>% 입니다.</h2><br>
     
       <h2 align="center">전국 대학생들의 학점 분포</h2>
@@ -62,6 +64,7 @@
 </div>
     <div id="curve_chart_all" style="width: 900px; height: 500px; margin: auto" ></div>
     <h2 align="center">내 점수는 <%= @my_point %><br>
+    <h2 align="center">그룹 평균 <%= @avg_all %><br>
     전체 <%= @all_all %>명 중 <%= @rank_all %>등, 상위 <%= @percent_all %>% 입니다.</h2><br>
   </body>
 </html>
