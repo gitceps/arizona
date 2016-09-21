@@ -76,8 +76,8 @@ function findLowLimit(arr) {
 function findHighLimit(arr) {
     arr.sort();
     var high = 4.5;
-    while((high > arr[arr.length-1][0]) && (arr[arr.length-1][0] != null)) {
-        if(high - 0.5 > arr[0][0])
+    while((high >= arr[arr.length - 1][0]) && (arr[arr.length-1][0] != null)) {
+        if(high - 0.5 > arr[arr.length - 1][0])
             high -= 0.5;
         else 
             break;
@@ -88,7 +88,7 @@ function findHighLimit(arr) {
 function generateRange(arr){
     var low = findLowLimit(arr);
     var high = findHighLimit(arr);
-
+    alert("low : " + low +", high : " + high);
     var result = [];
     for(var i = low; i <= high; i+= 0.5)
         result.push(i);
@@ -99,6 +99,7 @@ function terminalDataProcess(arr) {
     
     var low = findLowLimit(arr);
     var high = findHighLimit(arr);
+    alert("low : " + low +", high : " + high);
     arr = arr.concat([[low, 0]]);
     arr = arr.concat([[high, 0]]);
     arr.sort();
@@ -129,20 +130,20 @@ function terminalDataProcess2(arr) {
     
       var arr_all = arr.concat(<%= @data_all %>);
           var low_all = findLowLimit(arr_all);
-          arr_all = terminalDataProcess(arr_all);
-         var range_all = generateRange(arr_all);
+        var range_all = generateRange(arr_all);
+          arr_all = terminalDataProcess(arr_all); 
           arr_all = arr.concat(arr_all);
           console.log(range_all);
                                   
       var arr_school = <%= @data_school %>;
+      var range_school = generateRange(arr_school);      
           arr_school = terminalDataProcess(arr_school);
-      var range_school = generateRange(arr_school);
           arr_school = arr.concat(arr_school);
 
       var arr_dept = <%= @data_dept %>;
           var low_dept = findLowLimit(arr_dept);
-          arr_dept = terminalDataProcess(arr_dept);
       var range_dept = generateRange(arr_dept);
+          arr_dept = terminalDataProcess(arr_dept);
           arr_dept = arr.concat(arr_dept); 
 
       google.charts.load('current', {'packages':['corechart']});
