@@ -23,10 +23,21 @@ class HomeController < ApplicationController
     end
     
     def search
+        if user_signed_in?
+            if current_user.university_id == nil
+                @university_name = nil
+            else
+                @university_name = University.distinct.where('id = ?', current_user.university_id).pluck('name')[0]
+            end
+        else
+            @university_name = nil
+        end
+    
         @univ = University.all
          @university_name = University.distinct.pluck('name');
         @univ_search = University.all
-        @university_name = University.distinct.pluck('name');
+        @university_list = University.distinct.pluck('name');
+        
         if params[:search]
             @univ_search =  University.search(params[:search]).order("created_at DESC")
         else
@@ -77,7 +88,8 @@ class HomeController < ApplicationController
         @my_dept = Department.where('id = ?', @my_dept_id).pluck('department_name')[0]
         
         #전체 데이터 계산
-        @data_all = User.group(:point).count
+        #회원가입하고 데이터 입력 안한사람들을 위한 예외처리 해야함
+        @data_all = User.where.not(university_id: nil).group(:point).count
         @data_all = @data_all.to_a
         @h_axis_all = Array.new
         @data_all.each do |temp|
@@ -86,7 +98,7 @@ class HomeController < ApplicationController
         
         @rank_all = User.where("point > ?", @my_point).count + 1
         @all_all = User.count
-        @percent_all = (@rank_all.to_f / @all_all.to_f) * 100 
+        @percent_all = ((@rank_all.to_f / @all_all.to_f) * 100).round(2)
         
         #대학교별 데이터 계산
         @data_school = User.where('university_id = ?', @my_school_id).group(:point).count
@@ -98,7 +110,7 @@ class HomeController < ApplicationController
         
         @rank_school = User.where("point > ? and university_id = ?", @my_point, @my_school).count + 1
         @all_school = User.where('university_id = ?', @my_school_id).count
-        @percent_school = (@rank_school.to_f / @all_school.to_f) * 100 
+        @percent_school = ((@rank_school.to_f / @all_school.to_f) * 100).round(2)
         
         #학과별 데이터 계산
         @data_dept = User.where('university_id = ? and department_id = ?',
@@ -111,7 +123,7 @@ class HomeController < ApplicationController
         
         @rank_dept = User.where('point > ? and university_id = ? and department_id = ?', @my_point, @my_school_id, @my_dept_id).count + 1
         @all_dept = User.where('university_id = ? and department_id = ?', @my_school_id, @my_dept_id).count
-        @percent_dept = (@rank_dept.to_f / @all_dept.to_f) * 100
+        @percent_dept = ((@rank_dept.to_f / @all_dept.to_f) * 100).round(2)
         
     end
     def univlist
