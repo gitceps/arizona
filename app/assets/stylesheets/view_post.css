@@ -1,0 +1,83 @@
+table {
+    
+    font-family: 'Nanum Barun Gothic', sans-serif;
+}
+
+.board header {
+    font-weight: bold;
+    color:black;
+}
+
+/*margin class*/
+.top5 { margin-top:5px; }
+.top7 { margin-top:7px; }
+.top10 { margin-top:10px; }
+.top15 { margin-top:15px; }
+.top17 { margin-top:17px; }
+.top20 { margin-top:20px; }
+.top30 { margin-top:30px; }
+
+.thead-inverse th {
+    text-align: center;
+    font-weight: normal;
+}
+
+tbody td {
+    text-align: center;
+}
+
+.table>tbody>tr>td {
+    text-align: center;
+}
+
+
+@media only screen and (max-width: 640px) {
+	#tableku td:nth-child(1),
+	#tableku th:nth-child(1),
+    #tableku td:nth-child(4),
+	#tableku th:nth-child(4),
+	#tableku td:nth-child(5),
+	#tableku th:nth-child(5),
+	#tableku td:nth-child(6),
+	#tableku th:nth-child(6){display: none;}
+}
+
+.list-bt {
+    
+    height: 36px;
+    margin: 10px auto;
+    border-radius: 3px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #FFFFFF;
+    background-color: #333;
+    border-color: #333;
+    color: aliceblue;
+    font-size: 14px;
+    float: right;
+}
+
+@media screen and (max-width: 500px) {
+.list-bt {
+  width: 90px;  
+
+}
+
+.thsize-one {
+    width: 80%;
+}
+.thsize-two {
+    width: 20%;
+}
+}
+
+    
+
+
+table { 
+    table-layout: fixed;
+}
+
+.text-align{
+    text-align:left !important;
+}

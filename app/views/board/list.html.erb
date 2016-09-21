@@ -1,32 +1,39 @@
+<head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="../../assets/stylesheets/view_post.css">
+</head>
 <div class = "container">
-    <table class = "table" style= "margin-top:30px;">
+    <table class = "table top30" id="tableku">
         <thead class ="thead-inverse">
-            <th>글번호</th>
-            <th>제목</th>
-            <th>글쓴이</th>
-            <th>조회수</th>
-            <th>추천수</th>
-            <th>작성시간</th>
+            <tr>
+                <th width="80px">글번호</th>
+                <th class="thsize-one">제목</th>
+                <th class="thsize-two" width="80px">작성자</th>
+                <th width="80px">조회수</th>
+                <th width="80px">추천수</th>
+                <th width="150px">작성시간</th>
+            </tr>
         </thead>
         <% @pages.each do |p| %>
-        <tr>
-            <td><%= p.id %></td>
-            <td><a href ="/board/view_post/<%= p.id %>"><%= p.title %> [<%=p.replies.count%>]</a></td>
-            <td>익명</td>
-            <td><%= p.view %></td>
-            <td><%= p.like %></td>
-            <td><%= p.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-        </tr>
+        <tbody>
+            <tr>
+                <td><%= p.id %></td>
+                <td class="text-align"><a href ="/board/view_post/<%= p.id %>"><%= p.title %> [<%=p.replies.count%>]</a></td>
+                <td>익명</td>
+                <td><%= p.view %></td>
+                <td><%= p.like %></td>
+                <td><%= p.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+            </tr>
+        </tbody>
         <% end %>
     </table>
-    <div align="center" style ="color:black;">
+    <div>
         <%= will_paginate @pages, :page_links => true, :next_label => "다음 >", :previous_label => "< 이전" %>
     </div>
     <a href ="/board/new_post">
-        <button class="btn btn-default">글쓰기</button>
+        <button class="list-bt">글쓰기</button>
     </a>
 </div>
