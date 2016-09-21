@@ -38,9 +38,10 @@ Rails.application.routes.draw do
     post '/point' => 'home#point'
     get '/list' => "home#list"
     
-    get '/update' => 'home#update'
-    get '/update_minor' => 'home#update_minor'
-    get '/update_dept' => 'home#update_dept'
+    #routes for update database
+    get '/update' => 'update#update'
+    get '/update_minor' => 'updata#update_minor'
+    get '/update_dept' => 'update#update_dept'
     
     get '/univ_list' => 'home#univlist'
     #get '/univ_add/:univ_name' => 'home#univ_add'

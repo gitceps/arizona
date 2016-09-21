@@ -88,7 +88,6 @@ function findHighLimit(arr) {
 function generateRange(arr){
     var low = findLowLimit(arr);
     var high = findHighLimit(arr);
-    alert("low : " + low +", high : " + high);
     var result = [];
     for(var i = low; i <= high; i+= 0.5)
         result.push(i);
@@ -99,7 +98,6 @@ function terminalDataProcess(arr) {
     
     var low = findLowLimit(arr);
     var high = findHighLimit(arr);
-    alert("low : " + low +", high : " + high);
     arr = arr.concat([[low, 0]]);
     arr = arr.concat([[high, 0]]);
     arr.sort();

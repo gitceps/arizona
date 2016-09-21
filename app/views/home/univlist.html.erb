@@ -131,6 +131,10 @@
 
     <!-- hamburger bar -->
     <script>
+$(document).ready(function(){
+     $('#cssmenu ul > li').removeClass("active");
+     $("#menu_spring").addClass("active"); 
+});
         (function($) {
 $.fn.menumaker = function(options) {  
  var cssmenu = $(this), settings = $.extend({

@@ -10,6 +10,7 @@ class CreateUniversities < ActiveRecord::Migration
         t.integer :aplus_number
         t.integer :azero_number
         t.integer :aminus_number
+        t.integer :view
       t.timestamps null: false
     end
   end

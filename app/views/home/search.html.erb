@@ -65,7 +65,13 @@
 
 </script>
 <script>
-
+$(document).ready(function(){
+     $('#cssmenu ul > li').removeClass("active");
+});
+$('.bt').on('click', function() {
+    alert($('#search').value());
+    //$("#form1").valid();
+});
     
 var comboplete = new Awesomplete('input.dropdown-input', {
 	minChars: 0,
