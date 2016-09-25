@@ -1,4 +1,4 @@
-require 'uri/query_params'
+
 require 'roo'
 require 'rails4-autocomplete'
 

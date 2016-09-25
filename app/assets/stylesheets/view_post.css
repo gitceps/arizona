@@ -3,11 +3,6 @@ table {
     font-family: 'Nanum Barun Gothic', sans-serif;
 }
 
-.board header {
-    font-weight: bold;
-    color:black;
-}
-
 /*margin class*/
 .top5 { margin-top:5px; }
 .top7 { margin-top:7px; }
@@ -71,13 +66,92 @@ tbody td {
 }
 }
 
-    
-
-
 table { 
     table-layout: fixed;
 }
 
 .text-align{
     text-align:left !important;
+}
+
+
+.post-title {
+    background-color: rgba(215, 215, 215, 0.2);
+    border-top: solid 2px #696969;
+    border-bottom: solid 0.2px #656565;
+    padding: 4px 9px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0px;
+    color: #252525;
+    margin-top: 100px;
+}
+
+.post-writer {
+    border-bottom: solid 0.2px #656565;
+    font-size: 14px;
+    letter-spacing: 0px;
+    padding: 4px 9px;
+}
+
+.margin {
+    display: inline-block;
+    margin-left: 30px;
+    color:black;
+}
+
+.post-content {
+    margin-top: 20px;
+}
+
+.post-comment {
+    vertical-align: middle;
+    color: #696969;
+    font-size: 14px;
+
+
+}
+
+.comment-name {
+    margin-right: 10px;
+    font-size: 12px;
+    color: #252525;
+    display: inline-block;
+}
+
+.comment-time {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: #9a9a9a;
+    display: inline-block;
+}
+
+.comment {
+    font-size: 15px;
+    color: #252525;
+}
+
+.comment-box {
+    border-top: solid 2px #d8d4d4;
+    padding-top: 5px;
+    padding-bottom: 30px;
+}
+
+.well {
+
+    border-top: solid 2px #d8d4d4;
+    padding-top: 50px;
+}
+
+table a {
+    color: black;
+}
+
+.gray {
+    background-color:  #F2F2F2;
+    height: 100%;
+}
+
+.bt-font {
+    font-size: 14px;
 }

@@ -5,6 +5,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/view_post.css">
 </head>
+<body class="gray">
 <div class = "container">
     <table class = "table top30" id="tableku">
         <thead class ="thead-inverse">
@@ -30,13 +31,14 @@
         </tbody>
         <% end %>
     </table>
-    <div>
+    <div align="center">
         <%= will_paginate @pages, :page_links => true, :next_label => "다음 >", :previous_label => "< 이전" %>
     </div>
     <a href ="/board/new_post">
         <button class="list-bt">글쓰기</button>
     </a>
 </div>
+</body>
 <script>
     $(document).ready(function(){
      $('#cssmenu ul > li').removeClass("active");
