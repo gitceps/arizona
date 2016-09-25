@@ -132,7 +132,11 @@ class HomeController < ApplicationController
         
     end
     def univlist
-        @university_name = params[:search]
+        if params[:search] == nil
+            @university_name = University.where('id = ?', current_user.university_id).pluck('name')[0]
+        else
+            @university_name = params[:search]    
+        end
         @university_list = University.distinct.pluck('name');
         if @university_name == "random"
             @university_name = @university_list.sample
@@ -315,6 +319,7 @@ class HomeController < ApplicationController
             else
                 query_string = '?'
                 search = University.where('id = ?', current_user.university_id).pluck('name')[0]
+                puts(search)
                 utf_8 = params[:utf_8]
                 semester = params[:semester]
                 is_major = params[:is_major]
