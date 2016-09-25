@@ -98,7 +98,8 @@ class HomeController < ApplicationController
         end
         
         @rank_all = User.where("point > ?", @my_point).count + 1
-        @all_all = User.count
+        @all_all = User.where.not(university_id: nil).count
+        @avg_all = User.where.not(university_id: nil).average(:point).round(2)
         @percent_all = ((@rank_all.to_f / @all_all.to_f) * 100).round(2)
         
         #대학교별 데이터 계산
@@ -111,6 +112,7 @@ class HomeController < ApplicationController
         
         @rank_school = User.where("point > ? and university_id = ?", @my_point, @my_school).count + 1
         @all_school = User.where('university_id = ?', @my_school_id).count
+        @avg_school = User.where('university_id = ?', @my_school_id).average(:point).round(2)
         @percent_school = ((@rank_school.to_f / @all_school.to_f) * 100).round(2)
         
         #학과별 데이터 계산
@@ -124,6 +126,8 @@ class HomeController < ApplicationController
         
         @rank_dept = User.where('point > ? and university_id = ? and department_id = ?', @my_point, @my_school_id, @my_dept_id).count + 1
         @all_dept = User.where('university_id = ? and department_id = ?', @my_school_id, @my_dept_id).count
+        @avg_dept = User.where('university_id = ? and department_id = ?',
+        @my_school_id, @my_dept_id).average(:point)
         @percent_dept = ((@rank_dept.to_f / @all_dept.to_f) * 100).round(2)
         
     end

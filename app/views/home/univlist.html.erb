@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../../assets/stylesheets/univlist.css" />
     <link rel="stylesheet" href="../../assets/stylesheets/banner.css" />
     <link rel="stylesheet" href="../../assets/styleshspoets/swiper.min.css">
+    <link rel="stylesheet" href="../../assets/stylesheets/progress_bubbling.css" />
     <!-- FONT
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     
@@ -90,11 +91,19 @@
 
   <!-- barchart -->
 </div>
+    <div class="bubblingG" align="center">
+        <span id="bubblingG_1">
+        </span>
+        <span id="bubblingG_2">
+        </span>
+        <span id="bubblingG_3">
+        </span>
+    </div>
     <div class="row">
         <div class="tweleve columns">
         <div id="barchart" class="chart1"></div>
+        </div>
     </div>
-  </div>
     
 
 <!-- 주석 처리
@@ -279,7 +288,11 @@ var options = {
 	 };
 
 google.charts.load('current', {'packages':['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawBarChart);
+google.charts.setOnLoadCallback(chartOnLoadCallback);
+function chartOnLoadCallback() {
+    $(".bubblingG").hide();
+    drawBarChart();
+}
 
 function drawBarChart() {
 
