@@ -1,38 +1,44 @@
-<div class="bg"></div>
-<div align="center">
-<h2><span>가입하기</span></h2>
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= devise_error_messages! %>
+<!DOCTYPE>
+<html>
+<head>
 
-    <div class="field">
-      <span><%= f.label :이메일 %><br /></span>
-        <%= f.email_field :email, autofocus: true %>
-    </div>
-  
-    <div class="field">
-      <span><%= f.label :비밀번호 %>
-      <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %>자리 이상)</em></span>
-      <% end %><br />
-      <%= f.password_field :password, autocomplete: "off" %>
-    </div>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+<div class="row">
+<div class="login-page-new">
+    <div class="form-new">
+        
+            <h2>가입하기</h2>
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+                <%= devise_error_messages! %>
 
-    <div class="field">
-      <span><%= f.label :"비밀번호 확인" %></span><br />
-      <%= f.password_field :password_confirmation, autocomplete: "off" %>
-    </div>
+            
+                  <label for="user_이메일">이메일</label><br>
+                  <input autofocus="autofocus" type="text" value="" name="user[email]" id="user_email" placeholder="email address">
+            
+                
+                      <label for="user_비밀번호">비밀번호</label>
+                      <em>(6자리 이상)</em>
+                      <br>
+                      <input autocomplete="off" type="password" name="user[password]" id="user_password" placeholder="password">
+                
+            
+                    <label for="user_비밀번호 확인">비밀번호 확인</label><br>
+                    <input autocomplete="off" type="password" name="user[password_confirmation]" id="user_password_confirmation">
+            
 
-    <div class="actions">
-      <%= f.submit "Sign up" %>
-    </div>
-  <% end %>
+                
+                <button name="commit" value="Sign up">Sign up</button>
+    
+              <% end %>
 
-  <%= render "devise/shared/links" %>
+              <%= render "devise/shared/links" %>
+        
+    </div>
 </div>
-
-<script>
-$(document).ready(function(){
-     $('#cssmenu ul > li').removeClass("active");
-     $("#menu_signin").addClass("active"); 
-});
-</script>
+</div> 
+</div>
+</body>
+</html>
