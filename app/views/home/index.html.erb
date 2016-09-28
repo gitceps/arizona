@@ -1,4 +1,8 @@
+<!DOCTYPE>
+<html>
 <head>
+    
+<meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -11,31 +15,49 @@
     <link rel="stylesheet" href="../../assets/stylesheets/awesomplete.css" />
     <script src="../../assets/javascripts/awesomplete.js" async></script>
 </head>
+
+<body>
+    
+
+<div class="container">
+<div class="row">
+<div class="login-page-new">
+    <div class="form-new">
+        
+    <h2>내 학점 비교하기</h2>
+<!--
 당신의 ip = <%= @remote_ip %><br>
 당신의 아이디 = <%= @email %><br>  
 <%= link_to('Logout', destroy_user_session_path, :method => :get) %>
+-->
+
 <form action="/point" method="POST">
     <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="com">닉네임 입력</label>
-                <input type="string" name="nickname" class="form-control"></input>
-            </div>
-            * 최소 6자 이상 입력하여 주십시오 <br>
-            <label for="comment">학교 선택</label><br>
-            <input id="univ_name" class="dropdown-input" name="univ_name" list="mylist"/>
-                <datalist id="mylist">
-	               <% @university_name.each do |name| %>
-		              <option><%= name %></option>
-	               <%end%>
-                </datalist>
-            <select id="selectNumber" name="dept">
-                <option>학과 선택</option>
-            </select>
-            <br>
-            <label for="hakbun">학번 선택</label><br>
-            <select id="select_hakbun" name="hakbun">
+        <label for="com">닉네임 입력</label>
+        <input type="string" name="nickname" class="form-control"></input>
+        <h6>* 최소 6자 이상 입력하여 주십시오</h6>
+    </div>
+        
+    <div class="row">
+    <label for="comment">학교 입력</label><br>
+    <input id="univ_name" class="univchoice" name="univ_name" list="mylist"/>
+        <datalist id="mylist">
+	       <% @university_name.each do |name| %>
+		      <option><%= name %></option>
+	       <%end%>
+        </datalist>
+    
+
+    
+
+        <select id="selectNumber" name="dept">
+              <option>학과 선택</option>
+        </select>
+    </div>
+        
+    <div class="row">
+        <label for="hakbun">학번 선택</label>
+        <select id="select_hakbun" name="hakbun">
                 <datalist id="hakbun_list">
 		              <option>16 학번</option>
 		              <option>15 학번</option>
@@ -49,9 +71,13 @@
 		              <option>07 학번</option>
 		              <option>06 학번</option>
                 </datalist>
-            </select><br>
-            <label for="class">학년 선택</label><br>
-            <select id="select_class" name="class">
+        </select>
+    
+    </div>
+        
+    <div class="row">
+        <label for="class">학년 선택</label>
+        <select id="select_class" name="class">
                 <datalist id="class_list">
 		              <option>1 학년</option>
 		              <option>2 학년</option>
@@ -60,22 +86,32 @@
 		              <option>5 학년</option>
 		              <option>6 학년</option>
                 </datalist>
-            </select>
-            <!-- 학과, 학기 입력 -->
-            <div class="form-group">
-                <label for="comment">학점 입력</label>
-                <input type="number" name="point" class="form-control" rows="5" max="4.5" min="0" step="0.01"></input>
-            </div>
-      </div>
-        <div class="col-sm-offset-4 col-sm-4">
-            * 한번 입력하신 정보는 수정이 불가하니 정확히 기입해 주시기 바랍니다.
-            <button type="submit" class="btn btn-primary btn-lg sharp" border-radius="20px">성적 확인하러 가기</button>
-        </div>
-        <br>
-        <div class="col-md-4"></div>
+        </select>
     </div>
-</form>
+            <!-- 학과, 학기 입력 -->
+        
+    <div class="row">
+        <label for="comment">학점 입력</label>
+        <input type="number" name="point" class="form-control" rows="5" max="4.5" min="0" step="0.01"></input>
+    
+        
+        
+        <h6>* 한번 입력하신 정보는 수정이 불가하니 정확히 기입해 주시기 바랍니다.</h6>
+    </div>
 
+    <div>
+            <button type="submit" class="btn btn-primary btn-lg sharp" border-radius="20px">성적 확인하러 가기</button>
+    </div>
+        
+        
+</form>
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>
 <script>
 
     

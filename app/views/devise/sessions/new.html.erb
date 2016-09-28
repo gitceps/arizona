@@ -1,40 +1,57 @@
-<div class="bg"></div>
+<!DOCTYPE>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div class="container">
 <div class="row">
-  <div align="center">
-    <div class="container">
-      <h2><span style = "font-size:20pt">로그인</span></h2>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="field">
-        <span><%= f.label :"이메일" %></span><br>
-        <%= f.email_field :email, autofocus: true %>               
-      </div>
-      <div class="field">
-        <span><%= f.label :"비밀번호" %></span><br>
-        <%= f.password_field :password, autocomplete: "off" %>
-      </div>
+<div class="login-page-new">
+            <div class="form-new">
+                
+      
+                      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-      <% if devise_mapping.rememberable? -%>
-        <div class="field">
-          <%= f.check_box :remember_me %>
-          <span><%= f.label :"자동로그인 켜기"  %></span>
+                        <label for="user_이메일">이메일</label><br>
+                        <input autofocus="autofocus" type="text" placeholder="email address" value="" name="user[email]" id="user_email">               
+
+
+                        <label for="user_비밀번호">비밀번호</label><br>
+                        <input autocomplete="off" type="password"  name="user[password]" id="user_password" placeholder="password">
+
+                      <% if devise_mapping.rememberable? -%>
+                        
+                    
+                          <input name="user[remember_me]" type="hidden" value="0"><input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me">
+                          <label for="user_자동로그인 켜기">자동로그인 켜기</label>
+        
+                      <% end %>
+
+                      
+                        <button value="로그인">로그인</button>
+                        <div class="actions">
+                        </div>
+                      
+                    <% end -%>
+
+                    <%= render "devise/shared/links" %>
+                
+            </div>
         </div>
-      <% end %>
-
-      <div class="actions">
-        <%= f.submit "로그인" %>
-      </div>
-    <% end -%>
-
-    <%= render "devise/shared/links" %>
-    </div>
-  </div>
 </div>
+</div>
+
+</body>
+</html>
 <script>
 $(document).ready(function(){
      $('#cssmenu ul > li').removeClass("active");
      $("#menu_signin").addClass("active"); 
 });
 </script>
+
 
 
 

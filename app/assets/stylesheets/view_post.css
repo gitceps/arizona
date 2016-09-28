@@ -155,3 +155,7 @@ table a {
 .bt-font {
     font-size: 14px;
 }
+
+.form-control {
+    resize: none;
+}
