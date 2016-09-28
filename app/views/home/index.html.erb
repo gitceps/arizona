@@ -115,9 +115,9 @@
 <script>
 
     
-var comboplete = new Awesomplete('input.dropdown-input', {
-	minChars: 0,
-});
+//var comboplete = new Awesomplete('input.dropdown-input', {
+//	minChars: 0,
+//});
 //
 //Awesomplete.$('.dropdown-input').addEventListener("change", function() {
 //        alert('dropdown changed : ' + this.val);
@@ -148,6 +148,7 @@ var comboplete = new Awesomplete('input.dropdown-input', {
 //}
 function set_dropdown_item(data) {
     $('#selectNumber').empty();
+    console.log('asdfasfd');
     var option = '';
     for (var i=0;i<data.length;i++){
    option += '<option value="'+ data[i] + '">' + data[i] + '</option>';
