@@ -75,7 +75,7 @@
         <% @pages.each do |p| %>
         <tr>
             <td><%= p.id %></td>
-            <td><a href ="/board/view_post/<%= p.id %>"><%= p.title %> [<%=p.replies.count%>]</a></td>
+            <td class="text-align"><a href ="/board/view_post/<%= p.id %>"><%= p.title %> [<%=p.replies.count%>]</a></td>
             <td>익명</td>
             <td><%= p.view %></td>
             <td><%= p.like %></td>
