@@ -32,6 +32,8 @@
         <div class="twleve columns">
                 <form id="search-form" action="/univ_list" accept-charset="UTF-8" method="get">
                 <input name="utf8" type="hidden" value="✓">
+                <input name="semester" type="hidden" value="spring">
+                <input name="is_major" type="hidden" value="true">
                 <input type="text" name="search" id="search" class="awesomplete at" placeholder="우리 대학교 입력" list="mylist"/>
                 <datalist id="mylist">
                    <% @university_list.each do |name| %>
