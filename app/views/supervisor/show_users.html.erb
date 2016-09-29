@@ -1,0 +1,8 @@
+<% @users.each do |u| %>
+      <%= u.id %>
+      <%= u.email %>
+      <%= u.university_id%>
+      <%= u.department_id%>
+      <%= u.point%><br>
+<% end %> 
+당신의 ip = <%= request.env['REMOTE_ADDR'] %><br>
