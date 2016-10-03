@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     
     #routes for update database
     get '/update' => 'update#update'
-    get '/update_minor' => 'updata#update_minor'
+    get '/update_minor' => 'update#update_minor'
     get '/update_dept' => 'update#update_dept'
     
     get '/univ_list' => 'home#univlist'

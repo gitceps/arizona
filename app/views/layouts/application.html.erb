@@ -50,6 +50,7 @@
                           <a href="/mygrade"> 내 학점 비교하기 </a>
                           </form>
                     </li>
+                    <% if !request.path.eql?'/' %>
                     <li>
                         <a href="/search">
                             다른학교 비교하기
@@ -107,6 +108,7 @@
                     </li>
                         </ul>
                     </li>
+                    <% end %>
                 </ul>
                 </nav>
         </div>
